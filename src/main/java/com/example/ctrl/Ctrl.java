@@ -1,6 +1,6 @@
 package com.example.ctrl;
 
-import com.example.data.base.BaseDao;
+import com.example.data.base.IBaseDao;
 import com.example.data.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +16,7 @@ import java.util.List;
 @Controller
 public class Ctrl {
     @Resource
-    private BaseDao dao;
+    private IBaseDao dao;
 
     @RequestMapping(value = "/show")
     @ResponseBody
