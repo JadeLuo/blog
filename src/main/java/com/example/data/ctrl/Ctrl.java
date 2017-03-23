@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2017/3/23.
@@ -29,6 +31,7 @@ public class Ctrl {
         u.seteMail("1@1");
         userDao.save(u);
         User list = userDao.findOne("402882e85af9833b015af9835a020000");
+        List<Map<String, Object>> list1 = userDao.mapByWhere("select * from t_user", "");
         userDao.listAll();
         userDao.listByWhere("where id = ?", "402882e85af9833b015af9835a020000");
         userDao.count();

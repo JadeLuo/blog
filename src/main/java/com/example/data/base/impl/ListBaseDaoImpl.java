@@ -4,6 +4,7 @@ import com.example.data.base.ListBaseDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.ColumnMapRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -13,6 +14,7 @@ import javax.persistence.Table;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2017/3/23.
@@ -44,6 +46,11 @@ public class ListBaseDaoImpl<T, PK extends Serializable> extends CrudBaseDaoImpl
             return listAll();
         }
         return jdbcTemplate.query(SELECT_ALL + getTableName() + where, getRowMapper(getEntity()), para);
+    }
+
+    public List<Map<String, Object>> mapByWhere(String select, String where, Object... para) {
+        ColumnMapRowMapper clomap = new ColumnMapRowMapper();
+        return jdbcTemplate.queryForList(select + where);
     }
 
     public List<T> listAll() {
