@@ -1,7 +1,7 @@
 package com.example.data.base;
 
 import com.alibaba.fastjson.JSON;
-import com.example.data.dao.UserDao;
+import com.example.data.dao.TestDao;
 import com.example.data.entity.User;
 import org.junit.After;
 import org.junit.Assert;
@@ -15,7 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,7 +25,7 @@ import java.util.Map;
 public class PageBaseDaoTest {
 
     @Resource
-    private UserDao userDao;
+    private TestDao userDao;
 
     @Before
     public void setUp() throws Exception {
@@ -40,13 +39,17 @@ public class PageBaseDaoTest {
 
     @Test
     public void pageAll() throws Exception {
-        List<User> list = userDao.listAll();
-        System.out.println(list.size() + "-------------------------------------------------------");
+        Pageable pageable = new PageRequest(0, 5);
+        Page<User> list = userDao.PageAll(pageable);
+        list.getSize();
+        System.out.println(JSON.toJSONString(list) + "-------------------------------------------------------");
     }
 
     @Test
     public void pageByWhere() throws Exception {
-
+        Pageable pageable = new PageRequest(3, 10);
+        Page<User> list = userDao.PageByWhere(pageable, "where user_name like ? or real_name like ?", "%1%", "%1%");
+        System.out.print(JSON.toJSONString(list));
     }
 
     @Test

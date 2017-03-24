@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 /**
  * Created by Administrator on 2017/3/23.
  */
-@Repository("userDao")
-public class UserDaoImpl extends PageBaseDaoImpl<User, String> implements UserDao {
+@Repository("test")
+public class TestDaoImpl extends PageBaseDaoImpl<User, String> implements TestDao {
 }

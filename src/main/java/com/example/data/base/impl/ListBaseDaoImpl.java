@@ -2,7 +2,7 @@ package com.example.data.base.impl;
 
 import com.example.data.base.ListBaseDao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.ColumnMapRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -45,35 +45,49 @@ public class ListBaseDaoImpl<T, PK extends Serializable> extends CrudBaseDaoImpl
         if (where == null || where.equals("")) {
             return listAll();
         }
-        return jdbcTemplate.query(SELECT_ALL + getTableName() + where, getRowMapper(getEntity()), para);
+        try {
+            return jdbcTemplate.query(SELECT_ALL + getTableName() + where, getRowMapper(getEntity()), para);
+        } catch (DataAccessException e) {
+            return null;
+        }
     }
 
     public List<Map<String, Object>> mapByWhere(String select, String where, Object... para) {
         ColumnMapRowMapper clomap = new ColumnMapRowMapper();
-        return jdbcTemplate.queryForList(select + where, para);
+        try {
+            return jdbcTemplate.queryForList(select + where, para);
+        } catch (DataAccessException e) {
+            return null;
+        }
     }
 
     public List<T> listAll() {
         String name = getTableName();
         RowMapper rowMapper = getRowMapper(getEntity());
-        return jdbcTemplate.query(SELECT_ALL + getTableName(), getRowMapper(getEntity()));
-    }
-
-    public List<T> listAll(Sort sort) {
-        return null;
+        try {
+            return jdbcTemplate.query(SELECT_ALL + getTableName(), getRowMapper(getEntity()));
+        } catch (DataAccessException e) {
+            return null;
+        }
     }
 
     @Transactional(readOnly = true)
     public long count(String where, Object... para) {
         if (where != null && !where.equals("")) {
-            return (Long) jdbcTemplate.queryForObject(SEELECT_COUNT + getTableName() + where, Long.class, para);
+            try {
+                return (Long) jdbcTemplate.queryForObject(SEELECT_COUNT + getTableName() + where, Long.class, para);
+            } catch (DataAccessException e) {
+                return 0;
+            }
         }
         return count();
     }
 
     public long count() {
-        Object o = jdbcTemplate.queryForObject(SEELECT_COUNT + getTableName(), Long.class);
-        return 0;
-
+        try {
+            return jdbcTemplate.queryForObject(SEELECT_COUNT + getTableName(), Long.class);
+        } catch (DataAccessException e) {
+            return 0;
+        }
     }
 }

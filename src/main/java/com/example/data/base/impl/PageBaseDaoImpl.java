@@ -16,10 +16,12 @@ import java.util.Map;
 public class PageBaseDaoImpl<T, PK extends Serializable> extends ListBaseDaoImpl<T, PK> implements PageBaseDao<T, PK> {
 
     public Page<T> PageAll(Pageable pageable) {
-        return new PageImpl<T>(listAll(), pageable, count());
+
+        return new PageImpl<T>(listByWhere(BulidSql(pageable, "")), pageable, count());
     }
 
     public Page<T> PageByWhere(Pageable pageable, String where, Object... para) {
+        if (where == null || where.equals("")) return PageAll(pageable);
         where = BulidSql(pageable, where);
         return new PageImpl<T>(listByWhere(where, para), pageable, count(where, para));
     }

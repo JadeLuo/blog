@@ -7,5 +7,5 @@ import com.example.data.entity.User;
  * Created by Administrator on 2017/3/23.
  */
 
-public interface UserDao extends PageBaseDao<User, String> {
+public interface TestDao extends PageBaseDao<User, String> {
 }
