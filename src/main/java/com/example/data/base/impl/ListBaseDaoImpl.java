@@ -50,7 +50,7 @@ public class ListBaseDaoImpl<T, PK extends Serializable> extends CrudBaseDaoImpl
 
     public List<Map<String, Object>> mapByWhere(String select, String where, Object... para) {
         ColumnMapRowMapper clomap = new ColumnMapRowMapper();
-        return jdbcTemplate.queryForList(select + where);
+        return jdbcTemplate.queryForList(select + where, para);
     }
 
     public List<T> listAll() {

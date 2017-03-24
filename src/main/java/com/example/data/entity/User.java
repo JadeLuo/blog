@@ -2,8 +2,6 @@ package com.example.data.entity;
 
 
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,19 +24,14 @@ public class User {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid")
     private String id;
-    @NotEmpty(message = "姓名不能为空")
     private String userName;
-    @NotEmpty(message = "密码不能为空")
-    @Length(min = 6, message = "密码长度不能小于6位")
     private String passWord;
     /**
      * 账户状态
      */
     private int state;
     private String realName;
-    @NotEmpty(message = "邮箱不能为空")
     private String eMail;
-    @Length(max = 11, min = 11, message = "请输入真确的格式")
     private String phone;
 
     public String getUserName() {
