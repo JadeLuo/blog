@@ -1,7 +1,7 @@
 package com.example.data;
 
+import com.easyDev.context.SpringUtil;
 import com.example.data.supper.BaseRepositoryFactoryBean;
-import com.example.data.util.SpringUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;

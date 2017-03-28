@@ -1,7 +1,6 @@
 package com.example.data.base.impl;
 
 import com.example.data.base.BaseRepository;
-import com.example.data.util.SpringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
@@ -17,6 +16,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.Table;
 import java.io.Serializable;
@@ -34,7 +34,8 @@ public class BaseRepositoryImpl<T, PK extends Serializable> extends SimpleJpaRep
     private final JpaEntityInformation<T, ?> entityInformation;
     private final Class<T> domainClass;
     Logger logger = LoggerFactory.getLogger(this.getClass());
-    private JdbcTemplate jdbcTemplate = (JdbcTemplate) SpringUtil.getBean("jdbcTemplate");
+    @Resource
+    private JdbcTemplate jdbcTemplate;
 
     //父类没有不带参数的构造方法，这里手动构造父类
     public BaseRepositoryImpl(Class<T> domainClass, EntityManager entityManager) {
