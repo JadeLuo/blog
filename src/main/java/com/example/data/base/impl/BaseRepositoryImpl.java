@@ -1,7 +1,7 @@
 package com.example.data.base.impl;
 
-import com.example.data.SpringUtil;
 import com.example.data.base.BaseRepository;
+import com.example.data.util.SpringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
