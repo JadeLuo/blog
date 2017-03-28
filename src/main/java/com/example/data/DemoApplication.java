@@ -1,21 +1,17 @@
 package com.example.data;
 
+import com.example.data.supper.BaseRepositoryFactoryBean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {"com"})
+@EnableJpaRepositories(repositoryFactoryBeanClass = BaseRepositoryFactoryBean.class)
 public class DemoApplication {
 
     public static void main(String[] args) {
-        ApplicationContext ctx = SpringApplication.run(DemoApplication.class, args);
-        String[] beanNames = ctx.getBeanDefinitionNames();
-        System.out.println("所以beanNames个数：" + beanNames.length);
-        for (String bn : beanNames) {
-            if (bn.indexOf("org.springframework") == -1)
-                System.out.println("*******************************************************" + bn);
-        }
+        SpringApplication.run(DemoApplication.class, args);
     }
 }

@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -47,8 +48,8 @@ public class PageBaseDaoTest {
 
     @Test
     public void pageByWhere() throws Exception {
-        Pageable pageable = new PageRequest(3, 10);
-        Page<User> list = userDao.PageByWhere(pageable, "where user_name like ? or real_name like ?", "%1%", "%1%");
+        Pageable pageable = new PageRequest(0, 10);
+        Page<User> list = userDao.PageByWhere(pageable, "where user_name like ? or real_name like ?", "%s%", "%s%");
         System.out.print(JSON.toJSONString(list));
     }
 
@@ -58,6 +59,20 @@ public class PageBaseDaoTest {
         Page<Map<String, Object>> page = userDao.PageMapByWhere(pageable, "select user_name from t_user ", " where user_name=?", "success");
         Assert.assertNotNull(page);
         System.out.print(JSON.toJSONString(page));
+    }
+
+    @Test
+    public void listAll() throws Exception {
+        List<User> list = userDao.listAll();
+        Assert.assertNotNull(list);
+        System.out.print(JSON.toJSONString(list));
+    }
+
+    @Test
+    public void findByUserName() throws Exception {
+        User list = userDao.findByUserName("wanghuiwen");
+        Assert.assertNotNull(list);
+        System.out.print(JSON.toJSONString(list));
     }
 
 }
