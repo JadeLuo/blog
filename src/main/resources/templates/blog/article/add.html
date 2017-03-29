@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-cn" style="height:100%;">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta charset="UTF-8"/>
+    <div th:include="/blog/public/head::head"></div>
+    <title>添加博客</title>
+</head>
+<body style="height:100%;">
+<div class="blog-masthead" th:include="/blog/public/top::top"></div>
+
+<div class="container-fluid">
+
+    <div class="row">
+        <form id="addArticle" class="col-md-12" th:object="${article}" action="/article/add" method="post">
+            <input type="text" th:field="*{title}" id="blog-title" placeholder="标题" class="blog-title-edit"/>
+            <span class="control-label" for="blog-title"
+                  th:if="${#fields.hasErrors('title')}"
+                  th:errors="*{title}">
+            </span>
+            <input th:field="*{summary}" placeholder="摘要" class="blog-title-edit"/>
+            <textarea name="content" id="content" rows="20" cols="100">
+            </textarea>
+            <div>
+                <select onchange="addTypeFiled(this)">
+                    <option>选择分类</option>
+                    <option th:each="type:${articleType}" th:text="${type.typeName}" th:value="${type.id}"></option>
+                </select>
+                <a onclick="addTypes()">添加分类</a>
+            </div>
+            <div class="col-md-4 col-md-offset-4 col-sm-offset-4">
+                <button type="button" class="btn btn-info col-md-4 btn-lg blog-btn" onclick="addArticle()">发布</button>
+                <button type="button" class="btn btn-info col-md-4 btn-lg blog-btn">预览</button>
+            </div>
+            <input th:field="*{id}" type="hidden"/>
+            <input th:field="*{type}" type="hidden"/>
+            <input th:field="*{articleText}" type="hidden"/>
+            <input th:field="*{userId}" type="hidden"/>
+            <input th:field="*{tag}" type="hidden"/>
+            <input th:field="*{enjoy}" type="hidden"/>
+            <input th:field="*{Hate}" type="hidden"/>
+            <input th:field="*{status}" type="hidden"/>
+        </form>
+    </div>
+</div>
+<script>
+    $(function () {
+        var data = $('input[name="articleText"]').val();
+        CKEDITOR.instances.content.setData(data);
+    })
+    CKEDITOR.replace('content');
+    function addArticle() {
+        var data = CKEDITOR.instances.content.getData();
+        $('input[name="articleText"]').val(data);
+        $('#addArticle').ajaxSubmit(function (data) {
+            layer.msg(data);
+            window.location.href = "/article/list/all";
+        })
+    }
+    function addTypeFiled(thiz) {
+        $('input[name="type"]').val($(thiz).val());
+    }
+    function addTypes() {
+        $.get("/article/type/add", {}, function (data) {
+            layer.open({
+                type: 1,
+                area: ['500px', '300px'],
+                btn: ['添加', '取消'], //按钮
+                content: data
+            })
+        })
+    }
+</script>
+</body>
+</html>

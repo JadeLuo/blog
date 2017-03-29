@@ -1,0 +1,20 @@
+<div xmlns:th="http://www.thymeleaf.org" class="media col-md-12 blog-list-item "
+     th:each="article:${pageImpl}" th:onclick="'javascript:toDetial(\''+${article.id}+'\');'">
+    <div class="media-body  media-middle blog-list-body ">
+        <h1 class="media-heading" th:text="${article.title}">标题</h1>
+        <p th:text="${#strings.length(article.summary)>100 ? #strings.substring(article.summary,0,100) : article.summary}">
+            内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</p>
+        <div>
+            <span style="float: left" th:text="${article.userId}">时间作者</span>
+            <span style="float: right" th:text="${article.tag}">标签</span>
+        </div>
+    </div>
+    <div class="media-right  media-middle  ">
+        <div class="blog-list-icon">
+            <div class="glyphicon glyphicon-thumbs-up " aria-hidden="true" style="float: left"></div>
+            <span th:text="${article.enjoy}"></span>
+            <div class="glyphicon  glyphicon-thumbs-down " aria-hidden="true"></div>
+            <span th:text="${article.Hate}"></span>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>博客首页</title>
+    <div th:include="/blog/public/head::head"></div>
+</head>
+<body>
+
+<div class="blog-masthead" th:include="/blog/public/top::top"></div>
+
+<div class="container-fluid blog-article">
+    <div class="row blog-article">
+        <div class="col-sm-2  blog-sidebar">
+            <div class="sidebar-module sidebar-module-inset">
+                <h4>作者</h4>
+                <p></p>
+            </div>
+            <div class="sidebar-module">
+                <h4>目录</h4>
+                <ol class="list-unstyled">
+                    <li><a href="#">目录</a></li>
+                    <li><a href="#">目录</a></li>
+                    <li><a href="#">目录</a></li>
+                    <li><a href="#">目录</a></li>
+                    <li><a href="#">目录</a></li>
+                    <li><a href="#">目录</a></li>
+                </ol>
+            </div>
+            <div class="sidebar-module">
+                <h4>一些信息</h4>
+                <ol class="list-unstyled">
+                    <li><a href="#">GitHub</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Facebook</a></li>
+                </ol>
+            </div>
+        </div><!-- /.blog-sidebar -->
+
+        <div class="col-sm-9 blog-main">
+            <div class="blog-header">
+                <h1 class="blog-title" th:text="${article.title}">大标题</h1>
+                <div style="float: right;"><a th:href="@{/article/add(id=${article.id})}">编辑</a> <a
+                        th:href="@{/article/delete(id=${article.id})}">删除</a></div>
+                <p class="lead blog-description" th:text="${article.summary}">描述描述描述描述描述描述描述描述描述描述</p>
+                <p class="blog-post-meta" th:text="${article.articleDate}">January 1, 2014 by <a href="#">Mark</a></p>
+            </div>
+            <div class="blog-post" th:utext="${article.articleText}"></div>
+            <div class="col-sm-6 col-sm-offset-4">
+                <button class="btn btn-default btn-lg">
+                    <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+                </button>
+                <button class="btn btn-default btn-lg">
+                    <div class="glyphicon  glyphicon-thumbs-down" aria-hidden="true"></div>
+                </button>
+            </div>
+        </div><!-- /.blog-main -->
+
+
+    </div><!-- /.row -->
+
+</div><!-- /.container -->
+
+<footer class="blog-footer">
+    <p>Blog template built for <a href="http://getbootstrap.com">Bootstrap</a> by <a
+            href="https://twitter.com/mdo">@mdo</a>.</p>
+    <p>
+        <a href="#">Back to top</a>
+    </p>
+</footer>
+</body>
+</html>

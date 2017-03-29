@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>博客首页</title>
+    <div th:include="/blog/public/head::head"></div>
+</head>
+<body>
+
+<div class="blog-masthead" th:include="/blog/public/top::top"></div>
+
+<div class="container-fluid">
+
+    <div class="blog-header">
+        <h1 class="blog-title">这是一个博客系统</h1>
+        <p class="lead blog-description">欢迎大家分享</p>
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-8 blog-main">
+
+            <hr class="blog-post"/>
+            <h2 class="blog-post-title">君子务本，本立而道生</h2>
+            <p class="blog-post-meta">2017-03-20</p>
+
+        </div><!-- /.blog-post -->
+
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+            <div class="sidebar-module sidebar-module-inset">
+                <h4>关于</h4>
+                <p>随便写写</p>
+            </div>
+            <div class="sidebar-module">
+                <h4>Archives</h4>
+            </div>
+        </div><!-- /.blog-sidebar -->
+    </div><!-- /.blog-main -->
+</div><!-- /.row -->
+
+<footer class="blog-footer">
+    <p></p>
+    <p>
+    </p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-cn">
+<head>
+    <head th:include="public_page/head :: head"></head>
+    <link rel="stylesheet" th:href="@{/style/easyCss/index.css}"/>
+    <link rel="stylesheet" th:href="@{/style/easyCss/leftnav.css}"/>
+    <script type="text/javascript" th:src="@{/style/easyCss/left.js}"></script>
+    <title>欢迎使用easyDev</title>
+</head>
+<body>
+<!--中间-->
+<div class="container-fluid"
+     style="padding: 0px;color: inherit ; height:100%; overflow: hidden;margin:0px; padding:0px;">
+    <div class="row" style="background-color:#101010 " th:include="public_page/topnav :: top"></div>
+    <div class="row none-margin" style="background-color:#eeeeee;margin: 0px; height: 100%">
+        <div th:include="public_page/leftnav :: leftnav"
+             class="col-md-3 col-sm-3 col-xs-3 none-margin none-padding leftnav hidden-xs hidden-sm height-100"
+             id="leftNav">
+        </div>
+        <iframe class="col-md-9  col-sm-12 col-xs-12 height-100 none-margin none-padding" style="border:0px;"
+                src="" id="mainIframe" name="mainIframe"></iframe>
+    </div>
+</div>
+
+</body>
+</html>

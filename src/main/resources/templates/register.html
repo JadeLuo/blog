@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org " lang="en">
+<head th:include="public_page/head">
+    <meta charset="UTF-8"/>
+    <title>注册</title>
+</head>
+<style type="text/css">
+    html body {
+        height: 100%;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .register {
+        position: absolute;
+        top: 25%;
+        width: 100%;
+        height: 48%;
+    }
+</style>
+<body>
+<div class="container register">
+    <div class="row" style="height: 100%;">
+        <div class="col-md-6" style="background-color: #4fff30;height: 100%">
+
+        </div>
+        <div class="col-md-6" style="background-color: #9d9d9d;height: 100%;">
+            <div style="height:100% ;line-height: 100%; " class="col-md-6">
+                <form th:object="${user}" action="/register" method="post" class="orm-horizontal"
+                      style="position: absolute;left: 25%;top: 25% ;width: 50%">
+                    <div class="form-group">
+                        <input class="form-control" type="text" id="userName" placeholder="用户名"
+                               onchange="ajaxuser(this)"
+                               th:field="*{userName}"/>
+                        <span class="control-label" for="userName"
+                              th:if="${#fields.hasErrors('userName')}"
+                              th:errors="*{userName}">
+                        </span>
+                        <span class="control-label" id="tag" th:text="${message}"></span>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="password" id="passWord" placeholder="密码"
+                               th:field="*{passWord}"/>
+                        <span class="control-label" for="passWord"
+                              th:if="${#fields.hasErrors('passWord')}"
+                              th:errors="*{passWord}">
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="email" id="email" placeholder="邮箱" th:field="*{eMail}"/>
+                        <span class="control-label" for="email"
+                              th:if="${#fields.hasErrors('eMail')}"
+                              th:errors="*{eMail}">
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="text" id="realName" placeholder="真实姓名"
+                               th:field="*{realName}"/>
+                        <span class="control-label" for="realName"
+                              th:if="${#fields.hasErrors('realName')}"
+                              th:errors="*{realName}">
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="text" id="phone" placeholder="手机号码" th:field="*{phone}"/>
+                        <span class="control-label" for="phone"
+                              th:if="${#fields.hasErrors('phone')}"
+                              th:errors="*{phone}">
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success form-control">注册</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function ajaxuser(thiz) {
+        $.post('/unique', {name: $(thiz).val()}, function (data) {
+            if (data.indexOf("ajaxSuccess") == -1) {
+                $("#tag").text(data);
+            } else {
+                $("#tag").text("");
+            }
+        })
+    }
+</script>
+</body>
+</html>

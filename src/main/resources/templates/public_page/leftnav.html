@@ -1,0 +1,50 @@
+<div xmlns:th="http://www.thymeleaf.org" class="col-md-2 none-padding " th:fragment="leftnav">
+    <div class=" panel-group " aria-multiselectable="true" role="tablist">
+        <a class="btn btn-lev1 btn-block" data-toggle="collapse" data-target="#demo"
+           aria-expanded="true" aria-controls="demo" role="tab"><span class="glyphicon glyphicon-chevron-right"
+                                                                      aria-hidden="true" style="float: left;"></span>
+            用户管理
+        </a>
+        <div id="demo" class="collapse">
+            <a class="btn btn-lev2 btn-block none-margin" href="/user/list/all" onclick="setSrc(this)"
+               target="mainIframe">用户管理</a>
+            <a class="btn btn-lev2 btn-block none-margin" href="/user/add" onclick="setSrc(this)"
+               target="mainIframe">添加 </a>
+        </div>
+
+        <a class="btn  btn-lev1  btn-block" data-toggle="collapse" data-target="#permission"
+           aria-expanded="true" aria-controls="permission" role="tab">
+            权限管理
+        </a>
+        <div id="permission" class="collapse">
+            <a class="btn btn-lev2 btn-block none-margin" href="/permission/list/all" onclick="setSrc(this)"
+               target="mainIframe">列表 </a>
+            <a class="btn btn-lev2 btn-block none-margin" href="/permission/add" onclick="setSrc(this)"
+               target="mainIframe">添加 </a>
+        </div>
+
+
+        <a class="btn  btn-lev1  btn-block" data-toggle="collapse" data-target="#role"
+           aria-expanded="true" aria-controls="role" role="tab">
+            角色管理
+        </a>
+        <div id="role" class="collapse">
+            <a class="btn btn-lev2 btn-block none-margin" href="/role/list/all" onclick="setSrc(this)"
+               target="mainIframe">列表 </a>
+            <a class="btn btn-lev2 btn-block none-margin" href="/role/add" onclick="setSrc(this)"
+               target="mainIframe">添加 </a>
+        </div>
+
+
+        <a class="btn btn-lev1  btn-block" data-toggle="collapse" data-target="#sysManger"
+           aria-expanded="true" aria-controls="demo" role="tab">
+            系统管理
+        </a>
+        <div id="sysManger" class="collapse">
+            <a class="btn btn-lev2 btn-block none-margin"
+               href="/druid/index.html" target="mainIframe">
+                druid数据库监控
+            </a>
+        </div>
+    </div>
+</div>

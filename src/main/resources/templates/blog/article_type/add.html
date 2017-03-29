@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh_cn">
+<head>
+    <meta charset="UTF-8"/>
+    <title>添加分类</title>
+    <div th:include="/blog/public/head::head"></div>
+</head>
+<body>
+<form id="articleType" action="/article/type/save" method="post" th:object="${articleType}">
+    分类名称 <input th:field="*{typeName}" type="text"/>
+    <button type="button" onclick="addType()">添加</button>
+    <span th:if="${#fields.hasErrors('typeName')}"
+          th:errors="*{typeName}">
+        </span>
+</form>
+<hr/>
+<table class="table table-striped table-bordered table-hover">
+    <tr th:each="type:${type}">
+        <td th:text="${type.typeName}"></td>
+    </tr>
+</table>
+</body>
+<script>
+    function addType() {
+        $('#articleType').ajaxSubmit();
+    }
+</script>
+</html>

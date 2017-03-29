@@ -1,0 +1,15 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="crud">
+    <a th:abbr="${listParam.baseurl}" th:value="${page.id}" onclick="updateObj(this);">修改</a>|
+    <a th:abbr="${listParam.baseurl}" th:value="${page.id}" onclick="removeobj(this);">删除</a>
+</div>
+
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="autoRow">
+    <div th:if="${pageImpl.numberOfElements+1 &lt; pageImpl.size}">
+        <tr th:each="i:${#numbers.sequence(pageImpl.numberOfElements+1,pageImpl.size)}">
+            <td th:text="${i}"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </div>
+</div>
