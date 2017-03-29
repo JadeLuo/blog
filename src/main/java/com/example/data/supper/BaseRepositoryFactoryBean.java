@@ -1,6 +1,8 @@
 package com.example.data.supper;
 
 import com.example.data.base.impl.BaseRepositoryImpl;
+import com.example.data.common.SpringUtil;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.support.JpaRepositoryFactory;
 import org.springframework.data.jpa.repository.support.JpaRepositoryFactoryBean;
@@ -19,7 +21,6 @@ public class BaseRepositoryFactoryBean<R extends JpaRepository<T, I>, T,
     public BaseRepositoryFactoryBean(Class<? extends R> repositoryInterface) {
         super(repositoryInterface);
     }
-
     @Override
     protected RepositoryFactorySupport createRepositoryFactory(EntityManager em) {
         return new BaseRepositoryFactory(em);
@@ -29,15 +30,20 @@ public class BaseRepositoryFactoryBean<R extends JpaRepository<T, I>, T,
     private static class BaseRepositoryFactory<T, I extends Serializable>
             extends JpaRepositoryFactory {
         private final EntityManager em;
-
         public BaseRepositoryFactory(EntityManager em) {
             super(em);
             this.em = em;
         }
 
+        @Bean
+        public SpringUtil springUtil() {
+            return new SpringUtil();
+        }
+
         //设置具体的实现类是BaseRepositoryImpl
         @Override
         protected Object getTargetRepository(RepositoryInformation information) {
+
             return new BaseRepositoryImpl<T, I>((Class<T>) information.getDomainType(), em);
         }
 
