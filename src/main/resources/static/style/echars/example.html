@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<style type="text/css">
+    div {
+        float: left;
+    }
+
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="echarts.js"></script>
+    <script src="china.js"></script>
+</head>
+<body>
+<div id="main1" style="width: 600px;height:400px;"></div>
+<div id="main2" style="width: 600px;height:400px;"></div>
+<div id="map" style="width: 600px;height:400px;"></div>
+<div id="main3" style="width: 600px;height:400px;"></div>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    //    var myChart = echarts.init(document.getElementById('main'));
+    //
+    //    // 指定图表的配置项和数据
+    //    var option = {
+    //        title: {
+    //            text: 'ECharts 入门示例'
+    //        },
+    //        tooltip: {},
+    //        legend: {
+    //            data:['销量']
+    //        },
+    //        xAxis: {
+    //            data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+    //        },
+    //        yAxis: {},
+    //        series: [{
+    //            name: '销量',
+    //            type: 'bar',
+    //            data: [5, 20, 36, 10, 10, 20]
+    //        }]
+    //    };
+
+    // 使用刚指定的配置项和数据显示图表。
+
+    //    myChart.setOption(option);
+    var myChart1 = echarts.init(document.getElementById('main1'));
+    //遮罩
+    myChart1.showLoading();
+    myChart1.setOption({
+        series: [
+            {
+                name: '访问来源',
+                type: 'pie',
+                radius: '55%',
+                data: [
+                    {value: 400, name: '搜索引擎'/*可以在此处单独设置样式 itemStyle*/},
+                    {value: 335, name: '直接访问'},
+                    {value: 310, name: '邮件营销'},
+                    {value: 274, name: '联盟广告'},
+                    {value: 235, name: '视频广告'}
+                ]
+            }
+        ],
+        //南丁格尔图
+        roseType: 'angle',
+        itemStyle: {
+            normal: {
+                // 阴影的大小
+                shadowBlur: 200,
+                // 阴影水平方向上的偏移
+                shadowOffsetX: 0,
+                // 阴影垂直方向上的偏移
+                shadowOffsetY: 0,
+                // 阴影颜色
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
+        },
+        itemStyle: {//itemStyle都会有normal和emphasis两个选项，normal选项是正常展示下的样式，emphasis是鼠标 hover 时候的高亮样式。这个示例里是正常的样式下加阴影，但是可能更多的时候是 hover 的时候通过阴影突出。
+            emphasis: {
+                shadowBlur: 200,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+            },
+//            normal: {
+//                // 设置扇形的颜色
+//                color: '#c23531',
+//                shadowBlur: 200,
+//                shadowColor: 'rgba(0, 0, 0, 0.5)'
+//            }
+        },
+        backgroundColor: '#2c343c',//设置背景色
+        textStyle: {//字体样式
+            color: 'rgba(255, 255, 255, 0.3)'
+        }
+
+    })
+
+    var myChart2 = echarts.init(document.getElementById('main2'));
+    option = {
+        legend: {
+            data: ['scatter', 'scatter2']
+        },
+        xAxis: {
+            type: 'value'
+        },
+        yAxis: {
+            type: 'value'
+        },
+        dataZoom: [
+            {   // 这个dataZoom组件，默认控制x轴。
+                type: 'slider', // 这个 dataZoom 组件是 slider 型 dataZoom 组件
+                show: true,
+                start: 10,      // 左边在 10% 的位置。
+                end: 60         // 右边在 60% 的位置。
+            },
+            {   // 这个dataZoom组件，也控制x轴。
+                type: 'inside', // 这个 dataZoom 组件是 inside 型 dataZoom 组件
+                start: 10,      // 左边在 10% 的位置。
+                end: 60         // 右边在 60% 的位置。
+            }
+        ],
+        series: [
+            {
+                type: 'scatter', // 这是个『散点图』
+                name: 'scatter',
+                itemStyle: {
+                    normal: {
+                        opacity: 0.8
+                    }
+                },
+                symbolSize: function (val) {
+                    return val[2] * 40;
+                },
+                data: [["14.616", "7.241", "0.896"], ["3.958", "5.701", "0.955"], ["2.768", "8.971", "0.669"], ["9.051", "9.710", "0.171"], ["14.046", "4.182", "0.536"], ["12.295", "1.429", "0.962"], ["4.417", "8.167", "0.113"], ["0.492", "4.771", "0.785"], ["7.632", "2.605", "0.645"], ["14.242", "5.042", "0.368"]]
+            }
+        ]
+    }
+    myChart2.setOption(option);
+    var map = echarts.init(document.getElementById('map'));
+    option = {
+        series: [{
+            type: 'map',
+            map: 'china'
+        }],
+        roam: true,//是否开启鼠标缩放和平移漫游
+        center: [115.97, 29.71],//当前视角的中心点，用经纬度表示
+        //aspectScale:2,//这个参数用于 scale 地图的长宽比。
+        selectedMode: 'multiple'//选中模式，表示是否支持多个选中single|multiple
+    }
+    map.setOption(option);
+
+    var myChart3 = echarts.init(document.getElementById('main3'));
+    option2 = {
+        backgroundColor: '#1b1b1b',
+        tooltip: {
+            formatter: "{a} <br/>{c} {b}"
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                mark: {show: true},
+                restore: {show: true},
+                saveAsImage: {show: true}
+            }
+        },
+        series: [
+            {
+                name: '速度',
+                type: 'gauge',
+                min: 0,
+                max: 220,
+                splitNumber: 11,
+                radius: '50%',
+                axisLine: {            // 坐标轴线
+                    lineStyle: {       // 属性lineStyle控制线条样式
+                        color: [[0.09, 'lime'], [0.82, '#1e90ff'], [1, '#ff4500']],
+                        width: 3,
+                        shadowColor: '#fff', //默认透明
+                        shadowBlur: 10
+                    }
+                },
+                axisLabel: {            // 坐标轴小标记
+                    textStyle: {       // 属性lineStyle控制线条样式
+                        fontWeight: 'bolder',
+                        color: '#fff',
+                        shadowColor: '#fff', //默认透明
+                        shadowBlur: 10
+                    }
+                },
+                axisTick: {            // 坐标轴小标记
+                    length: 15,        // 属性length控制线长
+                    lineStyle: {       // 属性lineStyle控制线条样式
+                        color: 'auto',
+                        shadowColor: '#fff', //默认透明
+                        shadowBlur: 10
+                    }
+                },
+                splitLine: {           // 分隔线
+                    length: 25,         // 属性length控制线长
+                    lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+                        width: 3,
+                        color: '#fff',
+                        shadowColor: '#fff', //默认透明
+                        shadowBlur: 10
+                    }
+                },
+                pointer: {           // 分隔线
+                    shadowColor: '#fff', //默认透明
+                    shadowBlur: 5
+                },
+                title: {
+                    textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                        fontWeight: 'bolder',
+                        fontSize: 20,
+                        fontStyle: 'italic',
+                        color: '#fff',
+                        shadowColor: '#fff', //默认透明
+                        shadowBlur: 10
+                    }
+                },
+                detail: {
+                    backgroundColor: 'rgba(30,144,255,0.8)',
+                    borderWidth: 1,
+                    borderColor: '#fff',
+                    shadowColor: '#fff', //默认透明
+                    shadowBlur: 5,
+                    offsetCenter: [0, '50%'],       // x, y，单位px
+                    textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                        fontWeight: 'bolder',
+                        color: '#fff'
+                    }
+                },
+                data: [{value: 40, name: 'km/h'}]
+            },
+            {
+                name: '转速',
+                type: 'gauge',
+                center: ['25%', '55%'],    // 默认全局居中
+                radius: '30%',
+                min: 0,
+                max: 7,
+                endAngle: 45,
+                splitNumber: 7,
+                axisLine: {            // 坐标轴线
+                    lineStyle: {       // 属性lineStyle控制线条样式
+                        color: [[0.29, 'lime'], [0.86, '#1e90ff'], [1, '#ff4500']],
+                        width: 2,
+                        shadowColor: '#fff', //默认透明
+                        shadowBlur: 10
+                    }
+                },
+                axisLabel: {            // 坐标轴小标记
+                    textStyle: {       // 属性lineStyle控制线条样式
+                        fontWeight: 'bolder',
+                        color: '#fff',
+                        shadowColor: '#fff', //默认透明
+                        shadowBlur: 10
+                    }
+                },
+                axisTick: {            // 坐标轴小标记
+                    length: 12,        // 属性length控制线长
+                    lineStyle: {       // 属性lineStyle控制线条样式
+                        color: 'auto',
+                        shadowColor: '#fff', //默认透明
+                        shadowBlur: 10
+                    }
+                },
+                splitLine: {           // 分隔线
+                    length: 20,         // 属性length控制线长
+                    lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+                        width: 3,
+                        color: '#fff',
+                        shadowColor: '#fff', //默认透明
+                        shadowBlur: 10
+                    }
+                },
+                pointer: {
+                    width: 5,
+                    shadowColor: '#fff', //默认透明
+                    shadowBlur: 5
+                },
+                title: {
+                    offsetCenter: [0, '-30%'],       // x, y，单位px
+                    textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                        fontWeight: 'bolder',
+                        fontStyle: 'italic',
+                        color: '#fff',
+                        shadowColor: '#fff', //默认透明
+                        shadowBlur: 10
+                    }
+                },
+                detail: {
+                    //backgroundColor: 'rgba(30,144,255,0.8)',
+                    // borderWidth: 1,
+                    borderColor: '#fff',
+                    shadowColor: '#fff', //默认透明
+                    shadowBlur: 5,
+                    width: 80,
+                    height: 30,
+                    offsetCenter: [25, '20%'],       // x, y，单位px
+                    textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                        fontWeight: 'bolder',
+                        color: '#fff'
+                    }
+                },
+                data: [{value: 1.5, name: 'x1000 r/min'}]
+            },
+            {
+                name: '油表',
+                type: 'gauge',
+                center: ['75%', '50%'],    // 默认全局居中
+                radius: '30%',
+                min: 0,
+                max: 2,
+                startAngle: 135,
+                endAngle: 45,
+                splitNumber: 2,
+                axisLine: {            // 坐标轴线
+                    lineStyle: {       // 属性lineStyle控制线条样式
+                        color: [[0.2, 'lime'], [0.8, '#1e90ff'], [1, '#ff4500']],
+                        width: 2,
+                        shadowColor: '#fff', //默认透明
+                        shadowBlur: 10
+                    }
+                },
+                axisTick: {            // 坐标轴小标记
+                    length: 12,        // 属性length控制线长
+                    lineStyle: {       // 属性lineStyle控制线条样式
+                        color: 'auto',
+                        shadowColor: '#fff', //默认透明
+                        shadowBlur: 10
+                    }
+                },
+                axisLabel: {
+                    textStyle: {       // 属性lineStyle控制线条样式
+                        fontWeight: 'bolder',
+                        color: '#fff',
+                        shadowColor: '#fff', //默认透明
+                        shadowBlur: 10
+                    },
+                    formatter: function (v) {
+                        switch (v + '') {
+                            case '0' :
+                                return 'E';
+                            case '1' :
+                                return 'Gas';
+                            case '2' :
+                                return 'F';
+                        }
+                    }
+                },
+                splitLine: {           // 分隔线
+                    length: 15,         // 属性length控制线长
+                    lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+                        width: 3,
+                        color: '#fff',
+                        shadowColor: '#fff', //默认透明
+                        shadowBlur: 10
+                    }
+                },
+                pointer: {
+                    width: 2,
+                    shadowColor: '#fff', //默认透明
+                    shadowBlur: 5
+                },
+                title: {
+                    show: false
+                },
+                detail: {
+                    show: false
+                },
+                data: [{value: 0.5, name: 'gas'}]
+            },
+            {
+                name: '水表',
+                type: 'gauge',
+                center: ['75%', '50%'],    // 默认全局居中
+                radius: '30%',
+                min: 0,
+                max: 2,
+                startAngle: 315,
+                endAngle: 225,
+                splitNumber: 2,
+                axisLine: {            // 坐标轴线
+                    lineStyle: {       // 属性lineStyle控制线条样式
+                        color: [[0.2, 'lime'], [0.8, '#1e90ff'], [1, '#ff4500']],
+                        width: 2,
+                        shadowColor: '#fff', //默认透明
+                        shadowBlur: 10
+                    }
+                },
+                axisTick: {            // 坐标轴小标记
+                    show: false
+                },
+                axisLabel: {
+                    textStyle: {       // 属性lineStyle控制线条样式
+                        fontWeight: 'bolder',
+                        color: '#fff',
+                        shadowColor: '#fff', //默认透明
+                        shadowBlur: 10
+                    },
+                    formatter: function (v) {
+                        switch (v + '') {
+                            case '0' :
+                                return 'H';
+                            case '1' :
+                                return 'Water';
+                            case '2' :
+                                return 'C';
+                        }
+                    }
+                },
+                splitLine: {           // 分隔线
+                    length: 15,         // 属性length控制线长
+                    lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+                        width: 3,
+                        color: '#fff',
+                        shadowColor: '#fff', //默认透明
+                        shadowBlur: 10
+                    }
+                },
+                pointer: {
+                    width: 2,
+                    shadowColor: '#fff', //默认透明
+                    shadowBlur: 5
+                },
+                title: {
+                    show: false
+                },
+                detail: {
+                    show: false
+                },
+                data: [{value: 0.5, name: 'gas'}]
+            }
+        ]
+    };
+    myChart3.setOption(option2);
+    setInterval(function () {
+        option2.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
+        option2.series[1].data[0].value = (Math.random() * 7).toFixed(2) - 0;
+        option2.series[2].data[0].value = (Math.random() * 2).toFixed(2) - 0;
+        option2.series[3].data[0].value = (Math.random() * 2).toFixed(2) - 0;
+        myChart3.setOption(option2);
+    }, 2000)
+</script>
+</body>
+</html>
