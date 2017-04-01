@@ -10,4 +10,6 @@ import org.springframework.data.domain.Pageable;
  */
 public interface IArticleService extends IBaseService<Article, String> {
     Page<Article> serchByKey(Pageable pageable, String key);
+
+    Page<Article> PageByUser (Pageable pageable,String userID);
 }

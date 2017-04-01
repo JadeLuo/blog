@@ -11,4 +11,5 @@ import org.springframework.stereotype.Repository;
 public interface IArticleDao extends BaseRepository<Article, String> {
     String WHERE_BY_KEYWORD = " where title like ? or article_text like ? or summary like ?";
 
+    String WHERE_BY_USER = " where user_id = ? ";
 }

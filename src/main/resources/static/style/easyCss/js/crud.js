@@ -1,3 +1,13 @@
+function addSubmit(formid) {
+    var option = {
+        success: function (data) {
+            layer.msg(data);
+        }
+    }
+    $(formid).ajaxSubmit(option)
+}
+
+
 function removeobj(thiz) {
     $.post($(thiz).attr("abbr") + '/delete', {id: $(thiz).attr("value")},
         function (data) {

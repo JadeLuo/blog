@@ -17,6 +17,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.Table;
 import java.io.Serializable;
@@ -82,6 +83,9 @@ public class BaseRepositoryImpl<T, PK extends Serializable> extends SimpleJpaRep
         } catch (DataAccessException e) {
             logger.error(e.getMessage());
             return null;
+        } catch (NoResultException e) {
+            logger.error (e.getMessage ());
+            return null;
         }
     }
 
@@ -96,6 +100,9 @@ public class BaseRepositoryImpl<T, PK extends Serializable> extends SimpleJpaRep
                 return Long.parseLong(query.getSingleResult().toString());
             } catch (DataAccessException e) {
                 logger.error(e.getMessage());
+                return 0;
+            } catch (NoResultException e) {
+                logger.error (e.getMessage ());
                 return 0;
             }
         }

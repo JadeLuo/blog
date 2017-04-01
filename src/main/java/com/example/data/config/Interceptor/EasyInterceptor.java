@@ -2,6 +2,7 @@ package com.example.data.config.Interceptor;
 
 import com.example.data.common.Constant;
 import com.example.data.common.UtilFun;
+import com.example.data.entity.user.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -34,8 +35,10 @@ public class EasyInterceptor implements HandlerInterceptor {
      * 或者是调用action，然后要在Interceptor之前调用的内容都写在调用invoke之前，要在Interceptor之后调用的内容都写在调用invoke方法之后。
      */
     public void postHandle(HttpServletRequest request, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
-        logger.info("---------------user==" + request.getSession().getAttribute("user") +
-                "||||||controller==" + request.getRequestURI() + "---------------------" + UtilFun.getIpAddr(request) + Constant.LINE_SEPATATOR);
+
+        User user = (User) request.getSession ().getAttribute ("user");
+        String name = user != null ? user.getUserName () :"noLogin";
+        logger.info ("---------------user==" + name + "||||||controller==" + request.getRequestURI () + "---------------------" + UtilFun.getIpAddr (request) + Constant.LINE_SEPATATOR);
     }
 
     /**

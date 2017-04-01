@@ -35,7 +35,7 @@
             <input th:field="*{id}" type="hidden"/>
             <input th:field="*{type}" type="hidden"/>
             <input th:field="*{articleText}" type="hidden"/>
-            <input th:field="*{userId}" type="hidden"/>
+            <input name="userId" type="hidden" th:value="${session.user.id}"/>
             <input th:field="*{tag}" type="hidden"/>
             <input th:field="*{enjoy}" type="hidden"/>
             <input th:field="*{Hate}" type="hidden"/>
@@ -54,7 +54,9 @@
         $('input[name="articleText"]').val(data);
         $('#addArticle').ajaxSubmit(function (data) {
             layer.msg(data);
-            window.location.href = "/article/list/all";
+            if (data.indexOf("成功") != -1) {
+                window.location.href = "/article/list";
+            }
         })
     }
     function addTypeFiled(thiz) {

@@ -52,7 +52,6 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/style/**", "anon");
         filterChainDefinitionMap.put("/register", "anon");
         filterChainDefinitionMap.put("/unique", "anon");
-        filterChainDefinitionMap.put("/", "anon");
         //配置记住我或认证通过可以访问的地址
         filterChainDefinitionMap.put("/index", "user");
         filterChainDefinitionMap.put("/**", "user");

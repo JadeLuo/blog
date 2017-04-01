@@ -3,19 +3,22 @@
 <head>
     <title>博客首页</title>
     <div th:include="/blog/public/head::head"></div>
+    <div th:include="/blog/public/head::scroll"></div>
 </head>
 <body>
 
 <div class="blog-masthead" th:include="/blog/public/top::top"></div>
 
 <div class="container-fluid">
-
-    <div class="blog-header">
-        <h1 class="blog-title">这是一个博客系统</h1>
-        <p class="lead blog-description">欢迎大家分享</p>
-    </div>
-
-    <div class="row">
+    <nav class="navbar navbar-default col-md-12">
+        <div class="navbar-form navbar-right">
+            <div class="form-group">
+                <input id="serch" type="text" class="form-control" placeholder="Search"/>
+            </div>
+            <button class="btn btn-default" onclick="serch()">搜索</button>
+        </div>
+    </nav>
+    <div class="row" id="content">
 
         <div class="col-sm-8 blog-main">
 
@@ -28,19 +31,11 @@
         <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
             <div class="sidebar-module sidebar-module-inset">
                 <h4>关于</h4>
-                <p>随便写写</p>
-            </div>
-            <div class="sidebar-module">
-                <h4>Archives</h4>
+                <p>qq群 : 183728140</p>
             </div>
         </div><!-- /.blog-sidebar -->
     </div><!-- /.blog-main -->
 </div><!-- /.row -->
 
-<footer class="blog-footer">
-    <p></p>
-    <p>
-    </p>
-</footer>
 </body>
 </html>

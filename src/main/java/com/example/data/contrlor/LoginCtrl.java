@@ -32,8 +32,9 @@ public class LoginCtrl extends BaseControllerImpl<User, String> {
     private IUserService userService;
 
     @RequestMapping("/")
-    public String toIndex() {
-        return "/index/index";
+    public String toIndex (Model model) {
+
+        return toLogin (model);
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -61,7 +62,7 @@ public class LoginCtrl extends BaseControllerImpl<User, String> {
             e.printStackTrace();
         }
         if (subject.isAuthenticated()) {
-//            subject.getSession().setAttribute("user", userService.getByuserName(user.getUserName()));
+            subject.getSession ().setAttribute ("user",userService.getByuserName (user.getUserName ()));
             return "/blog/index";
         } else {
             model.addAttribute(user);
@@ -102,7 +103,7 @@ public class LoginCtrl extends BaseControllerImpl<User, String> {
         //使用权限管理工具进行用户的退出，跳出登录，给出提示信息
         getSession().removeAttribute("user");
         SecurityUtils.getSubject().logout();
-        return "/index/index";
+        return "/blog/index";
     }
 
     @RequestMapping(value = "/admin")

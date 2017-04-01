@@ -1,6 +1,6 @@
 package com.example.data.base.controller;
 
-import com.example.data.base.BaseRepository;
+import com.example.data.base.baseservice.IBaseService;
 import com.example.data.common.Constant;
 import com.example.data.common.UtilFun;
 import com.example.data.entity.user.User;
@@ -27,10 +27,16 @@ import java.lang.reflect.ParameterizedType;
  * Controller 模板
  */
 public abstract class BaseControllerImpl<M, PK extends Serializable> {
-    @Autowired
-    private BaseRepository<M, PK> baseDao;
+
+    protected IBaseService<M,PK> baseService;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @Autowired
+    protected void setBaseDao (IBaseService<M,PK> baseService) {
+
+        this.baseService = baseService;
+    }
 
     protected PageRequest getPage(int page) {
         return new PageRequest(page, Constant.DEFAULT_PAGE_SIZE);
@@ -46,7 +52,11 @@ public abstract class BaseControllerImpl<M, PK extends Serializable> {
         return subject.getSession();
     }
 
-    protected String getAddPage() {
+    protected void setAddPara (Model model) {}
+
+    protected void setAddAttr (M m) {}
+
+    protected String setAddPage () {
         return this.getClass().getAnnotation(RequestMapping.class).value()[0] + "/add";
     }
 
@@ -57,9 +67,11 @@ public abstract class BaseControllerImpl<M, PK extends Serializable> {
         try {
             M m = clazz.newInstance();
 
-            model.addAttribute(id != null && baseDao.findOne(id) != null ? baseDao.findOne(id) : m);
+            model.addAttribute (id != null && baseService.findOne (id) != null ? baseService.findOne (id) :m);
 
-            return getAddPage();
+            setAddPara (model);
+
+            return setAddPage ();
 
         } catch (InstantiationException e) {
             e.printStackTrace();
@@ -77,7 +89,8 @@ public abstract class BaseControllerImpl<M, PK extends Serializable> {
             if (result.hasErrors()) {
                 return result.getAllErrors().get(0).getDefaultMessage();
             }
-            baseDao.save(m);
+            setAddAttr (m);
+            baseService.save (m);
             return Constant.RECEIPT_SUCCESS;
         } catch (Exception e) {
             e.printStackTrace();
@@ -91,7 +104,7 @@ public abstract class BaseControllerImpl<M, PK extends Serializable> {
     protected String delete(@RequestParam(defaultValue = "") PK id) {
         try {
             if (UtilFun.isEmptyString(id.toString())) {
-                baseDao.delete(id);
+                baseService.delete (id);
                 return Constant.RECEIPT_SUCCESS;
             } else {
                 return Constant.RECEIPT_ERROR;

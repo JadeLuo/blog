@@ -7,6 +7,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.NoRepositoryBean;
 
 import java.io.Serializable;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -62,4 +63,13 @@ public interface IBaseService<T, PK extends Serializable> {
     <S extends T> long count(Example<S> example);
 
     <S extends T> boolean exists(Example<S> example);
+
+    /**
+     * 根据 map 构建where 动态查询 page
+     *
+     * @param pageable
+     * @param where
+     * @return
+     */
+    Page<T> PageByWhere (Pageable pageable,LinkedHashMap<String,Object> where);
 }

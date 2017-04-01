@@ -38,10 +38,6 @@ public class IArticleServiceTest {
         System.out.print(JSON.toJSONString(articleDao.mapByWhere("select id,title from t_article", "")));
     }
 
-    @Test
-    public void test() {
-        System.out.print(JSON.toJSONString(articleService.getlist()));
-    }
 
     @Test
     public void count() {

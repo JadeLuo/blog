@@ -5,7 +5,7 @@
         <p th:text="${#strings.length(article.summary)>100 ? #strings.substring(article.summary,0,100) : article.summary}">
             内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</p>
         <div>
-            <span style="float: left" th:text="${article.userId}">时间作者</span>
+            <span style="float: left" th:text="${article.articleDate}">时间作者</span>
             <span style="float: right" th:text="${article.tag}">标签</span>
         </div>
     </div>

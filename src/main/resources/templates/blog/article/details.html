@@ -13,25 +13,13 @@
         <div class="col-sm-2  blog-sidebar">
             <div class="sidebar-module sidebar-module-inset">
                 <h4>作者</h4>
-                <p></p>
+                <p th:text="${user.userName}"></p>
             </div>
             <div class="sidebar-module">
                 <h4>目录</h4>
-                <ol class="list-unstyled">
-                    <li><a href="#">目录</a></li>
-                    <li><a href="#">目录</a></li>
-                    <li><a href="#">目录</a></li>
-                    <li><a href="#">目录</a></li>
-                    <li><a href="#">目录</a></li>
-                    <li><a href="#">目录</a></li>
-                </ol>
-            </div>
-            <div class="sidebar-module">
-                <h4>一些信息</h4>
-                <ol class="list-unstyled">
-                    <li><a href="#">GitHub</a></li>
-                    <li><a href="#">Twitter</a></li>
-                    <li><a href="#">Facebook</a></li>
+                <ol class="list-unstyled" th:each="atype:${articleType}">
+                    <li><a th:href="@{/article/articleByType(typeId=${atype.id})}" th:text="${atype.typeName}">目录</a>
+                    </li>
                 </ol>
             </div>
         </div><!-- /.blog-sidebar -->
@@ -39,8 +27,11 @@
         <div class="col-sm-9 blog-main">
             <div class="blog-header">
                 <h1 class="blog-title" th:text="${article.title}">大标题</h1>
-                <div style="float: right;"><a th:href="@{/article/add(id=${article.id})}">编辑</a> <a
-                        th:href="@{/article/delete(id=${article.id})}">删除</a></div>
+                <div style="float: right;">
+                    <a th:href="@{/article/add(id=${article.id})}"
+                       th:unless="${session.user.id !=article.userId}">编辑</a>
+                    <a th:href="@{/article/delete(id=${article.id})}" th:unless="${session.user.id != article.userId}">删除</a>
+                </div>
                 <p class="lead blog-description" th:text="${article.summary}">描述描述描述描述描述描述描述描述描述描述</p>
                 <p class="blog-post-meta" th:text="${article.articleDate}">January 1, 2014 by <a href="#">Mark</a></p>
             </div>
@@ -54,18 +45,9 @@
                 </button>
             </div>
         </div><!-- /.blog-main -->
-
-
     </div><!-- /.row -->
 
 </div><!-- /.container -->
 
-<footer class="blog-footer">
-    <p>Blog template built for <a href="http://getbootstrap.com">Bootstrap</a> by <a
-            href="https://twitter.com/mdo">@mdo</a>.</p>
-    <p>
-        <a href="#">Back to top</a>
-    </p>
-</footer>
 </body>
 </html>

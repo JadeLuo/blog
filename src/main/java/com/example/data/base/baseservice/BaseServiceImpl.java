@@ -9,7 +9,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.NoRepositoryBean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by wanghuiwen on 17-1-6.
@@ -20,7 +23,7 @@ public abstract class BaseServiceImpl<T, PK extends Serializable> implements IBa
     protected BaseRepository<T, PK> baseDao;
 
     @Autowired
-    public void setBaseDao(BaseRepository<T, PK> baseDao) {
+    protected void setBaseDao (BaseRepository<T,PK> baseDao) {
         this.baseDao = baseDao;
     }
 
@@ -119,5 +122,16 @@ public abstract class BaseServiceImpl<T, PK extends Serializable> implements IBa
 
     public <S extends T> boolean exists(Example<S> example) {
         return baseDao.exists(example);
+    }
+
+    public Page<T> PageByWhere (Pageable pageable,LinkedHashMap<String,Object> where) {
+
+        StringBuilder sqlWhere = new StringBuilder ("where 1=1");
+        List<Object> para = new ArrayList<Object> ();
+        for (Map.Entry<String,Object> entry : where.entrySet ()) {
+            sqlWhere.append (" ").append (entry.getKey ()).append (" ");
+            para.add (entry.getValue ());
+        }
+        return baseDao.PageByWhere (pageable,sqlWhere.toString (),para.toArray ());
     }
 }

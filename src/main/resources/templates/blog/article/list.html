@@ -3,7 +3,7 @@
 <head>
     <title>列表</title>
     <div th:include="/blog/public/head::head"></div>
-    <script type="text/javascript" th:src="@{/style/blog/js/blog.js}"></script>
+    <div th:include="/blog/public/head::scroll"></div>
 </head>
 <body>
 <div class="blog-masthead" th:include="/blog/public/top::top"></div>
@@ -12,18 +12,12 @@
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div>
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">娱乐</a></li>
-                    <li><a href="#">IT</a></li>
-                </ul>
-                <div class="navbar-form navbar-left">
-                    <div class="form-group">
-                        <input id="serch" type="text" class="form-control" placeholder="Search"/>
-                    </div>
-                    <button class="btn btn-default" onclick="serch()">搜索</button>
+            <div class="navbar-form navbar-right">
+                <div class="form-group">
+                    <input id="serch" type="text" class="form-control" placeholder="Search"/>
                 </div>
-            </div><!-- /.navbar-collapse -->
+                <button class="btn btn-default" onclick="serch()">搜索</button>
+            </div>
         </div><!-- /.container-fluid -->
     </nav>
     <div id="content">
@@ -34,7 +28,7 @@
                 <p th:text="${#strings.length(article.summary)>100 ? #strings.substring(article.summary,0,100) : article.summary}">
                     内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</p>
                 <div>
-                    <span style="float: left" th:text="${article.userId}">时间作者</span>
+                    <span style="float: left" th:text="${article.articleDate}">时间作者</span>
                     <span style="float: right" th:text="${article.tag}">标签</span>
                 </div>
             </div>
@@ -50,11 +44,5 @@
     </div>
     <!--<div onclick="extracted() " style="height: 20px; text-align:center">加载更多</div>-->
 </div>
-<script>
-    var pageNumber = 0;
-    function toDetial(id) {
-        window.location.href = "/article/details?id=" + id;
-    }
-</script>
 </body>
 </html>
