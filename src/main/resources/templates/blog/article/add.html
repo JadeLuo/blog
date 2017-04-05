@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="zh-cn" style="height:100%;">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta charset="UTF-8"/>
-    <div th:include="/blog/public/head::head"></div>
-    <title>添加博客</title>
+<head th:include="/blog/public/head::head">>
+
 </head>
 <body style="height:100%;">
 <div class="blog-masthead" th:include="/blog/public/top::top"></div>
@@ -21,12 +18,8 @@
             <input th:field="*{summary}" placeholder="摘要" class="blog-title-edit"/>
             <textarea name="content" id="content" rows="20" cols="100">
             </textarea>
-            <div>
-                <select onchange="addTypeFiled(this)">
-                    <option>选择分类</option>
-                    <option th:each="type:${articleType}" th:text="${type.typeName}" th:value="${type.id}"></option>
-                </select>
-                <a onclick="addTypes()">添加分类</a>
+            <div th:include="/blog/article_type/select :: select">
+
             </div>
             <div class="col-md-4 col-md-offset-4 col-sm-offset-4">
                 <button type="button" class="btn btn-info col-md-4 btn-lg blog-btn" onclick="addArticle()">发布</button>
@@ -49,6 +42,7 @@
         CKEDITOR.instances.content.setData(data);
     })
     CKEDITOR.replace('content');
+
     function addArticle() {
         var data = CKEDITOR.instances.content.getData();
         $('input[name="articleText"]').val(data);
@@ -67,7 +61,11 @@
             layer.open({
                 type: 1,
                 area: ['500px', '300px'],
-                btn: ['添加', '取消'], //按钮
+                btn: ['确定'], //按钮
+                yes: function (index, layero) {
+                    $('#TypeSelect').load('/article/type/select')
+                    layer.close(index);
+                },
                 content: data
             })
         })

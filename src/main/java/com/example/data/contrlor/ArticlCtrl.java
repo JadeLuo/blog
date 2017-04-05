@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -41,7 +42,6 @@ public class ArticlCtrl extends BaseControllerImpl<Article, String> {
 
     @Override
     protected void setAddAttr (Article article) {
-
         article.setArticleDate (new Date ());
     }
 
@@ -113,6 +113,25 @@ public class ArticlCtrl extends BaseControllerImpl<Article, String> {
         Page<Article> page = articleService.PageByWhere (getPage (pageNumber),sql);
         model.addAttribute (page);
         return "/blog/article/list";
+    }
+
+    /**
+     * 喜欢 不喜欢
+     */
+    @RequestMapping(value = "/trial")
+    @ResponseBody
+    public int trial (@RequestParam() Article article,@RequestParam() int trial) {
+
+        if (trial == 1) {
+            article.setEnjoy (article.getEnjoy () + 1);
+            articleService.save (article);
+            return article.getEnjoy ();
+        } else {
+            article.setHate (article.getHate () + 1);
+            articleService.save (article);
+            return article.getHate ();
+        }
+
     }
 
 }

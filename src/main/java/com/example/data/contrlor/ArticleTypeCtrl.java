@@ -32,5 +32,23 @@ public class ArticleTypeCtrl extends BaseControllerImpl<ArticleType, Long> {
         model.addAttribute ("userId",getSessionUser ().getId ());
     }
 
+    @RequestMapping(value = "/list")
+    public String list (Model model) {
+
+        List<ArticleType> list = articleTypeService.listByUser (getSessionUser ().getId ());
+        model.addAttribute ("type",list);
+        return "/blog/article_type/list";
+
+    }
+
+    @RequestMapping(value = "/select")
+    public String select (Model model) {
+
+        List<ArticleType> list = articleTypeService.listByUser (getSessionUser ().getId ());
+        model.addAttribute ("articleType",list);
+        return "/blog/article_type/select";
+
+    }
+
 
 }

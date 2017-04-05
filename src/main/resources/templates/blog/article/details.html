@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <title>博客首页</title>
+    <title>博客</title>
     <div th:include="/blog/public/head::head"></div>
 </head>
 <body>
@@ -18,7 +18,8 @@
             <div class="sidebar-module">
                 <h4>目录</h4>
                 <ol class="list-unstyled" th:each="atype:${articleType}">
-                    <li><a th:href="@{/article/articleByType(typeId=${atype.id})}" th:text="${atype.typeName}">目录</a>
+                    <li>
+                        <a th:href="@{/article/articleByType(typeId=${atype.id})}" th:text="${atype.typeName}">目录</a>
                     </li>
                 </ol>
             </div>
@@ -30,24 +31,42 @@
                 <div style="float: right;">
                     <a th:href="@{/article/add(id=${article.id})}"
                        th:unless="${session.user.id !=article.userId}">编辑</a>
-                    <a th:href="@{/article/delete(id=${article.id})}" th:unless="${session.user.id != article.userId}">删除</a>
+                    <a th:value="${article.id}"
+                       abbr="/article"
+                       th:unless="${session.user.id != article.userId}"
+                       onclick="removeart(this)">删除</a>
                 </div>
                 <p class="lead blog-description" th:text="${article.summary}">描述描述描述描述描述描述描述描述描述描述</p>
                 <p class="blog-post-meta" th:text="${article.articleDate}">January 1, 2014 by <a href="#">Mark</a></p>
             </div>
             <div class="blog-post" th:utext="${article.articleText}"></div>
             <div class="col-sm-6 col-sm-offset-4">
-                <button class="btn btn-default btn-lg">
+                <button class="btn btn-default btn-lg" th:onclick="'trial(1)'">
                     <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
                 </button>
-                <button class="btn btn-default btn-lg">
+                <button class="btn btn-default btn-lg" th:onclick="'trial(0);'">
                     <div class="glyphicon  glyphicon-thumbs-down" aria-hidden="true"></div>
                 </button>
+                <input id="articleid" type="hidden" th:value="${article.id}"/>
             </div>
         </div><!-- /.blog-main -->
     </div><!-- /.row -->
 
 </div><!-- /.container -->
+<script type="text/javascript">
+    function trial(i) {
+        $.post("/article/trial", {article: $('#articleid').val(), trial: i});
+    }
+    function removeart(thiz) {
+        $.post($(thiz).attr("abbr") + '/delete', {id: $(thiz).attr("value")},
+            function (data) {
 
+                layer.msg(data, {time: 1000}, function () {
+                    window.location.href = "/article/list";
+                });
+            })
+    }
+
+</script>
 </body>
 </html>

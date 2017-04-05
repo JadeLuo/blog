@@ -2,8 +2,10 @@ function addSubmit(formid) {
     var option = {
         success: function (data) {
             layer.msg(data);
-        }
+        },
+        async: false,//使用同步的方式,true为异步方式
     }
+
     $(formid).ajaxSubmit(option)
 }
 

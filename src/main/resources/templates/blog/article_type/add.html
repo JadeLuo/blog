@@ -9,7 +9,7 @@
 <body>
 <form id="articleType" action="/article/type/add" method="post" th:object="${articleType}">
     分类名称 <input th:field="*{typeName}" type="text"/>
-    <button type="button" onclick="addSubmit('#articleType')">添加</button>
+    <button type="button" onclick="addArticleType('#articleType')">添加</button>
     <span th:if="${#fields.hasErrors('typeName')}"
           th:errors="*{typeName}">
         </span>
@@ -22,5 +22,11 @@
         <td th:text="${type.typeName}"></td>
     </tr>
 </table>
+<script>
+    function addArticleType(id) {
+        addSubmit(id)
+        $('.table').load("/article/type/list");
+    }
+</script>
 </body>
 </html>

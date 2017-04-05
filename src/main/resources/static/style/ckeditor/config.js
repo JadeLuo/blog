@@ -25,4 +25,6 @@ CKEDITOR.editorConfig = function (config) {
     config.uiColor = '#F7B42C';
     config.height = heig;
     config.toolbarCanCollapse = true;
+    config.codeSnippet_theme = 'monokai_sublime';
+    config.dialog_backgroundCoverColor = '#F7B42C'; //可设置参考
 };

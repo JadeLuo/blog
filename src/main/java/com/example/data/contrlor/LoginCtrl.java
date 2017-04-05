@@ -24,6 +24,7 @@ import javax.validation.Valid;
 
 /**
  * Created by wanghuiwen on 17-1-12.
+ *
  */
 @Controller
 public class LoginCtrl extends BaseControllerImpl<User, String> {
@@ -34,7 +35,7 @@ public class LoginCtrl extends BaseControllerImpl<User, String> {
     @RequestMapping("/")
     public String toIndex (Model model) {
 
-        return toLogin (model);
+        return "/blog/index";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
