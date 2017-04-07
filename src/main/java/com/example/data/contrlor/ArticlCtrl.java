@@ -1,7 +1,6 @@
 package com.example.data.contrlor;
 
 import com.example.data.base.controller.BaseControllerImpl;
-import com.example.data.common.UtilFun;
 import com.example.data.entity.Article;
 import com.example.data.entity.ArticleType;
 import com.example.data.entity.user.User;
@@ -106,12 +105,24 @@ public class ArticlCtrl extends BaseControllerImpl<Article, String> {
 
 
     @RequestMapping(value = "/articleByType")
-    public String articleByType (@RequestParam(defaultValue = "0") int pageNumber,@RequestParam(defaultValue = "") String typeId,Model model) {
+    public String articleByType (@RequestParam(defaultValue = "0") int pageNumber,@RequestParam(defaultValue = "") ArticleType typeId,@RequestParam(defaultValue = "") User user,Model model) {
 
         LinkedHashMap<String,Object> sql = new LinkedHashMap<String,Object> ();
-        if (UtilFun.isEmptyString (typeId)) sql.put ("and type = ?",typeId);
+
+        if (typeId == null) {
+            sql.put (" and type = '' and user_id = ?",user.getId ());
+        } else if (typeId.getId () != 0) {
+            sql.put ("and type = ?",typeId.getId ());
+        }
+
         Page<Article> page = articleService.PageByWhere (getPage (pageNumber),sql);
+
+        List<ArticleType> list = articleTypeService.listByUser (user != null ? user.getId () :typeId.getUserId ());
+
+        model.addAttribute ("articleType",list);
+
         model.addAttribute (page);
+
         return "/blog/article/list";
     }
 

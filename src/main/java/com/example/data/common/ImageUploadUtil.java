@@ -79,7 +79,7 @@ public class ImageUploadUtil {
                         // 重命名上传后的文件名 111112323.jpg
                         fileName = new Date ().getTime () + suffix;
                         // 定义上传路径 .../upload/111112323.jpg
-                        File uploadFile = new File (realPathDirectory + "\\" + fileName);
+                        File uploadFile = new File (realPathDirectory + File.separator + fileName);
                         System.out.println (uploadFile);
                         file.transferTo (uploadFile);
                     }

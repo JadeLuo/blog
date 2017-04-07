@@ -9,16 +9,19 @@
 <div class="blog-masthead" th:include="/blog/public/top::top"></div>
 <div class="container-fluid">
     <nav class="navbar navbar-default col-md-12">
-        <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="navbar-form navbar-right">
-                <div class="form-group">
-                    <input id="serch" type="text" class="form-control" placeholder="Search"/>
-                </div>
-                <button class="btn btn-default" onclick="serch()">搜索</button>
+        <ul class="nav navbar-nav">
+            <li th:each="atype:${articleType}" style="border: solid #f7eef1 1px">
+                <a th:href="@{/article/articleByType(typeId=${atype.id})}" th:text="${atype.typeName}">目录</a>
+            </li>
+        </ul>
+        <div class="navbar-form navbar-right">
+            <div class="form-group">
+                <input id="serch" type="text" class="form-control" placeholder="Search"/>
             </div>
-        </div><!-- /.container-fluid -->
+            <button class="btn btn-default" onclick="serch()">搜索</button>
+        </div>
     </nav>
     <div id="content">
         <div class="media col-md-12 blog-list-item " th:each="article:${pageImpl}"

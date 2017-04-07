@@ -17,11 +17,15 @@
             </div>
             <div class="sidebar-module">
                 <h4>目录</h4>
-                <ol class="list-unstyled" th:each="atype:${articleType}">
+                <ul>
+                    <li><a th:href="@{/article/articleByType(typeId=0,user=${user.id})}">默认</a>
+                    </li>
+                </ul>
+                <ul class="" th:each="atype:${articleType}">
                     <li>
                         <a th:href="@{/article/articleByType(typeId=${atype.id})}" th:text="${atype.typeName}">目录</a>
                     </li>
-                </ol>
+                </ul>
             </div>
         </div><!-- /.blog-sidebar -->
 
@@ -50,10 +54,20 @@
                 <input id="articleid" type="hidden" th:value="${article.id}"/>
             </div>
         </div><!-- /.blog-main -->
+        <div class="col-sm-9 col-sm-offset-2" style="clear: both">
+            <div id="comment" name="replace"></div>
+            <button>评论</button>
+        </div>
     </div><!-- /.row -->
 
 </div><!-- /.container -->
 <script type="text/javascript">
+    $(function () {
+        CKEDITOR.replace('comment', {
+            customConfig: '/style/ckeditor/comment-config.js'
+        })
+    })
+
     function trial(i) {
         $.post("/article/trial", {article: $('#articleid').val(), trial: i});
     }
@@ -66,6 +80,7 @@
                 });
             })
     }
+
 
 </script>
 </body>
