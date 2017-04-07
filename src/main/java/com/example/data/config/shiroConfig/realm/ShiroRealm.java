@@ -43,7 +43,6 @@ public class ShiroRealm extends AuthorizingRealm {
         * 当放到缓存中时，这样的话，doGetAuthorizationInfo就只会执行一次了，
         * 缓存过期之后会再次执行。
         */
-        System.out.println("权限配置-->MyShiroRealm.doGetAuthorizationInfo()");
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         User userInfo = (User) principals.getPrimaryPrincipal();
         User user = userService.findOne(userInfo.getId());
@@ -64,7 +63,6 @@ public class ShiroRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) {
-        System.out.println("MyShiroRealm.doGetAuthenticationInfo()");
         //获取用户的输入的账号.
         String username = token.getPrincipal().toString();
         //通过username从数据库中查找 User对象，如果找到，没找到.

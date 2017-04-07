@@ -9,5 +9,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository("userDao")
 public interface UserDao extends BaseRepository<User, String> {
-    User getByuserName(String userName);
+
+    User findFirstByuserName (String userName);
 }

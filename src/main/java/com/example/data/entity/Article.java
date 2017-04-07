@@ -2,7 +2,7 @@ package com.example.data.entity;
 
 import com.example.data.entity.baseEntity.BaseModel;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import java.sql.Clob;
@@ -37,7 +37,7 @@ public class Article extends BaseModel {
     /**
      * 标题
      */
-    @NotEmpty(message = "标题不能为空")
+    @NotBlank(message = "标题不能为空")
     private String title;
 
     private Date articleDate;

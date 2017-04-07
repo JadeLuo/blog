@@ -22,7 +22,8 @@ public class UserServiceImpl extends BaseServiceImpl<User, String> implements IU
      * @return
      */
     public boolean login(User user) {
-        User user1 = userDao.getByuserName(user.getUserName());
+
+        User user1 = userDao.findFirstByuserName (user.getUserName ());
         if (user1 != null) {
             if (user1.getPassWord().equals(user.getSalting())) {
                 return true;
@@ -32,7 +33,8 @@ public class UserServiceImpl extends BaseServiceImpl<User, String> implements IU
     }
 
     public User getByuserName(String name) {
-        User user = userDao.getByuserName(name);
+
+        User user = userDao.findFirstByuserName (name);
         return user;
     }
 

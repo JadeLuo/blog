@@ -6,7 +6,7 @@ import com.example.data.entity.role.Role;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import java.util.List;
@@ -27,9 +27,9 @@ public class User extends BaseModel {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid")
     private String id;
-    @NotEmpty(message = "姓名不能为空")
+
+    @NotBlank(message = "标题不能为空")
     private String userName;
-    @NotEmpty(message = "密码不能为空")
     @Length(min = 6, message = "密码长度不能小于6位")
     private String passWord;
     /**
@@ -37,7 +37,8 @@ public class User extends BaseModel {
      */
     private int state;
     private String realName;
-    @NotEmpty(message = "邮箱不能为空")
+
+    @NotBlank(message = "标题不能为空")
     private String eMail;
     @Length(max = 11, min = 11, message = "请输入真确的格式")
     private String phone;

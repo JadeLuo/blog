@@ -1,6 +1,7 @@
 package com.example.data.contrlor;
 
 import com.example.data.base.controller.BaseControllerImpl;
+import com.example.data.common.Constant;
 import com.example.data.entity.user.User;
 import com.example.data.service.user.IUserService;
 import org.apache.shiro.SecurityUtils;
@@ -55,12 +56,14 @@ public class LoginCtrl extends BaseControllerImpl<User, String> {
             subject.login(token);
         } catch (UnknownAccountException e) {
             errmsg = "账号或密码错误";
-            logger.info("认证出错---用户名不存在");
+            logger.info ("登录出错");
         } catch (IncorrectCredentialsException e) {
             errmsg = "账号或密码错误";
-            logger.info("认证出错---密码处理问题");
+            logger.info ("登录出错");
         } catch (Exception e) {
+            errmsg = "账号或密码错误";
             e.printStackTrace();
+            logger.info ("登录出错");
         }
         if (subject.isAuthenticated()) {
             subject.getSession ().setAttribute ("user",userService.getByuserName (user.getUserName ()));
@@ -80,13 +83,16 @@ public class LoginCtrl extends BaseControllerImpl<User, String> {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String register(@Valid User user, BindingResult result, Model model, HttpSession session) {
+    public String register (@Valid User user,BindingResult result) {
+
+        if (!ajax (user.getUserName ()).equals (Constant.AJAX_SUCCESS)) {
+            result.rejectValue ("userName","1111","用户名已经被使用");
+        }
         if (result.hasErrors()) {
             return "/register";
         }
         userService.save(user);
-        model.addAttribute(user);
-        return toLogin(user, model, session, "");
+        return "/login/login";
     }
 
     @RequestMapping(value = "/unique", method = RequestMethod.POST)
@@ -96,7 +102,7 @@ public class LoginCtrl extends BaseControllerImpl<User, String> {
         if (user != null) {
             return "用户名以存在";
         }
-        return "ajaxSuccess";
+        return Constant.AJAX_SUCCESS;
     }
 
     @RequestMapping(value = "/loginOut")
