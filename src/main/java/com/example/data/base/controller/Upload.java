@@ -18,7 +18,7 @@ public class Upload {
     public void uploadImage (HttpServletRequest request,HttpServletResponse response) {
 
         try {
-            ImageUploadUtil.ckeditor (request,response,"upload/");
+            ImageUploadUtil.ckeditor (request,response,"uploadfile/");
         } catch (IOException e) {
             e.printStackTrace ();
         }

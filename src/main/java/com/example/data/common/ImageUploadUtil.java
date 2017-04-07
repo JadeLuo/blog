@@ -69,18 +69,20 @@ public class ImageUploadUtil {
                             continue;
                         }
                         // 获得上传路径的绝对路径地址(/upload)-->
-                        String realPath = request.getServletContext ().getRealPath ("/" + DirectoryName);
-                        System.out.println (realPath);
+                        String realPath = request.getSession ().getServletContext ().getRealPath ("");
+
                         // 如果路径不存在，则创建该路径
                         File realPathDirectory = new File (realPath);
-                        if (realPathDirectory == null || !realPathDirectory.exists ()) {
-                            realPathDirectory.mkdirs ();
+
+                        File upload = new File (realPathDirectory.getParent () + File.separator + DirectoryName + File.separator);
+
+                        if (!upload.exists ()) {
+                            upload.mkdirs ();
                         }
                         // 重命名上传后的文件名 111112323.jpg
                         fileName = new Date ().getTime () + suffix;
                         // 定义上传路径 .../upload/111112323.jpg
-                        File uploadFile = new File (realPathDirectory + File.separator + fileName);
-                        System.out.println (uploadFile);
+                        File uploadFile = new File (upload + File.separator + fileName);
                         file.transferTo (uploadFile);
                     }
                 }
@@ -106,7 +108,7 @@ public class ImageUploadUtil {
         String fileName = upload (request,DirectoryName);
         // 结合ckeditor功能
         // imageContextPath为图片在服务器地址，如upload/123.jpg,非绝对路径
-        String imageContextPath = request.getContextPath () + "/" + DirectoryName + "/" + fileName;
+        String imageContextPath = "http://60.205.222.196/" + request.getContextPath () + "/" + DirectoryName + "/" + fileName;
         response.setContentType ("text/html;charset=UTF-8");
         String callback = request.getParameter ("CKEditorFuncNum");
         PrintWriter out = response.getWriter ();
