@@ -1,0 +1,6 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="comment">
+    <div th:each="comment:${comments}" class="panel panel-default">
+        <div class="panel-heading" th:utext="${comment.commentDate}"></div>
+        <div class="panel-body" th:utext="${comment.cotent}"></div>
+    </div>
+</div>

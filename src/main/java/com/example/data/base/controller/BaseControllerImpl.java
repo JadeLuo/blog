@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
@@ -54,7 +55,7 @@ public abstract class BaseControllerImpl<M, PK extends Serializable> {
 
     protected void setAddPara (Model model) {}
 
-    protected void setAddAttr (M m) {}
+    protected void setAddAttr (M m,HttpServletRequest request) {}
 
     protected String setAddPage () {
         return this.getClass().getAnnotation(RequestMapping.class).value()[0] + "/add";
@@ -84,12 +85,12 @@ public abstract class BaseControllerImpl<M, PK extends Serializable> {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
-    protected String save(@Valid M m, BindingResult result, Model model) {
+    protected String save (@Valid M m,BindingResult result,Model model,HttpServletRequest request) {
         try {
             if (result.hasErrors()) {
                 return result.getAllErrors().get(0).getDefaultMessage();
             }
-            setAddAttr (m);
+            setAddAttr (m,request);
             baseService.save (m);
             return Constant.RECEIPT_SUCCESS;
         } catch (Exception e) {

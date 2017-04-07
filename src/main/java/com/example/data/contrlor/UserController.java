@@ -13,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -50,16 +49,6 @@ public class UserController extends BaseControllerImpl<User, String> {
         super.save(id, model);
         return "/user/user_add";
     }
-
-    @Override
-    public String save(@Valid User user, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            return "/user/user_add";
-        }
-        super.save(user, result, model);
-        return "/user/user_add";
-    }
-
 
     @Override
     @RequiresPermissions("userInfo:delete")

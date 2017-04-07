@@ -20,8 +20,32 @@ public class Comment extends BaseModel {
     @GenericGenerator(name = "uuid", strategy = "uuid")
     private String id;
     private String pid;
+
+    private String articleId;
     private String cotent;
     private Date commentDate;
+
+    private String userId;
+
+    public String getUserId () {
+
+        return userId;
+    }
+
+    public void setUserId (String userId) {
+
+        this.userId = userId;
+    }
+
+    public String getArticleId () {
+
+        return articleId;
+    }
+
+    public void setArticleId (String articleId) {
+
+        this.articleId = articleId;
+    }
 
     public String getId() {
         return id;

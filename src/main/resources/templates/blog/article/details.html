@@ -10,7 +10,7 @@
 
 <div class="container-fluid blog-article">
     <div class="row blog-article">
-        <div class="col-sm-2  blog-sidebar">
+        <div class="col-sm-2  blog-sidebar" style="height: 100%">
             <div class="sidebar-module sidebar-module-inset">
                 <h4>作者</h4>
                 <p th:text="${user.userName}"></p>
@@ -29,7 +29,7 @@
             </div>
         </div><!-- /.blog-sidebar -->
 
-        <div class="col-sm-9 blog-main">
+        <div class="col-sm-10 blog-main ">
             <div class="blog-header">
                 <h1 class="blog-title" th:text="${article.title}">大标题</h1>
                 <div style="float: right;">
@@ -43,23 +43,32 @@
                 <p class="lead blog-description" th:text="${article.summary}">描述描述描述描述描述描述描述描述描述描述</p>
                 <p class="blog-post-meta" th:text="${article.articleDate}">January 1, 2014 by <a href="#">Mark</a></p>
             </div>
-            <div class="blog-post" th:utext="${article.articleText}"></div>
-            <div class="col-sm-6 col-sm-offset-4">
-                <button class="btn btn-default btn-lg" th:onclick="'trial(1)'">
-                    <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
-                </button>
-                <button class="btn btn-default btn-lg" th:onclick="'trial(0);'">
-                    <div class="glyphicon  glyphicon-thumbs-down" aria-hidden="true"></div>
-                </button>
-                <input id="articleid" type="hidden" th:value="${article.id}"/>
+            <div class="blog-post panel panel-default">
+                <div th:utext="${article.articleText}"></div>
+                <div style="text-align: center">
+                    <button class="btn btn-default btn-lg" th:onclick="'trial(1)'">
+                        <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+                    </button>
+                    <button class="btn btn-default btn-lg" th:onclick="'trial(0);'">
+                        <div class="glyphicon  glyphicon-thumbs-down" aria-hidden="true"></div>
+                    </button>
+                    <input id="articleid" type="hidden" th:value="${article.id}"/>
+                </div>
             </div>
-        </div><!-- /.blog-main -->
-        <div class="col-sm-9 col-sm-offset-2" style="clear: both">
-            <div id="comment" name="replace"></div>
-            <button>评论</button>
-        </div>
-    </div><!-- /.row -->
 
+        </div>
+        <!-- /.blog-main -->
+        <div class="col-sm-10 col-sm-offset-2  " style="clear: both">
+            <div class="panel panel-default">
+                <div class="panel-heading clo-sm-12">评论</div>
+                <div id="oldComment" th:include="/blog/comment/comment :: comment"></div>
+            </div>
+        </div>
+        <from class="col-sm-9 col-sm-offset-2" style="clear: both" th:object="${comment}">
+            <div id="comment" name="replace"></div>
+            <button class="btn" onclick="commentArticle()">评论</button>
+        </from>
+    </div><!-- /.row -->
 </div><!-- /.container -->
 <script type="text/javascript">
     $(function () {
@@ -74,13 +83,26 @@
     function removeart(thiz) {
         $.post($(thiz).attr("abbr") + '/delete', {id: $(thiz).attr("value")},
             function (data) {
-
                 layer.msg(data, {time: 1000}, function () {
                     window.location.href = "/article/list";
                 });
             })
     }
-
+    function commentArticle() {
+        var con = CKEDITOR.instances.comment.getData();
+        if (con == null || con == "") {
+            layer.msg("不能为空")
+            return;
+        }
+        var thing = {cotent: con, articleId: $('#articleid').val()};
+        $.post('/comment/add',
+            {comment: $.toJSON(thing)}
+            , function (data) {
+                CKEDITOR.instances.comment.setData("");
+                layer.msg(data)
+                $('#oldComment').load("/comment/list", {id: $('#articleid').val()});
+            })
+    }
 
 </script>
 </body>

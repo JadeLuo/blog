@@ -6,6 +6,7 @@ import com.example.data.entity.ArticleType;
 import com.example.data.entity.user.User;
 import com.example.data.service.IArticleService;
 import com.example.data.service.IArticleTypeService;
+import com.example.data.service.ICommentService;
 import com.example.data.service.user.IUserService;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -32,7 +34,12 @@ public class ArticlCtrl extends BaseControllerImpl<Article, String> {
     private IArticleTypeService articleTypeService;
 
     @Resource
+    private ICommentService commentService;
+    @Resource
     private IUserService userService;
+
+    @Resource
+    private CommentCtrl commentCtrl;
 
     @Override
     protected String setAddPage () {
@@ -40,7 +47,7 @@ public class ArticlCtrl extends BaseControllerImpl<Article, String> {
     }
 
     @Override
-    protected void setAddAttr (Article article) {
+    protected void setAddAttr (Article article,HttpServletRequest request) {
         article.setArticleDate (new Date ());
     }
 
@@ -87,6 +94,8 @@ public class ArticlCtrl extends BaseControllerImpl<Article, String> {
         List<ArticleType> list = articleTypeService.listByUser (id.getUserId ());
 
         model.addAttribute ("articleType",list);
+
+        commentCtrl.ListByArticleId (id.getId (),model);
 
         model.addAttribute (user);
 
