@@ -7,6 +7,7 @@ import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -41,7 +42,6 @@ public class ShiroConfiguration {
         shiroFilterFactoryBean.setLoginUrl("/login");
         // 登录成功后要跳转的链接
         shiroFilterFactoryBean.setSuccessUrl("/index");
-
         //拦截器.
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
         //配置退出过滤器,其中的具体的退出代码Shiro已经替我们实现了
@@ -68,10 +68,27 @@ public class ShiroConfiguration {
         securityManager.setRealm(myShiroRealm());
         //注入记住我管理器;
         securityManager.setRememberMeManager(rememberMeManager());
+        securityManager.setSessionManager (defaultWebSessionManager ());
         //注入缓存管理器;
         return securityManager;
     }
 
+    /**
+     * session 管理
+     *
+     * @return
+     */
+    @Bean(name = "sessionManager")
+    public DefaultWebSessionManager defaultWebSessionManager () {
+
+        DefaultWebSessionManager sessionManager = new DefaultWebSessionManager ();
+        //        sessionManager.setCacheManager(cacheManager());
+        sessionManager.setGlobalSessionTimeout (-1);
+        sessionManager.setDeleteInvalidSessions (true);
+        sessionManager.setSessionValidationSchedulerEnabled (true);
+        sessionManager.setDeleteInvalidSessions (true);
+        return sessionManager;
+    }
     /**
      * 身份认证realm;
      * (这个需要自己写，账号密码校验；权限等)

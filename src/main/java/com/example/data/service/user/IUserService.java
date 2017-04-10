@@ -25,9 +25,4 @@ public interface IUserService extends IBaseService<User, String> {
      */
     User getByuserName(String userName);
 
-    /**
-     * 保存
-     */
-    User save(User user);
-
 }

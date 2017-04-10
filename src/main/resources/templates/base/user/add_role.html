@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-cn">
+<head>
+    <div th:include="public_page/head :: head"></div>
+</head>
+<body>
+<script>
+    $(function () {
+        var ids = $('input[name="roleList"]').val().split(",");
+        $.each(ids, function () {
+            $('input[value=' + this + ']').attr("checked", "checked");
+        });
+    })
+    function checkRole(thiz) {
+        var ids = $('input[name="roleList"]').val();
+        var newId = null;
+        if (ids == "" || ids == null) {
+            newId = $(thiz).val();
+        } else {
+            newId = "," + $(thiz).val();
+        }
+        if ($(thiz).is(':checked')) {
+            $('input[name="roleList"]').val(ids + newId);
+        } else {
+            $('input[name="roleList"]').val(ids.replace(newId, ""));
+        }
+    }
+</script>
+<form id="from" action="/base/user/addRole" method="post" th:object="${user}">
+    <div>
+        <table class="table table-striped table-bordered table-hover">
+            <thead align="center">
+            <tr>
+                <th>序号</th>
+                <th>角色名称</th>
+                <th>是否可用</th>
+                <th>添加</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="page,iterStat : ${pageImpl}">
+                <td th:text="${iterStat.index+1}"></td>
+                <td th:text="${page.name}"></td>
+                <td th:text="${page.available}"></td>
+                <td><input onclick="checkRole(this)" type="checkbox" th:value="${page.id}"/></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--<input name="roleResult" />-->
+    <input th:field="*{roleList}" type="hidden"/>
+    <input th:field="*{id}" type="hidden"/>
+    <input th:field="*{userName}" type="hidden"/>
+    <input th:field="*{passWord}" type="hidden"/>
+    <input th:field="*{state}" type="hidden"/>
+    <input th:field="*{realName}" type="hidden"/>
+    <input th:field="*{eMail}" type="hidden"/>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:include="public_page/head :: head">
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<script>
+    $(function () {
+        var per = $('input[name="perid"]');
+        per.each(function () {
+            var val = $(this).val();
+            $('input[value="' + val + '"]').attr("checked", "checked");
+        })
+    })
+    function checkper(thiz) {
+        var permission = $('input[name=permissions]');
+        var old = permission.val();
+        if ($(thiz).is(':checked')) {
+            if (old == "") {
+                permission.val($(thiz).val())
+            } else {
+                permission.val(permission.val() + "," + $(thiz).val())
+            }
+        } else {
+            permission.val(permission.val().replace($(thiz).val(), ""))
+        }
+
+    }
+</script>
+<form id="peradd" action="/base/role/addPermissionForRole" method="post" th:object="${arole}">
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>权限名称</th>
+            <th>权限字符串</th>
+            <th>是否可用</th>
+            <th>添加</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="permission,iterStat : ${apermission}">
+            <td th:text="${permission.name}" th:name="name"></td>
+            <td th:text="${permission.permission}"></td>
+            <td th:text="${permission.available}"></td>
+            <td><input type="checkbox" onclick="checkper(this)" th:value="${permission.id}"/></td>
+        </tr>
+        </tbody>
+    </table>
+    <span th:each="per: *{permissions}">
+    <input type="hidden" name="perid" th:value="${per.id}"/>
+    </span>
+    <input type="hidden" id="newper" name="newper"/>
+    <input type="hidden" th:field="*{id}"/>
+    <input type="hidden" th:field="*{permissions}"/>
+    <input type="hidden" th:field="*{available}"/>
+    <input type="hidden" th:field="*{name}"/>
+    <input type="hidden" th:field="*{users}"/>
+</form>
+</body>
+</html>

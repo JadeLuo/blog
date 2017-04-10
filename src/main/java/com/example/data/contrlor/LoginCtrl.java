@@ -48,12 +48,13 @@ public class LoginCtrl extends BaseControllerImpl<User, String> {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String toLogin(User user, Model model, HttpSession session, @RequestParam(defaultValue = "false") String rememberMe) {
-        UsernamePasswordToken token = new UsernamePasswordToken(user.getUserName(), user.getSalting(), rememberMe);
+
+        UsernamePasswordToken token = new UsernamePasswordToken (user.getUserName (),user.getPassWord (),rememberMe);
         Subject subject = SecurityUtils.getSubject();
 
         String errmsg = null;
+        subject.login (token);
         try {
-            subject.login(token);
         } catch (UnknownAccountException e) {
             errmsg = "账号或密码错误";
             logger.info ("登录出错");
@@ -91,7 +92,7 @@ public class LoginCtrl extends BaseControllerImpl<User, String> {
         if (result.hasErrors()) {
             return "/register";
         }
-        userService.save(user);
+        baseService.save (user);
         return "/login/login";
     }
 

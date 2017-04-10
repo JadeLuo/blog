@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-cn">
+<head th:include="public_page/head">
+    <title>添加用户</title>
+</head>
+<body>
+<div>
+    <div class="page-title">
+        <div class="title_left">
+            <h3>用户添加</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_content">
+                    <br/>
+                    <form id="user_info" action="/base/user/add"
+                          data-result="user_info" role="form"
+                          class="form-horizontal form-label-left" th:object="${user}" method="post">
+                        <!---->
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="username">用户名 <span
+                                    class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="username" th:field="*{userName}"
+                                       required="required"
+                                       class="form-control col-md-7 col-xs-12"
+                                       type="text"/>
+                            </div>
+                        </div>
+                        <!---->
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="username">密码 <span
+                                    class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="passWord" th:field="*{passWord}"
+                                       required="required"
+                                       class="form-control col-md-7 col-xs-12"
+                                       type="text"/>
+                            </div>
+                        </div>
+
+                        <!---->
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="username">邮箱 <span
+                                    class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="eMail" th:field="*{eMail}"
+                                       required="required"
+                                       class="form-control col-md-7 col-xs-12"
+                                       type="text"/>
+                            </div>
+                        </div>
+
+                        <!---->
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="username">电话 <span
+                                    class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="phone" th:field="*{phone}"
+                                       required="required"
+                                       class="form-control col-md-7 col-xs-12"
+                                       type="text"/>
+                            </div>
+                        </div>
+                        <!---->
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="username">用户状态 <span
+                                    class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="state" th:field="*{state}"
+                                       required="required"
+                                       class="form-control col-md-7 col-xs-12"
+                                       type="text"/>
+                            </div>
+                        </div>
+
+
+                        <input th:field="*{id}" type="hidden"/>
+
+                        <div class="ln_solid"></div>
+                        <div class="form-group">
+                            <div class="col-md-6 col-sm-6 col-xs-6 col-xs-offset-5">
+                                <button type="button" class="btn btn-info" onclick="addSubmit('#user_info')">保存</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

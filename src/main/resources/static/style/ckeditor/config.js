@@ -4,7 +4,7 @@
  */
 
 CKEDITOR.editorConfig = function (config) {
-    var heig = document.body.clientHeight - 260;
+    var heig = document.body.clientHeight - 280;
     config.toolbarGroups = [
         {name: 'document', groups: ['mode', 'document', 'doctools']},
         {name: 'clipboard', groups: ['clipboard', 'undo']},
@@ -21,7 +21,9 @@ CKEDITOR.editorConfig = function (config) {
         {name: 'about', groups: ['about']}
     ];
 
-    config.removeButtons = 'Source,Save,NewPage,Preview,Templates,Cut,Copy,Paste,PasteText,PasteFromWord,SelectAll,Scayt,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,CopyFormatting,RemoveFormat,Indent,Outdent,CreateDiv,Language,BidiRtl,BidiLtr,Anchor,PageBreak,Iframe,ShowBlocks,About,Print,Undo,Redo,Subscript,Superscript,Strike,SpecialChar';
+    config.removeButtons = 'Source,Cut,Copy,Paste,PasteText,PasteFromWord,SelectAll,Scayt,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,CopyFormatting,RemoveFormat,Indent,Outdent,CreateDiv,Language,BidiRtl,BidiLtr,Anchor,PageBreak,Iframe,ShowBlocks,About,Undo,Redo,Subscript,Superscript,Strike,SpecialChar,Link,Unlink,Smiley,Flash,Find,Replace,Preview,Print,NewPage';
+
+
     config.language = 'zh-cn';
     config.uiColor = '#F7B42C';
     config.height = heig;

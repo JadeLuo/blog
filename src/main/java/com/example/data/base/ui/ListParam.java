@@ -1,16 +1,17 @@
-package com.example.data.entity.baseEntity;
+package com.example.data.base.ui;
 
 import java.io.Serializable;
 
 /**
- * Created by Administrator on 2017/3/3.
- * 列表页面的一些基础参数
+ * Created by Administrator on 2017/4/10.
  */
 public class ListParam implements Serializable {
+
     /**
      * 顶部标题
      */
     private String title;
+
     /**
      * url 的开头部分 /user/list 中的/user
      */
@@ -21,27 +22,33 @@ public class ListParam implements Serializable {
      */
     private String action;
 
-    public String getTitle() {
+    public String getTitle () {
+
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle (String title) {
+
         this.title = title;
     }
 
-    public String getBaseurl() {
+    public String getBaseurl () {
+
         return baseurl;
     }
 
-    public void setBaseurl(String baseurl) {
+    public void setBaseurl (String baseurl) {
+
         this.baseurl = baseurl;
     }
 
-    public String getAction() {
+    public String getAction () {
+
         return action;
     }
 
-    public void setAction(String action) {
+    public void setAction (String action) {
+
         this.action = action;
     }
 }

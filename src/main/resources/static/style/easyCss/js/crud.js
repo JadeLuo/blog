@@ -13,7 +13,8 @@ function addSubmit(formid) {
 function removeobj(thiz) {
     $.post($(thiz).attr("abbr") + '/delete', {id: $(thiz).attr("value")},
         function (data) {
-            if (data.indexOf("ajaxSuccess") != -1) {
+            alert(data);
+            if (data.indexOf("成功") != -1) {
                 layer.msg("操作成功");
                 $(thiz).parent().parent().remove();
             } else {

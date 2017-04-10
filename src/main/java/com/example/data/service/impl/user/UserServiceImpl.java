@@ -38,9 +38,5 @@ public class UserServiceImpl extends BaseServiceImpl<User, String> implements IU
         return user;
     }
 
-    @Override
-    public User save(User user) {
-        user.setPassWord(user.getSalting());
-        return userDao.save(user);
-    }
+
 }
