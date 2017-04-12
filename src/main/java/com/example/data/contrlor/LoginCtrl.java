@@ -53,8 +53,8 @@ public class LoginCtrl extends BaseControllerImpl<User, String> {
         Subject subject = SecurityUtils.getSubject();
 
         String errmsg = null;
-        subject.login (token);
         try {
+            subject.login (token);
         } catch (UnknownAccountException e) {
             errmsg = "账号或密码错误";
             logger.info ("登录出错");

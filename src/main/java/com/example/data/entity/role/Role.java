@@ -10,6 +10,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by wanghuiwen on 17-1-5.
@@ -35,7 +36,7 @@ public class Role extends BaseModel {
     //角色 -- 权限关系：多对多关系;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "RolePermission", joinColumns = {@JoinColumn(name = "roleId")}, inverseJoinColumns = {@JoinColumn(name = "permissionId")})
-    private List<Permission> permissions;
+    private Set<Permission> permissions;
 
     public String getId() {
         return id;
@@ -69,11 +70,13 @@ public class Role extends BaseModel {
         this.users = users;
     }
 
-    public List<Permission> getPermissions() {
+    public Set<Permission> getPermissions () {
+
         return permissions;
     }
 
-    public void setPermissions(List<Permission> permissions) {
+    public void setPermissions (Set<Permission> permissions) {
+
         this.permissions = permissions;
     }
 }

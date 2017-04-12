@@ -1,5 +1,6 @@
 package com.example.data.config.shiroConfig;
 
+import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import com.example.data.config.shiroConfig.realm.ShiroRealm;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -121,6 +122,14 @@ public class ShiroConfiguration {
         CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
         cookieRememberMeManager.setCookie(rememberMeCookie());
         return cookieRememberMeManager;
+    }
+    /**
+     * ShiroDialect，为了在thymeleaf里使用shiro的标签的bean
+     * @return
+     */
+    @Bean
+    public ShiroDialect shiroDialect(){
+        return new ShiroDialect();
     }
 
 }

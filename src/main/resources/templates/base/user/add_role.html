@@ -5,6 +5,7 @@
 </head>
 <body>
 <script>
+    /*<![CDATA[*/
     $(function () {
         var ids = $('input[name="roleList"]').val().split(",");
         $.each(ids, function () {
@@ -13,18 +14,17 @@
     })
     function checkRole(thiz) {
         var ids = $('input[name="roleList"]').val();
-        var newId = null;
-        if (ids == "" || ids == null) {
-            newId = $(thiz).val();
-        } else {
-            newId = "," + $(thiz).val();
-        }
+        var newId = $(thiz).val();
         if ($(thiz).is(':checked')) {
+            if(ids!=null&&ids!=""){newId=","+newId}
             $('input[name="roleList"]').val(ids + newId);
         } else {
+            if(ids.split(",").length>1&&ids.indexOf(newId)!=0){newId=","+newId}
+            if(ids.indexOf(newId)==0&&ids.indexOf(",")!=-1){newId = newId+","}
             $('input[name="roleList"]').val(ids.replace(newId, ""));
         }
     }
+    /*]]>*/
 </script>
 <form id="from" action="/base/user/addRole" method="post" th:object="${user}">
     <div>

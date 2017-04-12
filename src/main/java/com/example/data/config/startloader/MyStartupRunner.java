@@ -14,7 +14,9 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.lang.reflect.Method;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by wanghuiwen on 17-2-12.
@@ -57,7 +59,7 @@ public class MyStartupRunner implements CommandLineRunner {
             Role role = new Role ();
             role.setName ("admin");
             role.setAvailable (true);
-            role.setPermissions (permissionService.findAll ());
+            role.setPermissions (new HashSet<Permission>(permissionService.findAll ()));
             roleService.save (role);
         }
     }

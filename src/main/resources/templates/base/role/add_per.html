@@ -43,7 +43,7 @@
             <td th:text="${permission.name}" th:name="name"></td>
             <td th:text="${permission.permission}"></td>
             <td th:text="${permission.available}"></td>
-            <td><input type="checkbox" onclick="checkper(this)" th:value="${permission.id}"/></td>
+            <td><input type="checkbox" onclick="checkadd(this,'permissions')" th:value="${permission.id}"/></td>
         </tr>
         </tbody>
     </table>

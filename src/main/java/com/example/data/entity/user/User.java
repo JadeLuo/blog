@@ -10,6 +10,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by wanghuiwen on 17-1-5.
@@ -44,7 +45,7 @@ public class User extends BaseModel {
     private String phone;
     @ManyToMany(fetch = FetchType.EAGER)//立即从数据库中进行加载数据;
     @JoinTable(name = "UserRole", joinColumns = {@JoinColumn(name = "userId")}, inverseJoinColumns = {@JoinColumn(name = "roleId")})
-    private List<Role> roleList;// 一个用户具有多个角色
+    private Set<Role> roleList;// 一个用户具有多个角色
 
     public String getUserName() {
         return userName;
@@ -59,7 +60,6 @@ public class User extends BaseModel {
     }
 
     public void setPassWord(String passWord) {
-
         this.passWord = getSalting ();
     }
 
@@ -95,11 +95,13 @@ public class User extends BaseModel {
         this.id = id;
     }
 
-    public List<Role> getRoleList() {
+    public Set<Role> getRoleList () {
+
         return roleList;
     }
 
-    public void setRoleList(List<Role> roleList) {
+    public void setRoleList (Set<Role> roleList) {
+
         this.roleList = roleList;
     }
 

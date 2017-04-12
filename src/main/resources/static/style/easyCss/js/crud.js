@@ -5,10 +5,8 @@ function addSubmit(formid) {
         },
         async: false,//使用同步的方式,true为异步方式
     }
-
     $(formid).ajaxSubmit(option)
 }
-
 
 function removeobj(thiz) {
     $.post($(thiz).attr("abbr") + '/delete', {id: $(thiz).attr("value")},
@@ -23,6 +21,7 @@ function removeobj(thiz) {
         }
     );
 }
+
 function updateObj(thiz) {
     //Ajax获取
     $.get($(thiz).attr("abbr") + '/add', {id: $(thiz).attr("value")}, function (data) {
@@ -39,4 +38,17 @@ function updateObj(thiz) {
             content: data
         });
     });
+}
+
+function checkadd(thiz,other) {
+    var ids = $("input[name='"+other+"']").val();
+    var newId = $(thiz).val();
+    if ($(thiz).is(':checked')) {
+        if(ids!=null&&ids!=""){newId=","+newId}
+        $("input[name='"+other+"']").val(ids + newId);
+    } else {
+        if(ids.split(",").length>1&&ids.indexOf(newId)!=0){newId=","+newId}
+        if(ids.indexOf(newId)==0&&ids.indexOf(",")!=-1){newId = newId+","}
+        $("input[name='"+other+"']").val(ids.replace(newId, ""));
+    }
 }

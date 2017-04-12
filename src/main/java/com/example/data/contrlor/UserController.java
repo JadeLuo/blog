@@ -60,10 +60,10 @@ public class UserController extends BaseControllerImpl<User, String> {
      * 为用户添加角色
      */
     @RequestMapping(value = "/addRole", method = RequestMethod.GET)
-    public String addRoleForUser(@RequestParam() String id, Model model) {
+    public String addRoleForUser(@RequestParam() User id, Model model) {
         Iterable<Role> list = roleService.findAll();
         model.addAttribute("pageImpl", JSON.toJSON(list));
-        model.addAttribute(userService.findOne(id));
+        model.addAttribute(id);
         return "/base/user/add_role";
     }
 

@@ -17,7 +17,7 @@
 		<java.version>1.8</java.version>
 		<spring-boot.version>1.5.0.RELEASE</spring-boot.version>
         <thymeleaf.version>3.0.2.RELEASE</thymeleaf.version>
-        <thymeleaf-layout-dialect.version>2.1.1</thymeleaf-layout-dialect.version>
+        <thymeleaf-layout-dialect.version>2.0.4</thymeleaf-layout-dialect.version><thymeleaf.version>3.0.2.RELEASE</thymeleaf.version>
 	</properties>
 
 	<dependencies>
@@ -110,7 +110,12 @@
             <artifactId>shiro-ehcache</artifactId>
             <version>1.2.2</version>
         </dependency>
-
+        <!-- shiro tag -->
+        <dependency>
+            <groupId>com.github.theborakompanioni</groupId>
+            <artifactId>thymeleaf-extras-shiro</artifactId>
+            <version>1.0.2</version>
+        </dependency>
         <!--
             包含支持UI模版（Velocity，FreeMarker，JasperReports），
             邮件服务，
