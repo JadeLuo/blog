@@ -45,7 +45,7 @@ public class UserController extends BaseControllerImpl<User, String> {
         listParam.setTitle("用户管理");
         listParam.setBaseurl ("/base/user");
         model.addAttribute(listParam);
-        return "/base/user/list";
+        return "/base/user/user_list";
     }
 
     @RequiresPermissions("user:add")
