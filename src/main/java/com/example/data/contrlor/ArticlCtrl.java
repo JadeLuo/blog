@@ -8,6 +8,7 @@ import com.example.data.service.IArticleService;
 import com.example.data.service.IArticleTypeService;
 import com.example.data.service.ICommentService;
 import com.example.data.service.user.IUserService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -63,7 +64,7 @@ public class ArticlCtrl extends BaseControllerImpl<Article, String> {
     public String index() {
         return "/blog/index";
     }
-
+    @RequiresPermissions("user:add")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String list (@RequestParam(defaultValue = "0") int pageNumber,Model model) {
 

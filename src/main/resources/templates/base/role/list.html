@@ -6,7 +6,7 @@
     <title>数据列表页面</title>
 </head>
 <body>
-<fieldset id="dataConsole" class="layui-elem-field layui-field-title">
+<fieldset id="dataConsole" class="layui-elem-field layui-field-title"  >
     <div class="layui-field-box">
         <div id="articleIndexTop">
             <form class="layui-form layui-form-pane" action="">
@@ -31,8 +31,7 @@
                     </div>
                     <div class="layui-inline">
                         <div class="layui-input-inline" style="width:auto">
-                            <a id="addArticle" class="layui-btn layui-btn-normal" th:abbr="${baseurl}"
-                               onclick=" updateObj(this);">添加用户</a>
+                            <a id="addArticle" class="layui-btn layui-btn-normal"  th:abbr="${listParam.baseurl}" onclick=" updateObj(this);">添加角色</a>
                         </div>
                     </div>
                 </div>
@@ -45,40 +44,38 @@
         <div id="dataContent" class="">
             <!--内容区域 ajax获取-->
             <table style="" class="layui-table" lay-even="">
-
-                <thead>
+                <colgroup>
+                    <col width="180"/>
+                    <col/>
+                    <col width="150"/>
+                    <col width="180"/>
+                    <col width="90"/>
+                </colgroup>
+                <thead >
                 <tr>
                     <th>序号</th>
-                    <th>用户名</th>
-                    <th>账户状态</th>
-                    <th>真实姓名</th>
-                    <th>电话</th>
-                    <th>邮箱</th>
+                    <th>角色名称</th>
+                    <th>是否可用</th>
                     <th>编辑</th>
-                    <th>添加角色</th>
+                    <th>添加权限</th>
                 </tr>
                 </thead>
                 <tbody>
-
                 <tr th:each="page,iterStat : ${pageImpl}">
-
                     <td th:text="${iterStat.index+1}"></td>
-                    <td th:text="${page.userName}"></td>
-                    <td th:text="${page.state}"></td>
-                    <td th:text="${page.realName}"></td>
-                    <td th:text="${page.phone}"></td>
-                    <td th:text="${page.eMail}"></td>
+                    <td th:text="${page.name}"></td>
+                    <td th:text="${page.available}"></td>
                     <div th:include="/new/list :: ud"></div>
                     <td>
-                        <button class="layui-btn layui-btn-small" onclick="addRole(this)" th:value="${page.id}">添加角色
-                        </button>
+                        <button class="layui-btn layui-btn-small" th:onclick="'javascript:addPermission(\''+${page.id}+'\');'">添加权限</button>
                     </td>
                 </tr>
                 </tbody>
             </table>
-            <div th:include="/new/list :: hidden"></div>
-            <div id="pageNav"></div>
+
         </div>
+        <div  th:include="/new/list :: hidden"></div>
+        <div id="pageNav"></div>
     </div>
 </fieldset>
 <!-- layui规范化用法 -->
@@ -86,31 +83,23 @@
     layui.config({
         base: '/style/easyCss/js/'
     }).use('datalist');
-
-    function addRole(thiz) {
-        $.get('/base/user/addRole', {id: $(thiz).attr("value")}, function (data) {
+    function addPermission(id) {
+        //Ajax获取
+        $.post('/base/role/addPermission', {role: id}, function (data) {
             layer.open({
                 type: 1,
                 area: ['500px', '300px'],
                 btn: ['添加', '取消'], //按钮
                 btn1: function (index) {
-                    $('#from').ajaxSubmit(function (data) {
-                        if (data.indexOf("success") != -1) {
-                            layer.msg("操作成功")
-                            layer.close(index);
-                        } else {
-                            layer.msg(data)
-                        }
-
-                    });
+                    $("#peradd").ajaxSubmit();
+                    layer.close(index);
                 },
                 btn2: function () {
                 },
                 content: data
-            })
-        })
+            });
+        });
     }
-
 </script>
 </body>
 </html>

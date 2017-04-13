@@ -5,11 +5,14 @@ import com.example.data.common.UtilFun;
 import com.example.data.entity.user.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.lang.annotation.Annotation;
 
 /**
  * Created by wang on 17-2-16.
@@ -23,7 +26,8 @@ public class EasyInterceptor implements HandlerInterceptor {
      * Controller方法调用之前调用。SpringMVC的这种Interceptor链式结构也是可以进行中断的，这种中断方式是令preHandle的返
      * 回值为false，当preHandle的返回值为false的时候整个请求就结束了。
      */
-    public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse httpServletResponse, Object o) throws Exception {
+
         return true;
     }
 
@@ -34,11 +38,25 @@ public class EasyInterceptor implements HandlerInterceptor {
      * 只是Struts2里面的intercept方法中要手动的调用ActionInvocation的invoke方法，Struts2中调用ActionInvocation的invoke方法就是调用下一个Interceptor
      * 或者是调用action，然后要在Interceptor之前调用的内容都写在调用invoke之前，要在Interceptor之后调用的内容都写在调用invoke方法之后。
      */
-    public void postHandle(HttpServletRequest request, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
+    public void postHandle(HttpServletRequest request, HttpServletResponse httpServletResponse,
+                           Object o, ModelAndView modelAndView) throws Exception {
+        if(HandlerMethod.class.equals(o.getClass())) {
+            //获取controller，判断是不是实现登录接口的控制器
+            HandlerMethod method = (HandlerMethod) o;
+            Class controller = method.getBeanType();
+            if(controller.isAnnotationPresent(RequestMapping.class)){
+                RequestMapping requestMapping= (RequestMapping)controller.getAnnotation (RequestMapping.class);
 
-        User user = (User) request.getSession ().getAttribute ("user");
+                if(modelAndView!=null)modelAndView.addObject ("baseurl", requestMapping.value()[0]);
+            }
+        }
+
+            User user = (User) request.getSession ().getAttribute ("user");
         String name = user != null ? user.getUserName () :"noLogin";
-        logger.info ("---------------user==" + name + "||||||controller==" + request.getRequestURI () + "---------------------" + UtilFun.getIpAddr (request) + Constant.LINE_SEPATATOR);
+        logger.info ("---------------user==" + name + "||||||controller==" +
+                request.getRequestURI () + "---------------------"
+                + UtilFun.getIpAddr (request) + Constant.LINE_SEPATATOR);
+
     }
 
     /**

@@ -212,3 +212,8 @@ layui.define(['element', 'layer', 'util', 'pagesize', 'form'], function (exports
 
     exports('main', {});
 });
+
+
+function toIndex() {
+    window.location.href="/";
+}

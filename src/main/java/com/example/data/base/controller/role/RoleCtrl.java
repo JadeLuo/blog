@@ -8,6 +8,8 @@ import com.example.data.entity.menu.Permission;
 import com.example.data.entity.role.Role;
 import com.example.data.service.permission.IPermissionService;
 import com.example.data.service.role.IRoleService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +28,7 @@ import java.util.LinkedHashMap;
 @Controller
 @RequestMapping("/base/role")
 public class RoleCtrl extends BaseControllerImpl<Role,String> {
-
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Resource
     private IRoleService roleService;
 
@@ -44,7 +46,7 @@ public class RoleCtrl extends BaseControllerImpl<Role,String> {
         listParam.setTitle ("角色管理");
         listParam.setBaseurl ("/base/role");
         model.addAttribute (listParam);
-        return "/base/role/role_list";
+        return "/base/role/list";
     }
 
     /**

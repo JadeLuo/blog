@@ -5,17 +5,12 @@
 </head>
 <body>
 <div>
-    <div class="page-title">
-        <div class="title_left">
-            <h3>用户添加</h3>
-        </div>
-    </div>
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_content">
                     <br/>
-                    <form id="user_info" action="/base/user/add"
+                    <form id="add" action="/base/user/add"
                           data-result="user_info" role="form"
                           class="form-horizontal form-label-left" th:object="${user}" method="post">
                         <!---->
@@ -83,13 +78,14 @@
 
 
                         <input th:field="*{id}" type="hidden"/>
-
-                        <div class="ln_solid"></div>
-                        <div class="form-group">
-                            <div class="col-md-6 col-sm-6 col-xs-6 col-xs-offset-5">
-                                <button type="button" class="btn btn-info" onclick="addSubmit('#user_info')">保存</button>
-                            </div>
-                        </div>
+                        <input th:field="*{roleList}" type="hidden"/>
+                        <input th:field="*{realName}" type="hidden"/>
+                        <!--<div class="ln_solid"></div>-->
+                        <!--<div class="form-group">-->
+                            <!--<div class="col-md-6 col-sm-6 col-xs-6 col-xs-offset-5">-->
+                                <!--<button type="button" class="btn btn-info" onclick="addSubmit('#user_info')">保存</button>-->
+                            <!--</div>-->
+                        <!--</div>-->
 
                     </form>
                 </div>

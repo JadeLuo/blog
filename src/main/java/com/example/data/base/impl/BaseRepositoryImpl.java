@@ -96,7 +96,7 @@ public class BaseRepositoryImpl<T, PK extends Serializable> extends SimpleJpaRep
         if (where != null && !where.equals("")) {
             try {
                 logger.info(SEELECT_COUNT + getTableName() + where + ":" + Arrays.toString(para));
-                Query query = getQuery(SEELECT_COUNT + getTableName() + where, para);
+                Query query = getQuery(SEELECT_COUNT + getTableName() + where, para.length>0?para:null);
                 return Long.parseLong(query.getSingleResult().toString());
             } catch (DataAccessException e) {
                 logger.error(e.getMessage());
@@ -117,16 +117,18 @@ public class BaseRepositoryImpl<T, PK extends Serializable> extends SimpleJpaRep
 
     public org.springframework.data.domain.Page<T> PageByWhere(Pageable pageable, String where, Object... para) {
         if (where == null || where.equals("")) return PageAll(pageable);
+        long count =  count(where, para);
         where = BulidSql(pageable, where);
         List<T> list = listByWhere(where, para);
-        if (list != null) return new PageImpl<T>(list, pageable, count(where, para));
+        if (list != null) return new PageImpl<T>(list, pageable,count);
         return null;
     }
 
     public Page<Map<String, Object>> PageMapByWhere(Pageable pageable, String select, String where, Object... para) {
+        long count =  count(where, para);
         where = BulidSql(pageable, where);
         List<Map<String, Object>> content = mapByWhere(select, where, para);
-        if (content != null) return new PageImpl<Map<String, Object>>(content, pageable, count());
+        if (content != null) return new PageImpl<Map<String, Object>>(content, pageable, count);
         return null;
     }
 
@@ -153,7 +155,7 @@ public class BaseRepositoryImpl<T, PK extends Serializable> extends SimpleJpaRep
 
         Query query = entityManager.createNativeQuery(select);
 
-        if (para.length > 0) for (int i = 0; i < para.length; i++) query.setParameter(i + 1, para[i]);
+        if (para!=null&&para.length > 0) for (int i = 0; i < para.length; i++) query.setParameter(i + 1, para[i]);
 
         return query;
     }

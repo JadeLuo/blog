@@ -29,7 +29,7 @@ public class User extends BaseModel {
     @GenericGenerator(name = "uuid", strategy = "uuid")
     private String id;
 
-    @NotBlank(message = "标题不能为空")
+    @NotBlank(message = "用户名不能为空")
     private String userName;
     @Length(min = 6, message = "密码长度不能小于6位")
     private String passWord;
@@ -39,11 +39,11 @@ public class User extends BaseModel {
     private int state;
     private String realName;
 
-    @NotBlank(message = "标题不能为空")
+    @NotBlank(message = "邮箱不能为空")
     private String eMail;
     @Length(max = 11, min = 11, message = "请输入真确的格式")
     private String phone;
-    @ManyToMany(fetch = FetchType.EAGER)//立即从数据库中进行加载数据;
+    @ManyToMany(fetch = FetchType.EAGER,cascade = {CascadeType.REMOVE})//立即从数据库中进行加载数据;
     @JoinTable(name = "UserRole", joinColumns = {@JoinColumn(name = "userId")}, inverseJoinColumns = {@JoinColumn(name = "roleId")})
     private Set<Role> roleList;// 一个用户具有多个角色
 

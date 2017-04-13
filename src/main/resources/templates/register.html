@@ -4,20 +4,6 @@
     <meta charset="UTF-8"/>
     <title>注册</title>
 </head>
-<style type="text/css">
-    html body {
-        height: 100%;
-        margin: 0px;
-        padding: 0px;
-    }
-
-    .register {
-        position: absolute;
-        top: 25%;
-        width: 100%;
-        height: 48%;
-    }
-</style>
 <body>
 <div class="container register">
     <div class="row" style="height: 100%;">
@@ -78,15 +64,6 @@
 </div>
 
 <script type="text/javascript">
-    function ajaxuser(thiz) {
-        $.post('/unique', {name: $(thiz).val()}, function (data) {
-            if (data.indexOf("ajaxSuccess") == -1) {
-                $("#tag").text(data);
-            } else {
-                $("#tag").text("");
-            }
-        })
-    }
 </script>
 </body>
 </html>

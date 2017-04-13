@@ -9,17 +9,23 @@ function addSubmit(formid) {
 }
 
 function removeobj(thiz) {
-    $.post($(thiz).attr("abbr") + '/delete', {id: $(thiz).attr("value")},
-        function (data) {
-            alert(data);
-            if (data.indexOf("成功") != -1) {
-                layer.msg("操作成功");
-                $(thiz).parent().parent().remove();
-            } else {
-                layer.msg("操作失败");
+
+    layer.confirm('你确定要删除？', {
+        btn: ['确定','取消'] //按钮
+    }, function(){
+        $.post($(thiz).attr("abbr") + '/delete', {id: $(thiz).attr("value")},
+            function (data) {
+                if (data.indexOf("成功") != -1) {
+                    layer.msg("操作成功");
+                    $(thiz).parent().parent().remove();
+                } else {
+                    layer.msg("操作失败");
+                }
             }
-        }
-    );
+        );
+    }, function(){
+        layer.msg('也可以这样', {time: 2000});
+});
 }
 
 function updateObj(thiz) {
@@ -28,9 +34,9 @@ function updateObj(thiz) {
         layer.open({
             type: 1,
             area: ['500px', '300px'],
-            btn: ['修改', '取消'], //按钮
+            btn: ['确定', '取消'], //按钮
             btn1: function (index) {
-                $("#add").submit();
+                addSubmit("#add")
                 layer.close(index);
             },
             btn2: function () {

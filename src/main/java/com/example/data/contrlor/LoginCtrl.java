@@ -71,7 +71,7 @@ public class LoginCtrl extends BaseControllerImpl<User, String> {
             return "/blog/index";
         } else {
             model.addAttribute(user);
-            model.addAttribute("message", errmsg);
+            model.addAttribute("errmsg", errmsg);
             return "/login/login";
         }
 
@@ -80,17 +80,18 @@ public class LoginCtrl extends BaseControllerImpl<User, String> {
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String register(Model model) {
         model.addAttribute(new User());
-        return "/register";
+        return "/login/login";
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String register (@Valid User user,BindingResult result) {
+    public String register (@Valid User user,BindingResult result,Model model) {
 
         if (!ajax (user.getUserName ()).equals (Constant.AJAX_SUCCESS)) {
             result.rejectValue ("userName","1111","用户名已经被使用");
         }
         if (result.hasErrors()) {
-            return "/register";
+            model.addAttribute("loginModel","register");
+            return "/login/login";
         }
         baseService.save (user);
         return "/login/login";
