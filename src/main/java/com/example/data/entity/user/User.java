@@ -60,7 +60,7 @@ public class User extends BaseModel {
     }
 
     public void setPassWord(String passWord) {
-        this.passWord = getSalting ();
+        this.passWord = passWord;
     }
 
     public int getState() {

@@ -158,6 +158,16 @@
                             <div class="field">
                                 <label for="reg_phone"> <i class="fa fa-mobile fa-2x"></i>
                                 </label>
+                                <input type="email"  th:field="*{eMail}" id="reg_eMail"
+                                       class="register-text" placeholder="手机号"/>
+                                <div class="login-msg error"
+                                     th:if="${#fields.hasErrors('eMail')}"
+                                     th:errors="*{eMail}">>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="reg_phone"> <i class="fa fa-mobile fa-2x"></i>
+                                </label>
                                 <input type="text"  th:field="*{phone}" id="reg_phone"
                                        class="register-text" placeholder="手机号"/>
                                 <div class="login-msg error"

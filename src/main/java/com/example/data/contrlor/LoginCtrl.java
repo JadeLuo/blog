@@ -2,8 +2,10 @@ package com.example.data.contrlor;
 
 import com.example.data.base.controller.BaseControllerImpl;
 import com.example.data.common.Constant;
+import com.example.data.common.HttpUtil;
 import com.example.data.entity.user.User;
 import com.example.data.service.user.IUserService;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -18,10 +20,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by wanghuiwen on 17-1-12.
@@ -49,7 +52,7 @@ public class LoginCtrl extends BaseControllerImpl<User, String> {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String toLogin(User user, Model model, HttpSession session, @RequestParam(defaultValue = "false") String rememberMe) {
 
-        UsernamePasswordToken token = new UsernamePasswordToken (user.getUserName (),user.getPassWord (),rememberMe);
+        UsernamePasswordToken token = new UsernamePasswordToken (user.getUserName (),user.getSalting(),rememberMe);
         Subject subject = SecurityUtils.getSubject();
 
         String errmsg = null;
@@ -93,6 +96,7 @@ public class LoginCtrl extends BaseControllerImpl<User, String> {
             model.addAttribute("loginModel","register");
             return "/login/login";
         }
+        user.setPassWord(user.getSalting());
         baseService.save (user);
         return "/login/login";
     }
@@ -119,6 +123,26 @@ public class LoginCtrl extends BaseControllerImpl<User, String> {
     public String admin(HttpSession session) {
         //使用权限管理工具进行用户的退出，跳出登录，给出提示信息
         return "admin/admin";
+    }
+    @RequestMapping(value = "sendSMS" ,method = RequestMethod.POST)
+    public String sendSMS(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        String timestamp = sdf.format(new Date());
+        String Url="http://gw.api.tbsandbox.com/router/rest";
+//        String para="accountSid=d6f289db83a64e4799d48fe5e201145f" +
+//                "&smsContent=【大神科技】您的验证码为{152538}，请于{2}分钟内正确输入，如非本人操作，请忽略此短信。" +
+//                "&to=15034164797" +
+//                "&timestamp=" +timestamp+
+//                "&sig=" + DigestUtils.md5Hex("d6f289db83a64e4799d48fe5e201145f"+"a91c4cfc1db145c1b74e52b4a90fd32d"+timestamp) +
+//                "&respDataType=JSON";
+        String para = "method=blogwang" +
+                "&app_key=23752299" +
+                "timestamp="+timestamp +
+                "v=2" +
+                "sign_method=md5" +
+                "sign"+DigestUtils.md5Hex("");
+        String res= HttpUtil.sendPost(Url,para);
+        return res;
     }
 
 }

@@ -87,10 +87,10 @@ function rsendSms(obj){
 		$("#register_Message").text("手机号不正确").show();
 		return;
 	}
-	time(obj);
+
 	var phone = $("#reg_phone").val();
 	$.ajax({
-		url: "registCode",
+		url: "https://api.miaodiyun.com/20150822/industrySMS/sendSMS",
 		type :'post',
 		dataType: 'json',
 		data: {"phone":phone},
