@@ -43,7 +43,7 @@ public class User extends BaseModel {
     private String eMail;
     @Length(max = 11, min = 11, message = "请输入真确的格式")
     private String phone;
-    @ManyToMany(fetch = FetchType.EAGER,cascade = {CascadeType.REMOVE})//立即从数据库中进行加载数据;
+    @ManyToMany(fetch = FetchType.EAGER)//立即从数据库中进行加载数据;
     @JoinTable(name = "UserRole", joinColumns = {@JoinColumn(name = "userId")}, inverseJoinColumns = {@JoinColumn(name = "roleId")})
     private Set<Role> roleList;// 一个用户具有多个角色
 

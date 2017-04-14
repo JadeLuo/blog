@@ -3,6 +3,7 @@ package com.example.data.base.controller.role;
 import com.alibaba.fastjson.JSON;
 import com.example.data.base.controller.BaseControllerImpl;
 import com.example.data.base.ui.ListParam;
+import com.example.data.common.Constant;
 import com.example.data.common.UtilFun;
 import com.example.data.entity.menu.Permission;
 import com.example.data.entity.role.Role;
@@ -13,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.LinkedHashMap;
 
 /**
@@ -49,6 +52,15 @@ public class RoleCtrl extends BaseControllerImpl<Role,String> {
         return "/base/role/list";
     }
 
+    @Override
+    protected String save (@Valid Role role,BindingResult result,Model model,HttpServletRequest request) {
+        Role r= roleService.getByname (role.getName ());
+        if(r!=null&&!UtilFun.isEmptyString (role.getId ())){
+            result.rejectValue ("name","name","角色名称已经存在");
+        }
+        return super.save (role,result,model,request);
+    }
+
     /**
      * 为角色添加权限跳转
      */
@@ -69,9 +81,9 @@ public class RoleCtrl extends BaseControllerImpl<Role,String> {
      */
     @RequestMapping(value = "/addPermissionForRole", method = RequestMethod.POST)
     @ResponseBody
-    public void addPermission (Role role) {
-
+    public String addPermission (Role role) {
         roleService.save (role);
+        return Constant.AJAX_SUCCESS;
     }
 
 }

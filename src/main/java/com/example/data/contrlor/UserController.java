@@ -14,12 +14,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 /**
@@ -55,6 +57,11 @@ public class UserController extends BaseControllerImpl<User, String> {
         return "/base/user/user_add";
     }
 
+    @Override
+    protected String save (@Valid User user,BindingResult result,Model model,HttpServletRequest request) {
+        user.setPassWord (user.getSalting ());
+        return super.save (user,result,model,request);
+    }
 
     /**
      * 为用户添加角色

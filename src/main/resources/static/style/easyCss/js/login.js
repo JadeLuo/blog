@@ -82,49 +82,6 @@ function time(obj){
 		time(obj) },1000) 
 }
 
-function rsendSms(obj){
-	if($("#reg_phone").val() == "" || $("#reg_phone").val() == null){
-		$("#register_Message").text("手机号不正确").show();
-		return;
-	}
-
-	var phone = $("#reg_phone").val();
-	$.ajax({
-		url: "https://api.miaodiyun.com/20150822/industrySMS/sendSMS",
-		type :'post',
-		dataType: 'json',
-		data: {"phone":phone},
-		success: function(json){
-			if(json.code == 300){
-		        countdown = 0;
-			}
-			$("#register_Message").text(json.msg).show();
-		}
-	});
-};
-
-function fsendSms(obj){
-	if($("#for_phone").val() == "" || $("#for_phone").val() == null){
-		$("#forgot_Message").text("手机号不正确").show();
-		return;
-	}
-	time(obj);
-	var phone = $("#for_phone").val();
-	$.ajax({
-		url: "forgotCode",
-		type :'post',
-		dataType: 'json',
-		data: {"phone":phone},
-		success: function(json){
-			if(json.code == 300){
-		        countdown = 0;
-			}
-			$("#forgot_Message").text(json.msg).show();
-		}
-	});
-}
-
-
 function ajaxuser(thiz) {
     $.post('/unique', {name: $(thiz).val()}, function (data) {
         if (data.indexOf("ajaxSuccess") == -1) {
@@ -132,5 +89,19 @@ function ajaxuser(thiz) {
         } else {
             $("#tag").text("");
         }
+    })
+}
+
+function sendSMS(thiz) {
+    $.post('/sendSMS',{email:$("#reg_eMail").val()},function (data) {
+        if(data.indexOf("ajaxFail")!=-1){$("#email_Message").text("发送失败请检查邮箱格式")}
+    })
+}
+
+function sendSimpleEmail(thiz) {
+    time(thiz)
+	$.post('/sendSimpleEmail',{email:$("#reg_eMail").val()},function (data) {
+		if(data.indexOf("ajaxFail")!=-1){$("#email_Message").text("发送失败请检查邮箱格式")}
+
     })
 }

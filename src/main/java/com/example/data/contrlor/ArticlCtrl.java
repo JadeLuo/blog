@@ -1,6 +1,7 @@
 package com.example.data.contrlor;
 
 import com.example.data.base.controller.BaseControllerImpl;
+import com.example.data.common.UtilFun;
 import com.example.data.entity.Article;
 import com.example.data.entity.ArticleType;
 import com.example.data.entity.user.User;
@@ -8,6 +9,7 @@ import com.example.data.service.IArticleService;
 import com.example.data.service.IArticleTypeService;
 import com.example.data.service.ICommentService;
 import com.example.data.service.user.IUserService;
+import io.swagger.annotations.Api;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -26,6 +28,7 @@ import java.util.List;
 /**
  * Created by wanghuiwen on 17-3-11.
  */
+@Api(value = "测试类",tags = "测试接口")
 @Controller
 @RequestMapping(value = "/article")
 public class ArticlCtrl extends BaseControllerImpl<Article, String> {
@@ -34,8 +37,7 @@ public class ArticlCtrl extends BaseControllerImpl<Article, String> {
     @Resource
     private IArticleTypeService articleTypeService;
 
-    @Resource
-    private ICommentService commentService;
+
     @Resource
     private IUserService userService;
 
@@ -64,17 +66,16 @@ public class ArticlCtrl extends BaseControllerImpl<Article, String> {
     public String index() {
         return "/blog/index";
     }
-    @RequiresPermissions("user:add")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String list (@RequestParam(defaultValue = "0") int pageNumber,Model model) {
+    public String list (@RequestParam(defaultValue = "0") int pageNumber,@RequestParam(defaultValue = "") User user,Model model) {
 
         LinkedHashMap<String,Object> sql = new LinkedHashMap<String,Object> ();
 
-        sql.put ("and user_id = ? ",getSessionUser ().getId ());
+        sql.put ("and user_id = ? ",user.getId ());
 
         Page<Article> page = articleService.PageByWhere (getPage (pageNumber),sql);
 
-        List<ArticleType> list = articleTypeService.listByUser (getSessionUser ().getId ());
+        List<ArticleType> list = articleTypeService.listByUser (user.getId ());
 
         model.addAttribute ("articleType",list);
         if (page != null) model.addAttribute (page);
@@ -83,7 +84,6 @@ public class ArticlCtrl extends BaseControllerImpl<Article, String> {
         }
         return "/blog/article/list";
     }
-
 
     @RequestMapping(value = "/details")
     public String articleDetails (@RequestParam(defaultValue = "") Article id,Model model) {

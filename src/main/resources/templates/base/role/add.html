@@ -44,7 +44,9 @@
                                 <!--<button type="button" class="btn btn-info" onclick="addSubmit('#user_info')">保存</button>-->
                             <!--</div>-->
                         <!--</div>-->
-                        <input type="hidden" th:value="*{id}"/>
+                        <input type="hidden" th:field="*{users}"/>
+                        <input type="hidden" th:field="*{permissions}"/>
+                        <input type="hidden" th:field="*{id}"/>
                     </form>
                 </div>
             </div>

@@ -9,7 +9,7 @@
 <div class="blog-masthead" th:include="/blog/public/top::top"></div>
 
 <div class="container-fluid blog-article">
-    <div class="row blog-article">
+    <div class="row">
         <div class="col-sm-2  blog-sidebar" style="height: 100%">
             <div class="sidebar-module sidebar-module-inset">
                 <h4>作者</h4>
@@ -32,9 +32,9 @@
         <div class="col-sm-10 blog-main ">
             <div class="blog-header">
                 <h1 class="blog-title" th:text="${article.title}">大标题</h1>
-                <div style="float: right;">
+                <div style="float: right;" th:if="${#strings.isEmpty(session)}">
                     <a th:href="@{/article/add(id=${article.id})}"
-                       th:unless="${session.user.id !=article.userId}">编辑</a>
+                       th:unless="${ session.user.id !=article.userId}">编辑</a>
                     <a th:value="${article.id}"
                        abbr="/article"
                        th:unless="${session.user.id != article.userId}"
@@ -64,13 +64,15 @@
                 <div id="oldComment" th:include="/blog/comment/comment :: comment"></div>
             </div>
         </div>
-        <from class="col-sm-9 col-sm-offset-2" style="clear: both" th:object="${comment}">
+        <from th:unless="${session.user==null}" class="col-sm-9 col-sm-offset-2" style="clear: both" th:object="${comment}">
             <div id="comment" name="replace"></div>
             <button class="btn" onclick="commentArticle()">评论</button>
         </from>
+        <div th:if="${session.user==null}" class="col-sm-9 col-sm-offset-2"><a href="/login">登录后才能评论</a></div>
     </div><!-- /.row -->
 </div><!-- /.container -->
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
     $(function () {
         CKEDITOR.replace('comment', {
             customConfig: '/style/ckeditor/comment-config.js'
@@ -103,7 +105,7 @@
                 $('#oldComment').load("/comment/list", {id: $('#articleid').val()});
             })
     }
-
+    /*]]>*/
 </script>
 </body>
 </html>

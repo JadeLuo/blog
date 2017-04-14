@@ -32,6 +32,7 @@
                     内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</p>
                 <div>
                     <span style="float: left" th:text="${article.articleDate}">时间作者</span>
+                    <input type="hidden" th:value="${article.userId}" id="userId"/>
                     <span style="float: right" th:text="${article.tag}">标签</span>
                 </div>
             </div>

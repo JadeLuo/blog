@@ -17,9 +17,9 @@ public class RoleService extends BaseServiceImpl<Role, String> implements IRoleS
     @Resource
     private IRoleDao roleDao;
 
-    public List<Role> getByname(String name) {
-        List<Role> roles = roleDao.getByName(name);
-        if (roles != null && roles.size() > 0) {
+    public Role getByname(String name) {
+        Role roles = roleDao.getFirstByName(name);
+        if (roles != null) {
             return roles;
         }
         return null;

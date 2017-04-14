@@ -12,5 +12,5 @@ import java.util.List;
  */
 @Repository("roleDao")
 public interface IRoleDao extends BaseRepository<Role, String> {
-    List<Role> getByName(String name);
+    Role getFirstByName(String name);
 }

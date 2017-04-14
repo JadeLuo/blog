@@ -11,5 +11,5 @@ import java.util.List;
  * 角色服务类
  */
 public interface IRoleService extends IBaseService<Role, String> {
-    List<Role> getByname(String name);
+    Role getByname(String name);
 }

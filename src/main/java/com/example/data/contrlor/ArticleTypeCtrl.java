@@ -43,7 +43,6 @@ public class ArticleTypeCtrl extends BaseControllerImpl<ArticleType, Long> {
 
     @RequestMapping(value = "/select")
     public String select (Model model) {
-
         List<ArticleType> list = articleTypeService.listByUser (getSessionUser ().getId ());
         model.addAttribute ("articleType",list);
         return "/blog/article_type/select";

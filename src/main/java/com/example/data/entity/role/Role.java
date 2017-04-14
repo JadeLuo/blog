@@ -30,7 +30,7 @@ public class Role extends BaseModel {
     private Boolean available = Boolean.TRUE;
     // 用户 - 角色关系定义;
     @JSONField(serialize = false)
-    @ManyToMany(fetch = FetchType.LAZY,cascade = {CascadeType.REMOVE})
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "UserRole", joinColumns = {@JoinColumn(name = "roleId")}, inverseJoinColumns = {@JoinColumn(name = "userId")})
     private List<User> users;// 一个角色对应多个用户
     //角色 -- 权限关系：多对多关系;

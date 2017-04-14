@@ -91,8 +91,12 @@
                 area: ['500px', '300px'],
                 btn: ['添加', '取消'], //按钮
                 btn1: function (index) {
-                    $("#peradd").ajaxSubmit();
-                    layer.close(index);
+                    $("#peradd").ajaxSubmit(function (data) {
+                        if(data.indexOf("uccess")!=-1){
+                            layer.msg("操作成功");
+                            layer.close(index);
+                        }
+                    });
                 },
                 btn2: function () {
                 },

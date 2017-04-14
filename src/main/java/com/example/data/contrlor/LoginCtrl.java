@@ -3,6 +3,7 @@ package com.example.data.contrlor;
 import com.example.data.base.controller.BaseControllerImpl;
 import com.example.data.common.Constant;
 import com.example.data.common.HttpUtil;
+import com.example.data.common.UtilFun;
 import com.example.data.entity.user.User;
 import com.example.data.service.user.IUserService;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -13,6 +14,10 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -35,6 +40,8 @@ public class LoginCtrl extends BaseControllerImpl<User, String> {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Resource
     private IUserService userService;
+    @Autowired
+    private JavaMailSender mailSender;
 
     @RequestMapping("/")
     public String toIndex (Model model) {
@@ -115,34 +122,48 @@ public class LoginCtrl extends BaseControllerImpl<User, String> {
     public String loginout(HttpSession session) {
         //使用权限管理工具进行用户的退出，跳出登录，给出提示信息
         getSession().removeAttribute("user");
-        SecurityUtils.getSubject().logout();
+//        SecurityUtils.getSubject().logout();
         return "/blog/index";
     }
 
     @RequestMapping(value = "/admin")
-    public String admin(HttpSession session) {
+    public String admin( ) {
         //使用权限管理工具进行用户的退出，跳出登录，给出提示信息
         return "admin/admin";
     }
+
     @RequestMapping(value = "sendSMS" ,method = RequestMethod.POST)
+    @ResponseBody
     public String sendSMS(){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         String timestamp = sdf.format(new Date());
-        String Url="http://gw.api.tbsandbox.com/router/rest";
-//        String para="accountSid=d6f289db83a64e4799d48fe5e201145f" +
-//                "&smsContent=【大神科技】您的验证码为{152538}，请于{2}分钟内正确输入，如非本人操作，请忽略此短信。" +
-//                "&to=15034164797" +
-//                "&timestamp=" +timestamp+
-//                "&sig=" + DigestUtils.md5Hex("d6f289db83a64e4799d48fe5e201145f"+"a91c4cfc1db145c1b74e52b4a90fd32d"+timestamp) +
-//                "&respDataType=JSON";
-        String para = "method=blogwang" +
-                "&app_key=23752299" +
-                "timestamp="+timestamp +
-                "v=2" +
-                "sign_method=md5" +
-                "sign"+DigestUtils.md5Hex("");
+        String Url="https://api.miaodiyun.com/20150822/industrySMS/sendSMS";
+        String para = "accountSid=d6f289db83a64e4799d48fe5e201145f" +
+                "&smsContent=【大神科技】您的验证码为123456，请于2分钟内正确输入，如非本人操作，请忽略此短信。" +
+                "&to=18235404640" +
+                "&timestamp=" +timestamp+
+                "&sig="+DigestUtils.md5Hex("d6f289db83a64e4799d48fe5e201145f"+"a91c4cfc1db145c1b74e52b4a90fd32d"+timestamp)+
+                "&respDataType=JSON";
         String res= HttpUtil.sendPost(Url,para);
         return res;
+    }
+    @RequestMapping(value = "/sendSimpleEmail",method = RequestMethod.POST)
+    @ResponseBody
+    public String   sendSimpleEmail(@RequestParam(defaultValue = "") String email) {
+        if(!UtilFun.isEmptyString (email)) return "邮箱不能为空";
+        SimpleMailMessage message = new SimpleMailMessage ();
+        int code= (int)((Math.random()*9+1)*100000);
+        message.setFrom ("wanghuiwen312@sina.com");//发送者.
+        message.setTo (email);//接收者.
+        message.setSubject ("验证码");//邮件主题.
+        message.setText ("您的验证码是"+code);//邮件内容.
+
+        try {
+            mailSender.send (message);//发送邮件
+            return Constant.AJAX_SUCCESS;
+        } catch (MailException e) {
+            return Constant.AJAX_FAIL;
+        }
     }
 
 }

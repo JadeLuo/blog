@@ -52,8 +52,8 @@ public class MyStartupRunner implements CommandLineRunner {
 
         }
         logger.info ("————————————————————init role——————————————");
-        List<Role> roles = roleService.getByname ("admin");
-        if (UtilFun.isEmptyList (roles)) {
+        Role roles = roleService.getByname ("admin");
+        if (roles!=null) {
             logger.debug ("————————————————————role admin is  ——————————————");
         } else {
             Role role = new Role ();

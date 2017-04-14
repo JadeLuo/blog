@@ -7,12 +7,13 @@
           content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0"/>
     <link th:href="@{/style/easyCss/css/page.css}" rel="stylesheet"/>
     <link th:href="@{/style/easyCss/css/new-loginV2.css}" rel="stylesheet"/>
+    <script type="text/javascript" th:src="@{/style/jquery/jquery-3.1.1.min.js}"></script>
 </head>
 <body>
 <div id="page">
     <div id="header" class="clearfix" data-spm="1000340">
         <div class="logo">
-            <h1>驾培综合服务云平台</h1>
+            <h1>登录</h1>
         </div>
     </div>
     <div id="content">
@@ -117,7 +118,7 @@
                     <div class="static-form">
                         <div class="register-title">免费注册</div>
                         <form action="/register" class="form-register" method="post" autocomplete="off"
-                              th:object="${user}">
+                              th:object="${user}" id="register">
                             <div id="register_Message"
                                  th:unless="${#strings.isEmpty(#strings.toString(message))}"
                                  class="login-msg error" th:text="${#strings.toString(message)}">
@@ -155,16 +156,7 @@
                                                 placeholder="请确认密码"/>
 
                             </div>
-                            <div class="field">
-                                <label for="reg_phone"> <i class="fa fa-mobile fa-2x"></i>
-                                </label>
-                                <input type="email"  th:field="*{eMail}" id="reg_eMail"
-                                       class="register-text" placeholder="手机号"/>
-                                <div class="login-msg error"
-                                     th:if="${#fields.hasErrors('eMail')}"
-                                     th:errors="*{eMail}">>
-                                </div>
-                            </div>
+
                             <div class="field">
                                 <label for="reg_phone"> <i class="fa fa-mobile fa-2x"></i>
                                 </label>
@@ -176,15 +168,28 @@
                                 </div>
                             </div>
                             <div class="field">
-                                <label for="user_phone_code"> <i
-                                        class="fa fa-check-square-o fa-lg"></i>
+                                <label for="reg_phone"> <i class="fa fa-mobile fa-2x"></i>
                                 </label>
-                                <input type="text" name="reg_phone_code" id="user_phone_code"
-                                       class="register-text" style="width: 130px;"
-                                       placeholder="手机验证码"/>
-                                <input type="button" value="免费获取验证码" class="smsBtn"
-                                       onclick="rsendSms(this)"/>
+                                <input type="email"  th:field="*{eMail}" id="reg_eMail"
+                                       class="register-text" placeholder="邮箱"/>
+                                <div class="login-msg error"
+                                     th:if="${#fields.hasErrors('eMail')}"
+                                     th:errors="*{eMail}">>
+                                </div>
                             </div>
+                            <!--<div class="field">-->
+                                <!--<label for="user_phone_code"> <i-->
+                                        <!--class="fa fa-check-square-o fa-lg"></i>-->
+                                <!--</label>-->
+                                <!--<input type="text" name="reg_phone_code" id="user_phone_code"-->
+                                       <!--class="register-text" style="width: 130px;"-->
+                                       <!--placeholder="邮箱验证码"/>-->
+                                <!--<input type="button" value="发送验证码" class="smsBtn"-->
+                                       <!--onclick="sendSimpleEmail(this)"/>-->
+                            <!--</div>-->
+                            <!--<div id="email_Message"-->
+                                 <!--class="login-msg error">-->
+                            <!--</div>-->
                             <div class="field"></div>
 
                             <div class="form-actions">
@@ -203,7 +208,7 @@
     </div>
     <div id="foot">
         <div class="patent">
-            <p>2016&copy;迅普高科科技有限公司</p>
+            <p>大神科技</p>
         </div>
     </div>
 </div>
