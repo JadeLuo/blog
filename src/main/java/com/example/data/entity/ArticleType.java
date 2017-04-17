@@ -1,5 +1,6 @@
 package com.example.data.entity;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.Entity;
@@ -18,7 +19,7 @@ public class ArticleType {
     private long id;
 
     private String userId;
-    @NotEmpty(message = "分类名称不能为空")
+    @NotBlank(message = "分类名称不能为空")
     private String typeName;
 
     private long pId;

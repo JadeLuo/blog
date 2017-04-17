@@ -65,7 +65,7 @@
         $('#addArticle').ajaxSubmit(function (data) {
             layer.msg(data);
             if (data.indexOf("成功") != -1) {
-                window.location.href = "/article/list";
+                window.location.href = "/article/list?user="+$("input[name=userId]").val();
             }
         })
     }

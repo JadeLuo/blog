@@ -28,7 +28,6 @@ import java.util.List;
 /**
  * Created by wanghuiwen on 17-3-11.
  */
-@Api(value = "测试类",tags = "测试接口")
 @Controller
 @RequestMapping(value = "/article")
 public class ArticlCtrl extends BaseControllerImpl<Article, String> {

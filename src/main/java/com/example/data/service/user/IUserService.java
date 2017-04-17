@@ -25,4 +25,6 @@ public interface IUserService extends IBaseService<User, String> {
      */
     User getByuserName(String userName);
 
+    User findByeMail(String eMail);
+
 }

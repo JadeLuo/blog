@@ -53,6 +53,7 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/style/**", "anon");
         filterChainDefinitionMap.put("/sendSimpleEmail", "anon");
         filterChainDefinitionMap.put("/register", "anon");
+        filterChainDefinitionMap.put("/upPwd", "anon");
         filterChainDefinitionMap.put("/unique", "anon");
 
         filterChainDefinitionMap.put("/blog/**", "anon");

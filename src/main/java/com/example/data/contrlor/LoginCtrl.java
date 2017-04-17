@@ -4,7 +4,10 @@ import com.example.data.base.controller.BaseControllerImpl;
 import com.example.data.common.Constant;
 import com.example.data.common.HttpUtil;
 import com.example.data.common.UtilFun;
+import com.example.data.entity.Code;
 import com.example.data.entity.user.User;
+import com.example.data.service.IArticleService;
+import com.example.data.service.ICodeService;
 import com.example.data.service.user.IUserService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.shiro.SecurityUtils;
@@ -25,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -40,6 +44,12 @@ public class LoginCtrl extends BaseControllerImpl<User, String> {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Resource
     private IUserService userService;
+
+    @Resource
+    private IArticleService articleService;
+
+    @Resource
+    private ICodeService codeService;
     @Autowired
     private JavaMailSender mailSender;
 
@@ -94,16 +104,32 @@ public class LoginCtrl extends BaseControllerImpl<User, String> {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String register (@Valid User user,BindingResult result,Model model) {
+    public String register (@Valid User user,BindingResult result,@RequestParam(defaultValue = "") String code,Model model) {
 
         if (!ajax (user.getUserName ()).equals (Constant.AJAX_SUCCESS)) {
             result.rejectValue ("userName","1111","用户名已经被使用");
+        }
+        if(userService.findByeMail (user.geteMail ())!=null){
+            result.rejectValue ("eMail","1111","该邮箱已经被注册");
         }
         if (result.hasErrors()) {
             model.addAttribute("loginModel","register");
             return "/login/login";
         }
+        Code acode = codeService.findOne (user.geteMail ());
+        if (acode == null) {
+            model.addAttribute ("loginModel","register");
+            model.addAttribute ("code","请先发送验证码");
+            return "/login/login";
+        }
+        if (!acode.getCode ().equals (code)) {
+            model.addAttribute ("loginModel","register");
+            model.addAttribute ("code","验证码不正确");
+            return "/login/login";
+        }
+
         user.setPassWord(user.getSalting());
+        codeService.delete (acode);
         baseService.save (user);
         return "/login/login";
     }
@@ -122,13 +148,12 @@ public class LoginCtrl extends BaseControllerImpl<User, String> {
     public String loginout(HttpSession session) {
         //使用权限管理工具进行用户的退出，跳出登录，给出提示信息
         getSession().removeAttribute("user");
-//        SecurityUtils.getSubject().logout();
-        return "/blog/index";
+        SecurityUtils.getSubject ().logout ();
+        return "redirect:/login";
     }
 
     @RequestMapping(value = "/admin")
-    public String admin( ) {
-        //使用权限管理工具进行用户的退出，跳出登录，给出提示信息
+    public String admin (Model model) {
         return "admin/admin";
     }
 
@@ -157,6 +182,8 @@ public class LoginCtrl extends BaseControllerImpl<User, String> {
         message.setTo (email);//接收者.
         message.setSubject ("验证码");//邮件主题.
         message.setText ("您的验证码是"+code);//邮件内容.
+        Code acode = new Code (email,Integer.toString (code));
+        codeService.save (acode);
 
         try {
             mailSender.send (message);//发送邮件
@@ -164,6 +191,44 @@ public class LoginCtrl extends BaseControllerImpl<User, String> {
         } catch (MailException e) {
             return Constant.AJAX_FAIL;
         }
+    }
+
+    @RequestMapping(value = "/upPwd", method = RequestMethod.POST)
+    public String forgetPassword (@Valid User user,BindingResult result,
+                                  @RequestParam String password,
+                                  @RequestParam String eMail,
+                                  @RequestParam String code,Model model) {
+
+        String forgot_Message = "";
+        User auser = userService.findByeMail (eMail);
+
+        if (user == null) {
+            model.addAttribute ("loginModel","forgetPassword");
+            forgot_Message = "该邮箱还未注册";
+            model.addAttribute ("forgot_Message",forgot_Message);
+            return "/login/login";
+        }
+
+        Code acode = codeService.findOne (eMail);
+        if (acode == null) {
+            model.addAttribute ("loginModel","forgetPassword");
+            forgot_Message = "还未发送验证码";
+            model.addAttribute ("forgot_Message",forgot_Message);
+
+            return "/login/login";
+        }
+        if (!acode.getCode ().equals (code)) {
+            model.addAttribute ("loginModel","forgetPassword");
+            forgot_Message = "验证码错误";
+            model.addAttribute ("forgot_Message",forgot_Message);
+
+            return "/login/login";
+        }
+        auser.setPassWord (password);
+        auser.setPassWord (auser.getSalting ());
+        codeService.delete (acode);
+        userService.save (auser);
+        return "/login/login";
     }
 
 }

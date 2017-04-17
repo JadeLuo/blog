@@ -38,5 +38,10 @@ public class UserServiceImpl extends BaseServiceImpl<User, String> implements IU
         return user;
     }
 
+    public User findByeMail (String eMail) {
+
+        return  userDao.findFirstByeMail(eMail);
+    }
+
 
 }

@@ -24,7 +24,7 @@
         </div>
     </nav>
     <div id="content">
-        <div class="media col-md-12 blog-list-item " th:each="article:${pageImpl}"
+        <div class="media col-md-12 blog-list-item " th:each="article,iterStat:${pageImpl}"
              th:onclick="'javascript:toDetial(\''+${article.id}+'\');'">
             <div class="media-body  media-middle blog-list-body ">
                 <h1 class="media-heading" th:text="${article.title}">标题</h1>
@@ -32,7 +32,7 @@
                     内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</p>
                 <div>
                     <span style="float: left" th:text="${article.articleDate}">时间作者</span>
-                    <input type="hidden" th:value="${article.userId}" id="userId"/>
+                    <input th:if="${iterStat.index==0}" type="hidden" th:value="${article.userId}" id="userId"/>
                     <span style="float: right" th:text="${article.tag}">标签</span>
                 </div>
             </div>

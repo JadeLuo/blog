@@ -66,38 +66,38 @@
                     <div class="static-form">
                         <div class="forgot-title">忘记密码</div>
 
-                        <form action="upPwd" class="form-forgot" method="post" autocomplete="off">
-                            <div id="forgot_Message" style="display: none;"
-                                 class="login-msg error"></div>
+                        <form action="/upPwd" class="form-forgot" method="post" autocomplete="off">
+                            <div id="forgot_Message" th:unless="${#strings.isEmpty(#strings.toString(forgot_Message))}"
+                                 class="login-msg error" th:text="${#strings.toString(forgot_Message)}"></div>
                             <div class="field">
                                 <label for="forgot_pwd"> <i
                                         class="fa fa-lock fa-lg"></i>
-                                </label> <input type="password" name="forgot_password" id="forgot_pwd"
+                                </label> <input type="password" name="password" id="forgot_pwd"
                                                 class="register-text" placeholder="请设置密码"/>
                             </div>
 
                             <div class="field">
                                 <label for="v_forgot_pwd"> <i
                                         class="fa fa-lock fa-lg"></i>
-                                </label> <input type="password" name="verify_forgot_password"
+                                </label> <input type="password" name="verify_password"
                                                 id="v_forgot_pwd" class="register-text"
                                                 placeholder="请确认密码"/>
                             </div>
 
                             <div class="field">
-                                <label for="for_phone"> <i
+                                <label for="for_email"> <i
                                         class="fa fa-mobile fa-2x"></i>
-                                </label> <input type="text" name="forgot_phone"
-                                                id="for_phone" class="register-text" placeholder="手机号"/>
+                                </label> <input type="text" name="eMail"
+                                                id="for_email" class="register-text" placeholder="注册邮箱"/>
                             </div>
 
                             <div class="field">
                                 <label for="forgot_user_phone_code"> <i
                                         class="fa fa-check-square-o fa-lg"></i>
-                                </label> <input type="text" name="forgot_phone_code"
+                                </label> <input type="text" name="code"
                                                 id="forgot_user_phone_code" class="register-text"
                                                 style="width: 130px;" placeholder="短息验证码"/>
-                                <input type="button" value="免费获取验证码" class="smsBtn" onclick="fsendSms(this)"/>
+                                <input type="button" value="免费获取验证码" class="smsBtn" onclick="passwdSendEmail(this)"/>
                             </div>
 
                             <div class="field">
@@ -177,19 +177,20 @@
                                      th:errors="*{eMail}">>
                                 </div>
                             </div>
-                            <!--<div class="field">-->
-                                <!--<label for="user_phone_code"> <i-->
-                                        <!--class="fa fa-check-square-o fa-lg"></i>-->
-                                <!--</label>-->
-                                <!--<input type="text" name="reg_phone_code" id="user_phone_code"-->
-                                       <!--class="register-text" style="width: 130px;"-->
-                                       <!--placeholder="邮箱验证码"/>-->
-                                <!--<input type="button" value="发送验证码" class="smsBtn"-->
-                                       <!--onclick="sendSimpleEmail(this)"/>-->
-                            <!--</div>-->
-                            <!--<div id="email_Message"-->
-                                 <!--class="login-msg error">-->
-                            <!--</div>-->
+                            <div class="field">
+                                <label for="user_phone_code"> <i
+                                        class="fa fa-check-square-o fa-lg"></i>
+                                </label>
+                                <input type="text" name="code" id="user_phone_code"
+                                       class="register-text" style="width: 130px;"
+                                       placeholder="邮箱验证码"/>
+                                <input type="button" value="发送验证码" class="smsBtn"
+                                       onclick="sendSimpleEmail(this)"/>
+                            </div>
+                            <div id="code_message"
+                                 th:unless="${#strings.isEmpty(#strings.toString(code))}"
+                                 class="login-msg error" th:text="${#strings.toString(code)}">
+                            </div>
                             <div class="field"></div>
 
                             <div class="form-actions">
@@ -219,6 +220,7 @@
     $(function () {
         init();
         if($("#loginModel").val()=='register'){$('.register').click()};
+        if($("#loginModel").val()=='forgetPassword'){$('.forgot').click()};
     });
 </script>
 </body>

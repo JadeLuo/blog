@@ -1,7 +1,6 @@
 package com.example.data.config.startloader;
 
 import com.example.data.common.ClassUtil;
-import com.example.data.common.UtilFun;
 import com.example.data.entity.menu.Permission;
 import com.example.data.entity.role.Role;
 import com.example.data.service.permission.IPermissionService;
@@ -9,14 +8,15 @@ import com.example.data.service.role.IRoleService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by wanghuiwen on 17-2-12.
@@ -32,9 +32,12 @@ public class MyStartupRunner implements CommandLineRunner {
     @Resource
     private IRoleService roleService;
 
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+
 
     public void run(String... strings) throws Exception {
-
         logger.info ("————————————————————init permission——————————————");
         List<Method> methods = ClassUtil.MethodHasAnnotation (true,RequiresPermissions.class,"com.example.data");
         for (Method m : methods) {

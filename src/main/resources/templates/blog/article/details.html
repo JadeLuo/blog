@@ -32,7 +32,7 @@
         <div class="col-sm-10 blog-main ">
             <div class="blog-header">
                 <h1 class="blog-title" th:text="${article.title}">大标题</h1>
-                <div style="float: right;" th:if="${#strings.isEmpty(session)}">
+                <div style="float: right;" th:if="${#strings.isEmpty(#strings.toString(session.user))}">
                     <a th:href="@{/article/add(id=${article.id})}"
                        th:unless="${ session.user.id !=article.userId}">编辑</a>
                     <a th:value="${article.id}"

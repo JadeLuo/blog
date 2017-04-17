@@ -26,8 +26,8 @@ public class  LoginCtrlTest {
     private LoginCtrl loginCtrl;
     @Test
     public void sendSMS() throws Exception {
-        String result= loginCtrl.sendSMS();
-        System.out.println("--------------------------"+result);
+//        String result= loginCtrl.sendSMS();
+//        System.out.println("--------------------------"+result);
     }
     @Autowired
     private JavaMailSender mailSender;
@@ -37,14 +37,14 @@ public class  LoginCtrlTest {
      */
     @Test
     public void sendSimpleEmail(){
-        SimpleMailMessage message = new SimpleMailMessage();
-
-        message.setFrom("wanghuiwen312@sina.com");//发送者.
-        message.setTo("1026076331@qq.com");//接收者.
-        message.setSubject("测试邮件（邮件主题）");//邮件主题.
-        message.setText("这是邮件内容");//邮件内容.
-
-        mailSender.send(message);//发送邮件
+//        SimpleMailMessage message = new SimpleMailMessage();
+//
+//        message.setFrom("wanghuiwen312@sina.com");//发送者.
+//        message.setTo("1026076331@qq.com");//接收者.
+//        message.setSubject("测试邮件（邮件主题）");//邮件主题.
+//        message.setText("这是邮件内容");//邮件内容.
+//
+//        mailSender.send(message);//发送邮件
     }
 
 }

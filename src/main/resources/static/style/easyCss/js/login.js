@@ -102,6 +102,12 @@ function sendSimpleEmail(thiz) {
     time(thiz)
 	$.post('/sendSimpleEmail',{email:$("#reg_eMail").val()},function (data) {
 		if(data.indexOf("ajaxFail")!=-1){$("#email_Message").text("发送失败请检查邮箱格式")}
+        else if(data.indexOf("ajaxSuccess")!=-1){$("#email_Message").text("发送成功")}
+        else(layer.msg(data))
 
     })
+}
+function passwdSendEmail(thiz) {
+    time(thiz)
+    $.post('/sendSimpleEmail',{email:$("#for_email").val()},function (data) {})
 }

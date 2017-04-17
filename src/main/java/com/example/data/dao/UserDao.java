@@ -11,4 +11,5 @@ import org.springframework.stereotype.Repository;
 public interface UserDao extends BaseRepository<User, String> {
 
     User findFirstByuserName (String userName);
+    User findFirstByeMail(String eMail);
 }
