@@ -40,6 +40,15 @@ public class EasyInterceptor implements HandlerInterceptor {
      */
     public void postHandle(HttpServletRequest request, HttpServletResponse httpServletResponse,
                            Object o, ModelAndView modelAndView) throws Exception {
+        if(HandlerMethod.class.equals(o.getClass())) {
+            HandlerMethod method = (HandlerMethod) o;
+            Class controller = method.getBeanType();
+            if(controller.isAnnotationPresent(RequestMapping.class)){
+                RequestMapping requestMapping= (RequestMapping)controller.getAnnotation (RequestMapping.class);
+
+                if(modelAndView!=null)modelAndView.addObject ("baseurl", requestMapping.value()[0]);
+            }
+        }
     }
 
     /**
