@@ -1,52 +1,82 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+﻿<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>列表</title>
-    <div th:include="/blog/public/head::head"></div>
-    <div th:include="/blog/public/head::scroll"></div>
+    <title>文章专栏</title>
+     <head th:include="/new/head::head"></head>
+     <head th:include="/new/head::blog_head"></head>
+     <link th:href="@{/style/easyCss/css/article.css}" rel="stylesheet" />
+     <div th:include="/blog/public/head::scroll"></div>
 </head>
 <body>
-<div class="blog-masthead" th:include="/blog/public/top::top"></div>
-<div class="container-fluid">
-    <nav class="navbar navbar-default col-md-12">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <!-- Collect the nav links, forms, and other content for toggling -->
-        <ul class="nav navbar-nav">
-            <li th:each="atype:${articleType}" style="border: solid #f7eef1 1px">
-                <a th:href="@{/article/articleByType(typeId=${atype.id})}" th:text="${atype.typeName}">目录</a>
-            </li>
-        </ul>
-        <div class="navbar-form navbar-right">
-            <div class="form-group">
-                <input id="serch" type="text" class="form-control" placeholder="Search"/>
-            </div>
-            <button class="btn btn-default" onclick="serch()">搜索</button>
-        </div>
-    </nav>
-    <div id="content">
-        <div class="media col-md-12 blog-list-item " th:each="article,iterStat:${pageImpl}"
-             th:onclick="'javascript:toDetial(\''+${article.id}+'\');'">
-            <div class="media-body  media-middle blog-list-body ">
-                <h1 class="media-heading" th:text="${article.title}">标题</h1>
-                <p th:text="${#strings.length(article.summary)>100 ? #strings.substring(article.summary,0,100) : article.summary}">
-                    内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</p>
-                <div>
-                    <span style="float: left" th:text="${article.articleDate}">时间作者</span>
-                    <input th:if="${iterStat.index==0}" type="hidden" th:value="${article.userId}" id="userId"/>
-                    <span style="float: right" th:text="${article.tag}">标签</span>
+   <div class="blog-masthead" th:include="/blog/public/top::topv2"></div>
+   <!-- 主体（一般只改变这里的内容） -->
+    <div class="blog-body">
+        <div class="blog-container">
+            <div class="blog-main">
+                <div class="blog-main-left">
+                    <!--<div class="shadow" style="text-align:center;font-size:16px;padding:40px 15px;background:#fff;margin-bottom:15px;">-->
+                        <!--未搜索到与【<span style="color: #FF5722;">keywords</span>】有关的文章，随便看看吧！-->
+                    <!--</div>-->
+                    <div class="article shadow" th:each="article,iterStat:${pageImpl}">
+                        <div class="article-left">
+                            <!--<img src="../images/cover/201703181909057125.jpg" alt="基于laypage的layui扩展模块（pagesize.js）！" />-->
+                        </div>
+                        <div class="article-right">
+                            <div class="article-title">
+                                <a th:href="@{/article/details(id=${article.id})}" th:text="${article.title}">基于laypage的layui扩展模块（pagesize.js）！</a>
+                            </div>
+                            <div class="article-abstract" th:text="${#strings.length(article.summary)>100 ? #strings.substring(article.summary,0,100) : article.summary}">
+                                该模块主要是针对当前版本laypage没有页容量控制功能而制作，使用该模块后即可实现每页显示多少条数据的控制！本人原创，但是可能有可能只对本人的分页写法有用！
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="article-footer">
+                          <input th:if="${iterStat.index==0}" type="hidden" th:value="${article.userId}" id="userId"/>
+                            <span><i class="fa fa-clock-o" th:text="${#dates.format(article.articleDate,'yyyy-mm-dd')}"></i>&nbsp;&nbsp;</span>
+                            <span class="article-author"><i class="fa fa-user"></i>&nbsp;&nbsp;Absolutely</span>
+                            <span><i class="fa fa-tag" th:text="${article.tag}"></i>&nbsp;&nbsp;<a href="#"></a></span>
+                            <span class="article-viewinfo"><i class="fa fa-eye"></i>&nbsp;0</span>
+                            <span class="article-viewinfo"><i class="fa fa-commenting"></i>&nbsp;4</span>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="media-right  media-middle  ">
-                <div class="blog-list-icon">
-                    <div class="glyphicon glyphicon-thumbs-up " aria-hidden="true" style="float: left"></div>
-                    <span th:text="${article.enjoy}"></span>
-                    <div class="glyphicon  glyphicon-thumbs-down " aria-hidden="true"></div>
-                    <span th:text="${article.Hate}"></span>
+                <div class="blog-main-right">
+                
+                    <div class="blog-search">
+                        <form class="layui-form" action="">
+                            <div class="layui-form-item">
+                                <div class="search-keywords  shadow">
+                                    <input type="text" id="serch" name="keywords" lay-verify="required" placeholder="输入关键词搜索" autocomplete="off" class="layui-input"/>
+                                </div>
+                                <div class="search-submit  shadow">
+                                    <a class="search-btn" onclick="serch()"><i class="fa fa-search"></i></a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="blog-module shadow">
+                        <div class="blog-module-title">随便看看</div>
+                        <ul class="fa-ul blog-module-ul">
+                            <li><i class="fa-li fa fa-hand-o-right"></i><a href="details.html">一步步制作时光轴（一）（HTML篇）</a></li>
+                            <li><i class="fa-li fa fa-hand-o-right"></i><a href="details.html">ASP.NET MVC制作404跳转（非302和200）</a></li>
+                            <li><i class="fa-li fa fa-hand-o-right"></i><a href="details.html">ASP.NET MVC 防范跨站请求伪造（CSRF）</a></li>
+                            <li><i class="fa-li fa fa-hand-o-right"></i><a href="details.html">一步步制作时光轴（三）（JS篇）</a></li>
+                            <li><i class="fa-li fa fa-hand-o-right"></i><a href="details.html">基于laypage的layui扩展模块（pagesize.js）！</a></li>
+                            <li><i class="fa-li fa fa-hand-o-right"></i><a href="details.html">一步步制作时光轴（二）（CSS篇）</a></li>
+                            <li><i class="fa-li fa fa-hand-o-right"></i><a href="details.html">写了个Win10风格快捷菜单！</a></li>
+                            <li><i class="fa-li fa fa-hand-o-right"></i><a href="details.html">常用正则表达式</a></li>
+                        </ul>
+                    </div>
+                    <!--右边悬浮 平板或手机设备显示-->
+                    <div class="category-toggle"><i class="fa fa-chevron-left"></i></div>
                 </div>
+                <div class="clear"></div>
             </div>
         </div>
     </div>
-    <!--<div onclick="extracted() " style="height: 20px; text-align:center">加载更多</div>-->
-</div>
+   <div th:include="/blog/public/left::left"></div>
+   <!--遮罩-->
+    <div class="blog-mask animated layui-hide"></div>
 </body>
 </html>

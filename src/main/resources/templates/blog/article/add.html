@@ -1,30 +1,28 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="zh-cn" style="height:100%;">
-<head th:include="/blog/public/head::head">>
-
+<head>
+   <head th:include="/new/head::blog_head"></head>
+   <head th:include="/blog/public/head::head"></head>
 </head>
 <body style="height:100%;">
-<div class="blog-masthead" th:include="/blog/public/top::top"></div>
-
-<div class="container-fluid">
-
-    <div class="row">
-        <form id="addArticle" class="col-md-12" th:object="${article}" action="/article/add" method="post">
-            <input type="text" th:field="*{title}" id="blog-title" placeholder="标题" class="blog-title-edit"/>
+<div class="blog-masthead" th:include="/blog/public/top::topv2"></div>
+    <div class="blog-body">
+     <div class="blog-container">
+        <form id="addArticle" class="layui-form" th:object="${article}" action="/article/add" method="post">
+            <div class="layui-form-item">
+            <div style="width: 85%;float: left">
+                <input type="text" class="layui-input" th:field="*{title}"  placeholder="标题"/>
+            </div>
+                 <div style="width:15%;float: right;" th:include="/blog/article_type/select :: select"></div>
+            </div>
             <span class="control-label" for="blog-title"
                   th:if="${#fields.hasErrors('title')}"
                   th:errors="*{title}">
             </span>
-            <input th:field="*{summary}" placeholder="摘要" class="blog-title-edit"/>
+            <input class="layui-input" th:field="*{summary}" placeholder="摘要" />
+           
             <textarea name="content" id="content" rows="20" cols="100">
             </textarea>
-            <div th:include="/blog/article_type/select :: select">
-
-            </div>
-            <!--<div class="col-md-4 col-md-offset-4 col-sm-offset-4">-->
-            <!--<button type="button" class="btn btn-info col-md-4 btn-lg blog-btn" onclick="addArticle()">发布</button>-->
-            <!--<button type="button" class="btn btn-info col-md-4 btn-lg blog-btn">预览</button>-->
-            <!--</div>-->
             <input th:field="*{id}" type="hidden"/>
             <input th:field="*{type}" type="hidden"/>
             <input th:field="*{articleText}" type="hidden"/>
@@ -34,8 +32,9 @@
             <input th:field="*{Hate}" type="hidden"/>
             <input th:field="*{status}" type="hidden"/>
         </form>
+     </div>
     </div>
-</div>
+<div th:include="/blog/public/left::left"></div>
 <script>
     $(function () {
         CKEDITOR.replace('content');

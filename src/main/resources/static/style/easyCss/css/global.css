@@ -58,6 +58,7 @@ body {
     .blog-main > .blog-main-right {
         width: 100%;
         float: right;
+        margin-top: 15px;
     }
 
 /* 小屏幕（平板，大于等于 768px） */
@@ -97,6 +98,7 @@ body {
 
     .blog-main > .blog-main-left {
         width: 66%;
+        margin-top: 15px;
     }
 
     .blog-main > .blog-main-right {

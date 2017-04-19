@@ -2,6 +2,6 @@
 <select onchange="addTypeFiled(this)" id="TypeSelect">
     <option>选择分类</option>
     <option th:each="type:${articleType}" th:text="${type.typeName}" th:value="${type.id}"></option>
+    <option><a onclick="addTypes()">添加分类</a></option>
 </select>
-<a onclick="addTypes()">添加分类</a>
 </html>
