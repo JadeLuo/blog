@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/3/10.
@@ -30,5 +31,4 @@ public class ArticleServiceImpl extends BaseServiceImpl<Article, String> impleme
 
         return articleDao.PageByWhere (pageable,IArticleDao.WHERE_BY_USER,userId);
     }
-
 }

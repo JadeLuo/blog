@@ -1,41 +1,93 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>博客首页</title>
-    <div th:include="/blog/public/head::head"></div>
-    <div th:include="/blog/public/head::scroll"></div>
+    <title>个人博客网站</title>
+    <link rel="shortcut icon" href="../images/Logo_40.png" type="image/x-icon"/>
+
+    <head th:include="/new/head::blog_head"></head>
+    <link th:href="@{/style/easyCss/css/home.css}" rel="stylesheet" />
+    <script type="text/javascript" th:src="@{/style/easyCss/js/home.js}"></script>
 </head>
 <body>
-
-<div class="blog-masthead" th:include="/blog/public/top::top"></div>
-
-<div class="container-fluid">
-    <nav class="navbar navbar-default col-md-12">
-        <div class="navbar-form navbar-right">
-            <div class="form-group">
-                <input id="serch" type="text" class="form-control" placeholder="Search"/>
+    <!-- 导航 -->
+  <div class="blog-masthead" th:include="/blog/public/top::topv2"></div>
+    <!-- 主体（一般只改变这里的内容） -->
+    <div class="blog-body">
+        <!-- canvas -->
+        <canvas id="canvas-banner" style="background: #393D49;"></canvas>
+        <!--为了及时效果需要立即设置canvas宽高，否则就在home.js中设置-->
+        <script type="text/javascript">
+            var canvas = document.getElementById('canvas-banner');
+            canvas.width = window.document.body.clientWidth - 10;//减去滚动条的宽度
+            if (screen.width >= 992) {
+                canvas.height = window.innerHeight * 1 / 3;
+            } else {
+                canvas.height = window.innerHeight * 2 / 7;
+            }
+        </script>
+        <!-- 这个一般才是真正的主体内容 -->
+        <div class="blog-container">
+            <div class="blog-main">
+                <!-- 网站公告提示 -->
+                <!--<div class="home-tips shadow">-->
+                    <!--<i style="float:left;line-height:17px;" class="fa fa-volume-up"></i>-->
+                    <!--<div class="home-tips-container">-->
+                        <!--<span style="color: #009688">偷偷告诉大家，本博客的后台管理也正在制作，为大家准备了游客专用账号！</span>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--左边文章列表-->
+                <div class="blog-main-left" >
+                    <div class="article shadow" th:each="article:${articles}">
+                        <div class="article-left">
+                            <!--<img src="../images/cover/201703181909057125.jpg" alt="基于laypage的layui扩展模块（pagesize.js）！" />-->
+                        </div>
+                        <div class="article-right">
+                            <div class="article-title">
+                                <a th:href="@{/article/details(id=${article.id})}" th:text="${article.title}">基于laypage的layui扩展模块（pagesize.js）！</a>
+                            </div>
+                            <div class="article-abstract"
+                                    th:text="${#strings.length(article.summary)>100 ? #strings.substring(article.summary,0,100) : article.summary}">
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="article-footer">
+                            <span><i class="fa fa-clock-o" th:text="${#dates.format(article.articleDate,'yyyy-mm-dd')}"></i>&nbsp;&nbsp;</span>
+                            <span class="article-author" ><i class="fa fa-user"></i>&nbsp;&nbsp;Absolutely</span>
+                            <span><i class="fa fa-tag" th:text="${article.tag}"></i>&nbsp;&nbsp;<a href="#">Web前端</a></span>
+                            <span  class="article-viewinfo" ><i class="fa fa-eye"></i>&nbsp;0</span>
+                            <span class="article-viewinfo"><i class="fa fa-commenting"></i>&nbsp;4</span>
+                        </div>
+                    </div>
+                </div>
+                <!--右边小栏目-->
+                <div class="blog-main-right">
+                    <div></div><!--占位-->
+                    <div class="blog-module shadow">
+                        <div class="blog-module-title">热文排行</div>
+                        <ul class="fa-ul blog-module-ul">
+                            <li><i class="fa-li fa fa-hand-o-right"></i><a href="detail.html">Web安全之跨站请求伪造CSRF</a></li>
+                            <li><i class="fa-li fa fa-hand-o-right"></i><a href="detail.html">ASP.NET MVC 防范跨站请求伪造（CSRF）</a></li>
+                            <li><i class="fa-li fa fa-hand-o-right"></i><a href="detail.html">常用正则表达式</a></li>
+                            <li><i class="fa-li fa fa-hand-o-right"></i><a href="detail.html">EF CodeFirst数据迁移常用指令</a></li>
+                            <li><i class="fa-li fa fa-hand-o-right"></i><a href="detail.html">浅谈.NET Framework基元类型</a></li>
+                            <li><i class="fa-li fa fa-hand-o-right"></i><a href="detail.html">C#基础知识回顾-扩展方法</a></li>
+                            <li><i class="fa-li fa fa-hand-o-right"></i><a href="detail.html">一步步制作时光轴（一）（HTML篇）</a></li>
+                            <li><i class="fa-li fa fa-hand-o-right"></i><a href="detail.html">一步步制作时光轴（二）（CSS篇）</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="clear"></div>
             </div>
-            <button class="btn btn-default" onclick="serch()">搜索</button>
         </div>
-    </nav>
-    <div class="row" id="content">
-
-        <div class="col-sm-8 blog-main">
-
-            <hr class="blog-post"/>
-            <h2 class="blog-post-title">君子务本，本立而道生</h2>
-            <p class="blog-post-meta">2017-03-20</p>
-
-        </div><!-- /.blog-post -->
-
-        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
-            <div class="sidebar-module sidebar-module-inset">
-                <h4>关于</h4>
-                <p>qq群 : 183728140</p>
-            </div>
-        </div><!-- /.blog-sidebar -->
-    </div><!-- /.blog-main -->
-</div><!-- /.row -->
+    </div>
+    <!-- 底部 -->
+    <footer class="blog-footer">
+        <p><span>Copyright</span><span>&copy;</span><span>2017</span><a href="http://www.lyblogs.cn"></a><span>Design By LY</span></p>
+        <p><a href="http://www.miibeian.gov.cn/" target="_blank"></a></p>
+    </footer>
+    <div th:include="/blog/public/left::left"></div>
+    <!--遮罩-->
+    <div class="blog-mask animated layui-hide"></div>
 
 </body>
 </html>

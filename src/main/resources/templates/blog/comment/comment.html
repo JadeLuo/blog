@@ -1,6 +1,13 @@
 <div xmlns:th="http://www.thymeleaf.org" th:fragment="comment">
-    <div th:each="comment:${comments}" class="panel panel-default">
-        <div class="panel-heading" th:utext="${comment.commentDate}"></div>
-        <div class="panel-body" th:utext="${comment.cotent}"></div>
+<li th:each="comment:${comments}">
+    <div class="comment-parent">
+        <!--<img src="../images/Absolutely.jpg" alt="absolutely" />-->
+        <div class="info">
+            <span class="username">作者</span>
+            <span class="time" th:text="${comment.commentDate}"></span>
+        </div>
+        <div class="content" th:utext="${comment.cotent}">
+        </div>
     </div>
+</li>
 </div>

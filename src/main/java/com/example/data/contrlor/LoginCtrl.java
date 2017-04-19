@@ -55,8 +55,8 @@ public class LoginCtrl extends BaseControllerImpl<User, String> {
 
     @RequestMapping("/")
     public String toIndex (Model model) {
-
-        return "/blog/index";
+         model.addAttribute("articles",articleService.findAll(getPage(0)));
+         return "/blog/index";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -88,7 +88,7 @@ public class LoginCtrl extends BaseControllerImpl<User, String> {
         }
         if (subject.isAuthenticated()) {
             subject.getSession ().setAttribute ("user",userService.getByuserName (user.getUserName ()));
-            return "/blog/index";
+            return "redirect:/";
         } else {
             model.addAttribute(user);
             model.addAttribute("errmsg", errmsg);
