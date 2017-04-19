@@ -24,8 +24,7 @@ function removeobj(thiz) {
             }
         );
     }, function(){
-        layer.msg('也可以这样', {time: 2000});
-});
+        });
 }
 
 function updateObj(thiz) {
