@@ -40,7 +40,7 @@
                     <div class="article shadow" th:each="article:${articles}">
                         <div class="article-right">
                             <div class="article-title">
-                                <a th:href="@{/article/details(id=${article.id})}" th:text="${article.title}">基于laypage的layui扩展模块（pagesize.js）！</a>
+                               <a th:href="@{/article/details(id=${article.id})}"  th:text="${article.title}">基于laypage的layui扩展模块（pagesize.js）！</a>
                             </div>
                             <div class="article-abstract"
                                     th:text="${#strings.length(article.summary)>100 ? #strings.substring(article.summary,0,100) : article.summary}">
@@ -50,9 +50,9 @@
                         <div class="article-footer">
                             <span><i class="fa fa-clock-o" th:text="${#dates.format(article.articleDate,'yyyy-mm-dd')}"></i>&nbsp;&nbsp;</span>
                             <span class="article-author" ><i class="fa fa-user"></i>&nbsp;&nbsp;作者</span>
-                            <span><i class="fa fa-tag" th:text="${article.tag}"></i>&nbsp;&nbsp;<a href="#">Web前端</a></span>
-                            <span  class="article-viewinfo" th:text="${article.enjoy}"><i class="fa fa-thumbs-o-up"></i>&nbsp;0</span>
-                            <span class="article-viewinfo" th:text="${article.Hate}"><i class="fa fa-thumbs-o-down"></i>&nbsp;4</span>
+                            <span><i class="fa fa-tag" ></i>&nbsp;&nbsp;<a th:text="${article.tag}">tag</a></span>
+                            <span  class="article-viewinfo" ><i class="fa fa-thumbs-o-up" th:text="${article.enjoy}"></i>&nbsp;</span>
+                            <span class="article-viewinfo" ><i class="fa fa-thumbs-o-down" th:text="${article.Hate}"></i>&nbsp;</span>
                         </div>
                     </div>
                 </div>
@@ -71,10 +71,7 @@
         </div>
     </div>
     <!-- 底部 -->
-    <footer class="blog-footer">
-        <p><span>Copyright</span><span>&copy;</span><span>2017</span><a href="http://www.lyblogs.cn"></a><span>Design By LY</span></p>
-        <p><a href="http://www.miibeian.gov.cn/" target="_blank"></a></p>
-    </footer>
+  
     <div th:include="/blog/public/left::left"></div>
     <!--遮罩-->
     <div class="blog-mask animated layui-hide"></div>

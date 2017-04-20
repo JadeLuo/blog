@@ -6,13 +6,16 @@
     <link rel="shortcut icon" href="../images/Logo_40.png" type="image/x-icon"/>
     <head th:include="/new/head::blog_head"></head>
     <!-- 比较好用的代码着色插件 -->
-      <script type="text/javascript" th:src="@{/style/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/style/jquery/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/style/jquery/jquery.json.js}"></script>
-        <script type="text/javascript" th:src="@{/style/ckeditor/ckeditor.js}"></script>
+    <script type="text/javascript" th:src="@{/style/ckeditor/ckeditor.js}"></script>
     <link th:href="@{/style/easyCss/css/prettify.css}" rel="stylesheet"/>
     <link th:href="@{/style/easyCss/css/detail.css}" rel="stylesheet"/>
     <script type="text/javascript" th:src="@{/style/easyCss/js/prettify.js}"></script>
     <script type="text/javascript" th:src="@{/style/easyCss/js/detail.js}"></script>
+    <script type="text/javascript" th:src="@{/style/highlight/highlight.pack.js}"></script>
+     <link rel="stylesheet" th:href="@{/style/ckeditor/plugins/codesnippet/lib/highlight/styles/monokai_sublime.css}"/>
+   <script>hljs.initHighlightingOnLoad();</script>
 </head>
 <body>
     <!-- 导航 -->
@@ -78,10 +81,6 @@
         </div>
     </div>
     <!-- 底部 -->
-    <footer class="blog-footer">
-        <p><span>Copyright</span><span>&copy;</span><span>2017</span><a href="http://www.lyblogs.cn">不落阁</a><span>Design By LY</span></p>
-        <p><a href="http://www.miibeian.gov.cn/" target="_blank">蜀ICP备16029915号-1</a></p>
-    </footer>
     <div th:include="/blog/public/left::left"></div>
     <!--遮罩-->
     <div class="blog-mask animated layui-hide"></div>

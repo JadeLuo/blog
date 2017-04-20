@@ -55,10 +55,10 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/register", "anon");
         filterChainDefinitionMap.put("/upPwd", "anon");
         filterChainDefinitionMap.put("/unique", "anon");
-
-        filterChainDefinitionMap.put("/blog/**", "anon");
+        filterChainDefinitionMap.put("/", "anon");
         filterChainDefinitionMap.put("/article/details", "anon");
         filterChainDefinitionMap.put("/article/index", "anon");
+        filterChainDefinitionMap.put("/img/*", "anon");
         filterChainDefinitionMap.put("/article/articleByType", "anon");
         filterChainDefinitionMap.put("/article/serch", "anon");
         filterChainDefinitionMap.put("/article/list", "anon");
