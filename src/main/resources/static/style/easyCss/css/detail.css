@@ -37,6 +37,8 @@
 
 .article-detail-content {
     padding: 10px 5px;
+    overflow: hidden;
+    word-wrap: break-word;
 }
 
 
