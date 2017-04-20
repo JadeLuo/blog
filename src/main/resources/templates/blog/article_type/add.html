@@ -8,16 +8,18 @@
 </head>
 <body>
 <form id="articleType" action="/article/type/add" method="post" th:object="${articleType}">
-    分类名称 <input th:field="*{typeName}" type="text"/>
-    <button type="button" onclick="addArticleType('#articleType')">添加</button>
-    <span th:if="${#fields.hasErrors('typeName')}"
-          th:errors="*{typeName}">
-        </span>
+    <div class="layui-form-item">
+        <input class="layui-input" style="display: inline; width: 80%"  placeholder="分类名称" th:field="*{typeName}" type="text" />
+        <button class="layui-btn" style="width: 19%" type="button" onclick="addArticleType('#articleType')">添加</button>
+        <span th:if="${#fields.hasErrors('typeName')}"
+              th:errors="*{typeName}">
+            </span>
+    </div>
     <input name="userId" th:value="${userId}" type="hidden"/>
     <input th:field="*{id}" type="hidden"/>
 </form>
 <hr/>
-<table class="table table-striped table-bordered table-hover">
+<table class="layui-table">
     <tr th:each="type:${type}">
         <td th:text="${type.typeName}"></td>
     </tr>
@@ -25,7 +27,7 @@
 <script>
     function addArticleType(id) {
         addSubmit(id)
-        $('.table').load("/article/type/list");
+        $('.layui-table').load("/article/type/list");
     }
 </script>
 </body>

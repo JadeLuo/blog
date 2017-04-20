@@ -465,8 +465,8 @@ body {
         }
 
     .article > .article-right {
-        width: 73%;
-        float: right;
+        /*width: 73%;*/
+        /*float: right;*/
         padding-left: 2%;
     }
 

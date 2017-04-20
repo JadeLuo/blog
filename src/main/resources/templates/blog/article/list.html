@@ -34,10 +34,10 @@
                         <div class="article-footer">
                           <input th:if="${iterStat.index==0}" type="hidden" th:value="${article.userId}" id="userId"/>
                             <span><i class="fa fa-clock-o" th:text="${#dates.format(article.articleDate,'yyyy-mm-dd')}"></i>&nbsp;&nbsp;</span>
-                            <span class="article-author"><i class="fa fa-user"></i>&nbsp;&nbsp;Absolutely</span>
-                            <span><i class="fa fa-tag" th:text="${article.tag}"></i>&nbsp;&nbsp;<a href="#"></a></span>
-                            <span class="article-viewinfo"><i class="fa fa-eye"></i>&nbsp;0</span>
-                            <span class="article-viewinfo"><i class="fa fa-commenting"></i>&nbsp;4</span>
+                            <span class="article-author"><i class="fa fa-user"></i>&nbsp;&nbsp;作者</span>
+                            <span><i class="fa fa-tag" th:text="${article.tag}"></i>&nbsp;&nbsp;标签</span>
+                            <span  class="article-viewinfo"><i class="fa fa-thumbs-o-up"  th:text="${article.enjoy}"></i>&nbsp;</span>
+                            <span class="article-viewinfo" ><i class="fa fa-thumbs-o-down" th:text="${article.Hate}"></i>&nbsp;</span>
                         </div>
                     </div>
                 </div>
@@ -58,14 +58,7 @@
                     <div class="blog-module shadow">
                         <div class="blog-module-title">随便看看</div>
                         <ul class="fa-ul blog-module-ul">
-                            <li><i class="fa-li fa fa-hand-o-right"></i><a href="details.html">一步步制作时光轴（一）（HTML篇）</a></li>
-                            <li><i class="fa-li fa fa-hand-o-right"></i><a href="details.html">ASP.NET MVC制作404跳转（非302和200）</a></li>
-                            <li><i class="fa-li fa fa-hand-o-right"></i><a href="details.html">ASP.NET MVC 防范跨站请求伪造（CSRF）</a></li>
-                            <li><i class="fa-li fa fa-hand-o-right"></i><a href="details.html">一步步制作时光轴（三）（JS篇）</a></li>
-                            <li><i class="fa-li fa fa-hand-o-right"></i><a href="details.html">基于laypage的layui扩展模块（pagesize.js）！</a></li>
-                            <li><i class="fa-li fa fa-hand-o-right"></i><a href="details.html">一步步制作时光轴（二）（CSS篇）</a></li>
-                            <li><i class="fa-li fa fa-hand-o-right"></i><a href="details.html">写了个Win10风格快捷菜单！</a></li>
-                            <li><i class="fa-li fa fa-hand-o-right"></i><a href="details.html">常用正则表达式</a></li>
+                            <li><i class="fa-li fa fa-hand-o-right"></i><a href="">没有</a></li>
                         </ul>
                     </div>
                     <!--右边悬浮 平板或手机设备显示-->

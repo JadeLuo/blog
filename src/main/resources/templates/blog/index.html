@@ -38,9 +38,6 @@
                 <!--左边文章列表-->
                 <div class="blog-main-left" >
                     <div class="article shadow" th:each="article:${articles}">
-                        <div class="article-left">
-                            <!--<img src="../images/cover/201703181909057125.jpg" alt="基于laypage的layui扩展模块（pagesize.js）！" />-->
-                        </div>
                         <div class="article-right">
                             <div class="article-title">
                                 <a th:href="@{/article/details(id=${article.id})}" th:text="${article.title}">基于laypage的layui扩展模块（pagesize.js）！</a>
@@ -52,10 +49,10 @@
                         <div class="clear"></div>
                         <div class="article-footer">
                             <span><i class="fa fa-clock-o" th:text="${#dates.format(article.articleDate,'yyyy-mm-dd')}"></i>&nbsp;&nbsp;</span>
-                            <span class="article-author" ><i class="fa fa-user"></i>&nbsp;&nbsp;Absolutely</span>
+                            <span class="article-author" ><i class="fa fa-user"></i>&nbsp;&nbsp;作者</span>
                             <span><i class="fa fa-tag" th:text="${article.tag}"></i>&nbsp;&nbsp;<a href="#">Web前端</a></span>
-                            <span  class="article-viewinfo" ><i class="fa fa-eye"></i>&nbsp;0</span>
-                            <span class="article-viewinfo"><i class="fa fa-commenting"></i>&nbsp;4</span>
+                            <span  class="article-viewinfo" th:text="${article.enjoy}"><i class="fa fa-thumbs-o-up"></i>&nbsp;0</span>
+                            <span class="article-viewinfo" th:text="${article.Hate}"><i class="fa fa-thumbs-o-down"></i>&nbsp;4</span>
                         </div>
                     </div>
                 </div>
@@ -65,14 +62,7 @@
                     <div class="blog-module shadow">
                         <div class="blog-module-title">热文排行</div>
                         <ul class="fa-ul blog-module-ul">
-                            <li><i class="fa-li fa fa-hand-o-right"></i><a href="detail.html">Web安全之跨站请求伪造CSRF</a></li>
-                            <li><i class="fa-li fa fa-hand-o-right"></i><a href="detail.html">ASP.NET MVC 防范跨站请求伪造（CSRF）</a></li>
-                            <li><i class="fa-li fa fa-hand-o-right"></i><a href="detail.html">常用正则表达式</a></li>
-                            <li><i class="fa-li fa fa-hand-o-right"></i><a href="detail.html">EF CodeFirst数据迁移常用指令</a></li>
-                            <li><i class="fa-li fa fa-hand-o-right"></i><a href="detail.html">浅谈.NET Framework基元类型</a></li>
-                            <li><i class="fa-li fa fa-hand-o-right"></i><a href="detail.html">C#基础知识回顾-扩展方法</a></li>
-                            <li><i class="fa-li fa fa-hand-o-right"></i><a href="detail.html">一步步制作时光轴（一）（HTML篇）</a></li>
-                            <li><i class="fa-li fa fa-hand-o-right"></i><a href="detail.html">一步步制作时光轴（二）（CSS篇）</a></li>
+                        <li><i class="fa-li fa fa-hand-o-right"></i>没有</li>
                         </ul>
                     </div>
                 </div>

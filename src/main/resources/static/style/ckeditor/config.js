@@ -4,7 +4,7 @@
  */
 
 CKEDITOR.editorConfig = function (config) {
-    var heig = document.body.clientHeight - 280;
+    var heig = document.body.clientHeight;
     config.toolbarGroups = [
         {name: 'document', groups: ['mode', 'document', 'doctools']},
         {name: 'clipboard', groups: ['clipboard', 'undo']},

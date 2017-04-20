@@ -4,23 +4,25 @@
    <head th:include="/new/head::blog_head"></head>
    <head th:include="/blog/public/head::head"></head>
 </head>
-<body style="height:100%;">
+<body>
 <div class="blog-masthead" th:include="/blog/public/top::topv2"></div>
     <div class="blog-body">
      <div class="blog-container">
-        <form id="addArticle" class="layui-form" th:object="${article}" action="/article/add" method="post">
+        <form id="addArticle" class="" th:object="${article}" action="/article/add" method="post">
+        
             <div class="layui-form-item">
             <div style="width: 85%;float: left">
                 <input type="text" class="layui-input" th:field="*{title}"  placeholder="标题"/>
             </div>
-                 <div style="width:15%;float: right;" th:include="/blog/article_type/select :: select"></div>
+                 <div   style="width:15%;float: right;" th:include="/blog/article_type/select :: select"></div>
             </div>
             <span class="control-label" for="blog-title"
                   th:if="${#fields.hasErrors('title')}"
                   th:errors="*{title}">
             </span>
+            <div class="layui-form-item">
             <input class="layui-input" th:field="*{summary}" placeholder="摘要" />
-           
+            </div>
             <textarea name="content" id="content" rows="20" cols="100">
             </textarea>
             <input th:field="*{id}" type="hidden"/>
@@ -69,7 +71,12 @@
         })
     }
     function addTypeFiled(thiz) {
-        $('input[name="type"]').val($(thiz).val());
+        if($(thiz).val()==-1){
+            addTypes()
+        }else{
+            $('input[name="type"]').val($(thiz).val());
+        }
+       
     }
     function addTypes() {
         $.get("/article/type/add", {}, function (data) {

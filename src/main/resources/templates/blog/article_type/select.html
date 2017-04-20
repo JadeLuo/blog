@@ -1,7 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en" th:fragment="select">
-<select onchange="addTypeFiled(this)" id="TypeSelect">
+<select class="layui-input"  onchange="addTypeFiled(this)" id="TypeSelect">
     <option>选择分类</option>
     <option th:each="type:${articleType}" th:text="${type.typeName}" th:value="${type.id}"></option>
-    <option><a onclick="addTypes()">添加分类</a></option>
+    <option value="-1" class="layui-btn" style="margin: 10px;">添加分类</option>
 </select>
 </html>

@@ -93,7 +93,6 @@ layui.define(['element', 'layer', 'util', 'pagesize', 'form'], function (exports
     form.on('switch(sidenav)', function (data) {
         if (data.elem.checked) {
             showSideNav();
-            layer.msg('这个开关是layui的开关改编的');
         } else {
             hideSideNav();
         }
@@ -130,11 +129,11 @@ layui.define(['element', 'layer', 'util', 'pagesize', 'form'], function (exports
             $('.layui-side-hide').animate({ left: '-200px' });
             $('.layui-body').animate({ left: '0px' });
             $('.layui-footer').animate({ left: '0px' });
-            var tishi = layer.msg('鼠标靠左自动显示菜单', { time: 1500 });
-            layer.style(tishi, {
-                top: 'auto',
-                bottom: '50px'
-            });
+            // var tishi = layer.msg('鼠标靠左自动显示菜单', { time: 1500 });
+            // layer.style(tishi, {
+            //     top: 'auto',
+            //     bottom: '50px'
+            // });
             ishide = true;
         }
     }
@@ -150,7 +149,7 @@ layui.define(['element', 'layer', 'util', 'pagesize', 'form'], function (exports
     }
 
 
-    // runSteward();
+    runSteward();
     //管家功能
     function runSteward() {
         var layerSteward;   //管家窗口
@@ -164,11 +163,10 @@ layui.define(['element', 'layer', 'util', 'pagesize', 'form'], function (exports
 
         function getNotReplyLeaveMessage() {
             clearInterval(interval); //停止计时器
-            var content = '<p>目前有<span>12</span>条留言未回复<a href="javascript:layer.msg(\'跳转到相应页面\')">点击查看</a></p>';
-            content += '<div class="notnotice" >不再提醒</div>';
+            var content = '<div><p>this is a message</p></div>';
             layerSteward = layer.open({
                 type: 1,
-                title: '管家提醒',
+                title: 'tig',
                 shade: 0,
                 resize: false,
                 area: ['340px', '215px'],

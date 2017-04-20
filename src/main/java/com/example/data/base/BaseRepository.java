@@ -11,6 +11,7 @@ import java.util.Map;
 
 /**
  * Created by Administrator on 2017/3/28.
+ *
  */
 @NoRepositoryBean
 public interface BaseRepository<T, PK extends Serializable> extends JpaRepository<T, PK> {
