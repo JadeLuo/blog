@@ -33,7 +33,7 @@
                         <div class="clear"></div>
                         <div class="article-footer">
                           <input th:if="${iterStat.index==0}" type="hidden" th:value="${article.userId}" id="userId"/>
-                            <span><i class="fa fa-clock-o" th:text="${#dates.format(article.articleDate,'yyyy-mm-dd')}"></i>&nbsp;&nbsp;</span>
+                            <span><i class="fa fa-clock-o" th:text="${#dates.format(article.articleDate,'yyyy-MM-dd hh:mm:ss')}"></i>&nbsp;&nbsp;</span>
                             <span class="article-author"><i class="fa fa-user"></i>&nbsp;&nbsp;作者</span>
                             <span><i class="fa fa-tag" th:text="${article.tag}"></i>&nbsp;&nbsp;标签</span>
                             <span  class="article-viewinfo"><i class="fa fa-thumbs-o-down"  th:text="${'&nbsp;'+article.enjoy}"></i></span>
