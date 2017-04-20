@@ -30,15 +30,24 @@
                         <div class="article-detail-title" th:text="${article.title}">
                             基于laypage的layui扩展模块（pagesize.js）！
                         </div>
+                        <div style="float: right; padding-right: 30px;" th:unless="${#strings.isEmpty(#strings.toString(session.user))}">
+                            <a th:href="@{/article/add(id=${article.id})}"
+                                    th:unless="${ session.user.id !=article.userId}">编辑</a>
+                            <a th:value="${article.id}"
+                                    abbr="/article"
+                                    th:unless="${session.user.id != article.userId}"
+                                    onclick="removeart(this)">删除</a>
+                        </div>
                         <div class="article-detail-info">
                             <span th:text="${'编辑时间：'+article.articleDate}">编辑时间：</span>
-                            <span th:text="${'作者：'+user.userName}">作者：Absolutely</span>
+                            <span th:text="${'作者：'+user.userName}">作者</span>
                             <span>浏览量：12</span>
                         </div>
                         <div class="article-detail-content" th:utext="${article.articleText}">
                           
                         </div>
                      <input id="articleid" type="hidden" th:value="${article.id}"/>
+                     <input type="hidden" id="userId" th:value="${user.id}"/>
                     </div>
                     <!-- 评论区域 -->
                     <div class="blog-module shadow" style="box-shadow: 0 1px 8px #a6a6a6;">

@@ -9,7 +9,6 @@ function commentArticle() {
         layer.msg("不能为空")
         return;
     }
-    alert(con)
     var thing = {cotent: con, articleId: $('#articleid').val()};
     $.post('/comment/add',
         {comment: $.toJSON(thing)}
@@ -18,4 +17,17 @@ function commentArticle() {
             layer.msg(data)
             $('.blog-comment').load("/comment/list", {id: $('#articleid').val()});
         })
+}
+function removeart(thiz) {
+    layer.confirm('你确定要删除？', {
+        btn: ['确定', '取消'] //按钮
+    }, function () {
+        $.post($(thiz).attr("abbr") + '/delete', {id: $(thiz).attr("value")},
+            function (data) {
+                layer.msg(data, {time: 1000}, function () {
+                    window.location.href = "/article/list?user=" + $("#userId").val();
+                });
+            })
+    }, function(){
+    });
 }
