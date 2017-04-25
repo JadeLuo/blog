@@ -66,11 +66,16 @@ public class ArticlCtrl extends BaseControllerImpl<Article, String> {
         return "/blog/index";
     }
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String list (@RequestParam(defaultValue = "0") int pageNumber,@RequestParam(defaultValue = "") User user,Model model) {
+    public String list (@RequestParam(defaultValue = "0") int pageNumber,
+            @RequestParam(defaultValue = "") User user,@RequestParam(defaultValue = "") String atricleType,
+            Model model) {
 
         LinkedHashMap<String,Object> sql = new LinkedHashMap<String,Object> ();
 
         sql.put ("and user_id = ? ",user.getId ());
+        if(UtilFun.isEmptyString(atricleType)){
+            sql.put(" and type= ? ",atricleType);
+        }
 
         Page<Article> page = articleService.PageByWhere (getPage (pageNumber),sql);
 
@@ -122,6 +127,7 @@ public class ArticlCtrl extends BaseControllerImpl<Article, String> {
             sql.put (" and type = '' and user_id = ?",user.getId ());
         } else if (typeId.getId () != 0) {
             sql.put ("and type = ?",typeId.getId ());
+            model.addAttribute("typeId",typeId.getId());
         }
 
         Page<Article> page = articleService.PageByWhere (getPage (pageNumber),sql);
@@ -129,6 +135,7 @@ public class ArticlCtrl extends BaseControllerImpl<Article, String> {
         List<ArticleType> list = articleTypeService.listByUser (user != null ? user.getId () :typeId.getUserId ());
 
         model.addAttribute ("articleType",list);
+       
 
         model.addAttribute (page);
 

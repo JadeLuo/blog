@@ -38,11 +38,13 @@
             <version>${spring-boot.version}</version>
             <scope>test</scope>
         </dependency>
+		
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.37</version>
 		</dependency>
+		
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
@@ -140,6 +142,8 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>2.2.2</version>
         </dependency>
+
+
     </dependencies>
 
     <build>

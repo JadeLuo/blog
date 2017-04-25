@@ -18,7 +18,7 @@ function extracted() {
     if ($('#serch').val() != null && $('#serch').val() != "") {
         path = "/article/serch";
     }
-    $.get(path, {content: "%" + $('#serch').val() + "%", pageNumber:pageNumber,user:$("#userId").val()}, function (data) {
+    $.get(path, {content: "%" + $('#serch').val() + "%", pageNumber:pageNumber,user:$("#userId").val(),atricleType:$("#atricleType").val()}, function (data) {
         if(data!=""){
             $('.blog-main-left').append(data);
             pageNumber++;

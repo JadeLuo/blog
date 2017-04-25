@@ -69,7 +69,7 @@ public class WebLog {
                     "[webLogger] URL : " + request.getRequestURL ().toString ()+"\n"+
                     "[webLogger] HTTP_METHOD : " + request.getMethod ()+"\n"+
                     "[webLogger] IP : " + request.getRemoteAddr ()+"\n"+
-                    "[webLogger] CLASS_METHOD : " + joinPoint.getSignature ().getDeclaringTypeName () + "." +"\n"+
+                    "[webLogger] CLASS_METHOD : " + joinPoint.getSignature ().getDeclaringTypeName () + "." +
                             joinPoint.getSignature ().getName ()+"\n"+
                     "[webLogger] para:"+para.toString ()+"\n"+
                     "[webLogger] ARGS : " + Arrays.toString (joinPoint.getArgs ())+"\n"+
