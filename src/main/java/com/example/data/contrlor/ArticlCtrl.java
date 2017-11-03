@@ -1,5 +1,6 @@
 package com.example.data.contrlor;
 
+import com.alibaba.fastjson.JSON;
 import com.example.data.base.controller.BaseControllerImpl;
 import com.example.data.common.UtilFun;
 import com.example.data.entity.Article;
@@ -87,6 +88,27 @@ public class ArticlCtrl extends BaseControllerImpl<Article, String> {
             return "/blog/article/list_append";
         }
         return "/blog/article/list";
+    }
+
+    @RequestMapping(value = "/api/list", method = RequestMethod.GET)
+    @ResponseBody
+    public String list (@RequestParam(defaultValue = "0") int pageNumber,
+                        @RequestParam(defaultValue = "") User user,@RequestParam(defaultValue = "") String atricleType
+                        ) {
+
+        LinkedHashMap<String,Object> sql = new LinkedHashMap<String,Object> ();
+
+        sql.put ("and user_id = ? ",user.getId ());
+        if(UtilFun.isEmptyString(atricleType)){
+            sql.put(" and type= ? ",atricleType);
+        }
+
+        Page<Article> page = articleService.PageByWhere (getPage (pageNumber),sql);
+
+        List<ArticleType> list = articleTypeService.listByUser (user.getId ());
+
+        return JSON.toJSONString(page);
+
     }
 
     @RequestMapping(value = "/details")

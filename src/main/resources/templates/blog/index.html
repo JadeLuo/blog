@@ -6,7 +6,6 @@
 
     <head th:include="/new/head::blog_head"></head>
     <link th:href="@{/style/easyCss/css/home.css}" rel="stylesheet" />
-    <script type="text/javascript" th:src="@{/style/easyCss/js/home.js}"></script>
 </head>
 <body>
     <!-- 导航 -->
@@ -14,17 +13,17 @@
     <!-- 主体（一般只改变这里的内容） -->
     <div class="blog-body">
         <!-- canvas -->
-        <canvas id="canvas-banner" style="background: #393D49;"></canvas>
-        <!--为了及时效果需要立即设置canvas宽高，否则就在home.js中设置-->
-        <script type="text/javascript">
-            var canvas = document.getElementById('canvas-banner');
-            canvas.width = window.document.body.clientWidth - 10;//减去滚动条的宽度
-            if (screen.width >= 992) {
-                canvas.height = window.innerHeight * 1 / 3;
-            } else {
-                canvas.height = window.innerHeight * 2 / 7;
-            }
-        </script>
+        <!--<canvas id="canvas-banner" style="background: #393D49;"></canvas>-->
+        <!--&lt;!&ndash;为了及时效果需要立即设置canvas宽高，否则就在home.js中设置&ndash;&gt;-->
+        <!--<script type="text/javascript">-->
+            <!--var canvas = document.getElementById('canvas-banner');-->
+            <!--canvas.width = window.document.body.clientWidth - 10;//减去滚动条的宽度-->
+            <!--if (screen.width >= 992) {-->
+                <!--canvas.height = window.innerHeight * 1 / 3;-->
+            <!--} else {-->
+                <!--canvas.height = window.innerHeight * 2 / 7;-->
+            <!--}-->
+        <!--</script>-->
         <!-- 这个一般才是真正的主体内容 -->
         <div class="blog-container">
             <div class="blog-main">
