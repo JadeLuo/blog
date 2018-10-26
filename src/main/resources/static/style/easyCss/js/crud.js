@@ -57,3 +57,4 @@ function checkadd(thiz,other) {
         $("input[name='"+other+"']").val(ids.replace(newId, ""));
     }
 }
+

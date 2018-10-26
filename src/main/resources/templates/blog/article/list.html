@@ -6,7 +6,6 @@
      <head th:include="/new/head::head"></head>
      <head th:include="/new/head::blog_head"></head>
      <link th:href="@{/style/easyCss/css/article.css}" rel="stylesheet" />
-     <div th:include="/blog/public/head::scroll"></div>
 </head>
 <body>
    <div class="blog-masthead" th:include="/blog/public/top::topv2"></div>
@@ -14,34 +13,14 @@
     <div class="blog-body">
         <div class="blog-container">
             <div class="blog-main">
-                <div class="blog-main-left">
+                <div class="blog-main-left" id="content">
                     <!--<div class="shadow" style="text-align:center;font-size:16px;padding:40px 15px;background:#fff;margin-bottom:15px;">-->
                         <!--未搜索到与【<span style="color: #FF5722;">keywords</span>】有关的文章，随便看看吧！-->
                     <!--</div>-->
-                    <div class="article shadow" th:each="article,iterStat:${pageImpl}">
-                        <div class="article-left">
-                            <!--<img src="../images/cover/201703181909057125.jpg" alt="基于laypage的layui扩展模块（pagesize.js）！" />-->
-                        </div>
-                        <div class="article-right">
-                            <div class="article-title">
-                                <a th:href="@{/article/details(id=${article.id})}" th:text="${article.title}">基于laypage的layui扩展模块（pagesize.js）！</a>
-                            </div>
-                            <div class="article-abstract" th:text="${#strings.length(article.summary)>100 ? #strings.substring(article.summary,0,100) : article.summary}">
-                                该模块主要是针对当前版本laypage没有页容量控制功能而制作，使用该模块后即可实现每页显示多少条数据的控制！本人原创，但是可能有可能只对本人的分页写法有用！
-                            </div>
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-footer">
-                          <input th:if="${iterStat.index==0}" type="hidden" th:value="${article.userId}" id="userId"/>
-                            <span><i class="fa fa-clock-o" th:text="${#dates.format(article.articleDate,'yyyy-MM-dd hh:mm:ss')}"></i>&nbsp;&nbsp;</span>
-                            <span class="article-author"><i class="fa fa-user"></i>&nbsp;&nbsp;作者</span>
-                            <span><i class="fa fa-tag" th:text="${article.tag}"></i>&nbsp;&nbsp;标签</span>
-                            <span  class="article-viewinfo"><i class="fa fa-thumbs-o-down"  th:text="${'&nbsp;'+article.enjoy}"></i></span>
-                            <span class="article-viewinfo" ><i class="fa fa-thumbs-o-up" th:text="${'&nbsp;'+article.Hate}"></i></span>
-                        </div>
-                    </div>
-                <input id="atricleType" type="hidden" th:value="${typeId}"/>
                 </div>
+                <input id="atricleType" type="hidden" th:value="${typeId}"/>
+                <input type="hidden" th:value="${userId}" id="userId"/>
+
                 <div class="blog-main-right">
                 
                     <div class="blog-search">
@@ -79,5 +58,94 @@
    <div th:include="/blog/public/left::left"></div>
    <!--遮罩-->
     <div class="blog-mask animated layui-hide"></div>
+
+<script>
+    /*<![CDATA[*/
+
+    function serch() {
+        $.get("/article/serch", {content: "%" + $('#serch').val() + "%", pageNumber: 0}, function (data) {
+            pageNumber = 0;
+            $(".blog-main-left").replaceWith("<div class='blog-main-left'>" + data + "</div>");
+        })
+    }
+    layui.use(['flow','laydate','laytpl'], function(){
+        var flow = layui.flow,
+            laydate = layui.laydate,
+            laytpl = layui.laytpl,
+        $=layui.jquery;
+
+        layui.laytpl.toDateString = function(d, format){
+            var date = new Date(d || new Date())
+                ,ymd = [
+                this.digit(date.getFullYear(), 4)
+                ,this.digit(date.getMonth() + 1)
+                ,this.digit(date.getDate())
+            ]
+                ,hms = [
+                this.digit(date.getHours())
+                ,this.digit(date.getMinutes())
+                ,this.digit(date.getSeconds())
+            ];
+
+            format = format || 'yyyy-MM-dd HH:mm:ss';
+
+            return format.replace(/yyyy/g, ymd[0])
+                .replace(/MM/g, ymd[1])
+                .replace(/dd/g, ymd[2])
+                .replace(/HH/g, hms[0])
+                .replace(/mm/g, hms[1])
+                .replace(/ss/g, hms[2]);
+        };
+
+        //数字前置补零
+        layui.laytpl.digit = function(num, length, end){
+            var str = '';
+            num = String(num);
+            length = length || 2;
+            for(var i = num.length; i < length; i++){
+                str += '0';
+            }
+            return num < Math.pow(10, length) ? str + (num|0) : num;
+        };
+        var path = "/article/list";
+        if ($('#serch').val() != null && $('#serch').val() != "") {
+            path = "/article/serch";
+        }
+        //信息流
+        flow.load({
+            elem:"#content"
+//            ,isAuto:false
+            ,done:function (page,next) {
+                var pagetotle1=0;
+                var list=[];
+                $.ajax({
+                    type:"post",
+                    url:path,
+                    async:false,
+                    data:{content: "%" + $('#serch').val() + "%", pageNumber:page-1,user:$("#userId").val(),atricleType:$("#atricleType").val()},
+                    success:function (data) {
+                        layui.each(data.data.page.content, function(index, con){
+                            list.push(
+                                '<div class="article shadow"> <div class="article-left"></div> <div class="article-right"> <div class="article-title">'+
+                                '<a th:href="@{/article/details(id='+con.id+')}" >'+con.title+'</a></div>'+
+                                '<div class="article-abstract" >'+con.summary+'</div></div> <div class="clear"></div> <div class="article-footer">'+
+                                '<span><i class="fa fa-clock-o" ></i>'+laytpl.toDateString(con.articleDate,'yyyy-MM-dd hh:mm:ss')+'&nbsp;&nbsp;</span>'+
+                                '<span class="article-author"><i class="fa fa-user"></i>&nbsp;&nbsp;作者</span>'+
+                                '<span><i class="fa fa-tag" th:text="'+con.tag+'"></i>&nbsp;&nbsp;标签</span>'+
+                                '<span  class="article-viewinfo"><i class="fa fa-thumbs-o-up"  th:text="'+con.enjoy+'"></i>&nbsp;</span>'+
+                                '<span class="article-viewinfo" ><i class="fa fa-thumbs-o-down" th:text="'+con.Hate+'"></i>&nbsp;</span></div></div>'
+
+                            );
+                        });
+                        pagetotle1=data.data.page.totalPages;
+
+                }});
+
+                next(list.join(""), page < pagetotle1);
+            }
+        });
+    });
+    /*]]>*/
+</script>
 </body>
 </html>

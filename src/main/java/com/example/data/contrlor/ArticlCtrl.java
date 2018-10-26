@@ -2,6 +2,7 @@ package com.example.data.contrlor;
 
 import com.alibaba.fastjson.JSON;
 import com.example.data.base.controller.BaseControllerImpl;
+import com.example.data.common.AjaxReturn;
 import com.example.data.common.UtilFun;
 import com.example.data.entity.Article;
 import com.example.data.entity.ArticleType;
@@ -15,16 +16,11 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by wanghuiwen on 17-3-11.
@@ -66,11 +62,20 @@ public class ArticlCtrl extends BaseControllerImpl<Article, String> {
     public String index() {
         return "/blog/index";
     }
+
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String list (@RequestParam(defaultValue = "0") int pageNumber,
             @RequestParam(defaultValue = "") User user,@RequestParam(defaultValue = "") String atricleType,
             Model model) {
+        model.addAttribute("userId",user.getId());
+        return "/blog/article/list";
+    }
 
+    @PostMapping("/list")
+    @ResponseBody
+    public AjaxReturn lista(@RequestParam(defaultValue = "0") int pageNumber,
+                           @RequestParam(defaultValue = "") User user,@RequestParam(defaultValue = "") String atricleType,
+                           Model model){
         LinkedHashMap<String,Object> sql = new LinkedHashMap<String,Object> ();
 
         sql.put ("and user_id = ? ",user.getId ());
@@ -79,15 +84,10 @@ public class ArticlCtrl extends BaseControllerImpl<Article, String> {
         }
 
         Page<Article> page = articleService.PageByWhere (getPage (pageNumber),sql);
+        Map map = new HashMap();
+        map.put("page",page);
+        return new AjaxReturn(0,"a",map);
 
-        List<ArticleType> list = articleTypeService.listByUser (user.getId ());
-
-        model.addAttribute ("articleType",list);
-        if (page != null) model.addAttribute (page);
-        if (pageNumber > 0) {
-            return "/blog/article/list_append";
-        }
-        return "/blog/article/list";
     }
 
     @RequestMapping(value = "/api/list", method = RequestMethod.GET)
