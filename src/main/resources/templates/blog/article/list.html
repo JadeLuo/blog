@@ -45,16 +45,15 @@
                 <div class="blog-main-right">
                 
                     <div class="blog-search">
-                        <form class="layui-form" action="">
                             <div class="layui-form-item">
                                 <div class="search-keywords  shadow">
-                                    <input type="text" id="serch" name="keywords" lay-verify="required" placeholder="输入关键词搜索" autocomplete="off" class="layui-input"/>
+                                    <input type="text" id="serch" name="keywords" lay-verify="required"
+                                           placeholder="输入关键词搜索" autocomplete="off" class="layui-input" onkeyup="if(event.keyCode==13) {serch()}"/>
                                 </div>
                                 <div class="search-submit  shadow">
                                     <a class="search-btn" onclick="serch()"><i class="fa fa-search"></i></a>
                                 </div>
                             </div>
-                        </form>
                     </div>
                        <div class="article-category shadow">
                             <div class="article-category-title">分类导航</div>
