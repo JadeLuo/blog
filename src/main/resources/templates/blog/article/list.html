@@ -127,7 +127,7 @@
                         layui.each(data.data.page.content, function(index, con){
                             list.push(
                                 '<div class="article shadow"> <div class="article-left"></div> <div class="article-right"> <div class="article-title">'+
-                                '<a th:href="@{/article/details(id='+con.id+')}" >'+con.title+'</a></div>'+
+                                '<a href="/article/details?id='+con.id+'" >'+con.title+'</a></div>'+
                                 '<div class="article-abstract" >'+con.summary+'</div></div> <div class="clear"></div> <div class="article-footer">'+
                                 '<span><i class="fa fa-clock-o" ></i>'+laytpl.toDateString(con.articleDate,'yyyy-MM-dd hh:mm:ss')+'&nbsp;&nbsp;</span>'+
                                 '<span class="article-author"><i class="fa fa-user"></i>&nbsp;&nbsp;作者</span>'+
