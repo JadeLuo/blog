@@ -108,7 +108,7 @@ public class ImageUploadUtil {
         String fileName = upload (request,DirectoryName);
         // 结合ckeditor功能
         // imageContextPath为图片在服务器地址，如upload/123.jpg,非绝对路径
-        String imageContextPath = "http://60.205.222.196/" + request.getContextPath () + "/" + DirectoryName + "/" + fileName;
+        String imageContextPath = "http://149.28.89.195/" + request.getContextPath () + "/" + DirectoryName + "/" + fileName;
         response.setContentType ("text/html;charset=UTF-8");
         String callback = request.getParameter ("CKEditorFuncNum");
         PrintWriter out = response.getWriter ();

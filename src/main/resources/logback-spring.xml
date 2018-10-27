@@ -37,16 +37,16 @@
     <!--<logger name="org.hibernate.engine.query.HQLQueryPlan" level="DEBUG" />-->
 
     <!-- 将日志写入数据库 -->
-    <appender name="DB-CLASSIC-MYSQL-POOL" class="ch.qos.logback.classic.db.DBAppender">
-        <connectionSource class="ch.qos.logback.core.db.DataSourceConnectionSource">
-            <dataSource class="com.alibaba.druid.pool.DruidDataSource">
-                <driverClassName>com.mysql.jdbc.Driver</driverClassName>
-                <url>jdbc:mysql://localhost:3306/test</url>
-                <username>root</username>
-                <password>123456</password>
-            </dataSource>
-        </connectionSource>
-    </appender>
+    <!--<appender name="DB-CLASSIC-MYSQL-POOL" class="ch.qos.logback.classic.db.DBAppender">-->
+        <!--<connectionSource class="ch.qos.logback.core.db.DataSourceConnectionSource">-->
+            <!--<dataSource class="com.alibaba.druid.pool.DruidDataSource">-->
+                <!--<driverClassName>com.mysql.jdbc.Driver</driverClassName>-->
+                <!--<url>jdbc:mysql://localhost:3306/test</url>-->
+                <!--<username>root</username>-->
+                <!--<password>123456</password>-->
+            <!--</dataSource>-->
+        <!--</connectionSource>-->
+    <!--</appender>-->
     <!-- 日志输出级别 -->
     <root level="INFO">
         <appender-ref ref="STDOUT" />
