@@ -103,7 +103,7 @@ function sendSimpleEmail(thiz) {
 	$.post('/sendSimpleEmail',{email:$("#reg_eMail").val()},function (data) {
 		if(data.indexOf("ajaxFail")!=-1){$("#email_Message").text("发送失败请检查邮箱格式")}
         else if(data.indexOf("ajaxSuccess")!=-1){$("#email_Message").text("发送成功")}
-        else(layer.msg(data))
+        else($("#email_Message").text("发送成功"));
 
     })
 }

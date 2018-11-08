@@ -1,5 +1,6 @@
 package com.example.data.common;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -103,12 +105,12 @@ public class ImageUploadUtil {
      * @throws IOException
      * @Title ckeditor
      */
-    public static void ckeditor (HttpServletRequest request,HttpServletResponse response,String DirectoryName) throws IOException {
+    public static   void ckeditor (HttpServletRequest request,HttpServletResponse response,String DirectoryName,String host ,String port) throws IOException {
 
         String fileName = upload (request,DirectoryName);
         // 结合ckeditor功能
         // imageContextPath为图片在服务器地址，如upload/123.jpg,非绝对路径
-        String imageContextPath = "http://149.28.89.195/" + request.getContextPath () + "/" + DirectoryName + "/" + fileName;
+        String imageContextPath = "http://"+host+":"+port+"/" + request.getContextPath () + "/" + DirectoryName + "/" + fileName;
         response.setContentType ("text/html;charset=UTF-8");
         String callback = request.getParameter ("CKEditorFuncNum");
         PrintWriter out = response.getWriter ();

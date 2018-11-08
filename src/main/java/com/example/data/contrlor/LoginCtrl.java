@@ -50,8 +50,8 @@ public class LoginCtrl extends BaseControllerImpl<User, String> {
 
     @Resource
     private ICodeService codeService;
-    @Autowired
-    private JavaMailSender mailSender;
+//    @Autowired
+//    private JavaMailSender mailSender;
 
     @RequestMapping("/")
     public String toIndex (Model model) {
@@ -185,12 +185,12 @@ public class LoginCtrl extends BaseControllerImpl<User, String> {
         Code acode = new Code (email,Integer.toString (code));
         codeService.save (acode);
 
-        try {
-            mailSender.send (message);//发送邮件
+//        try {
+//            mailSender.send (message);//发送邮件
             return Constant.AJAX_SUCCESS;
-        } catch (MailException e) {
-            return Constant.AJAX_FAIL;
-        }
+//        } catch (MailException e) {
+//            return Constant.AJAX_FAIL;
+//        }
     }
 
     @RequestMapping(value = "/upPwd", method = RequestMethod.POST)
