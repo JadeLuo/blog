@@ -36,6 +36,7 @@ http://149.28.89.195/
 #注意
 在Idea中开发会一个bug;
 pom文件中下面这个依赖在打包时去掉注解，在Idea启动时需要加上注解才可以
+  ```xml 
    <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
@@ -43,4 +44,5 @@ pom文件中下面这个依赖在打包时去掉注解，在Idea启动时需要�
             <!--打包时取消注解 idea的bug-->
             <scope>provided</scope>
    </dependency>
+   ```
 
