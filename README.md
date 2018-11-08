@@ -33,3 +33,14 @@ http://149.28.89.195/
 
 注册时发送验证码会在code表里有验证码。
 
+#注意
+在Idea中开发会一个bug;
+pom文件中下面这个依赖在打包时去掉注解，在Idea启动时需要加上注解才可以
+   <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <version>${spring-boot.version}</version>
+            <!--打包时取消注解 idea的bug-->
+            <scope>provided</scope>
+   </dependency>
+
