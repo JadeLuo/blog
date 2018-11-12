@@ -77,8 +77,9 @@ public class ArticlCtrl extends BaseControllerImpl<Article, String> {
                            @RequestParam(defaultValue = "") User user,@RequestParam(defaultValue = "") String atricleType,
                            Model model){
         LinkedHashMap<String,Object> sql = new LinkedHashMap<String,Object> ();
-
-        sql.put ("and user_id = ? ",user.getId ());
+        if(user!=null){
+            sql.put ("and user_id = ? ",user.getId ());
+        }
         if(UtilFun.isEmptyString(atricleType)){
             sql.put(" and type= ? ",atricleType);
         }
@@ -129,14 +130,15 @@ public class ArticlCtrl extends BaseControllerImpl<Article, String> {
         return "/blog/article/details";
     }
 
-    @RequestMapping(value = "/serch", method = RequestMethod.GET)
+    @RequestMapping(value = "/serch", method = RequestMethod.POST)
+    @ResponseBody
     public String serch(@RequestParam(defaultValue = "0") int pageNumber, Model model,
                         @RequestParam(defaultValue = "") String content) {
 
         Page<Article> page = articleService.serchByKey (getPage (pageNumber),content);
 
         model.addAttribute(page);
-        return "/blog/article/list_append";
+        return  JSON.toJSONString(page);
     }
 
 
