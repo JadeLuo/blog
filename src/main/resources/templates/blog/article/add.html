@@ -42,6 +42,7 @@
         CKEDITOR.replace('content');
         var data = $('input[name="articleText"]').val();
         CKEDITOR.instances.content.setData(data);
+        $("#TypeSelect").val($('input[name="type"]').val());
         CKEDITOR.instances.content.on("instanceReady", function () {
             this.addCommand("save", {
                     modes: {
